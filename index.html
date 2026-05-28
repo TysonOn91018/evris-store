@@ -8,7 +8,7 @@
       name="description"
       content="EVRIS is an EC-focused accessory brand with pearl jewelry, natural stone bracelets, delicate earrings, and minimal necklaces for daily styling."
     />
-    <link rel="stylesheet" href="styles.css?v=5" />
+    <link rel="stylesheet" href="styles.css?v=6" />
   </head>
   <body>
     <div class="top-message">Free shipping over RMB 599 / Member points 5%</div>
@@ -24,6 +24,28 @@
         <a href="#news">News</a>
       </nav>
       <div class="header-actions" aria-label="Account and cart links">
+        <div class="locale-controls" aria-label="Country and language settings">
+          <label>
+            <span>Country</span>
+            <select id="marketSelect">
+              <option value="CN">China / CNY</option>
+              <option value="JP">Japan / JPY</option>
+              <option value="HK">Hong Kong / HKD</option>
+              <option value="US">United States / USD</option>
+              <option value="KR">Korea / KRW</option>
+              <option value="TW">Taiwan / TWD</option>
+            </select>
+          </label>
+          <label>
+            <span>Language</span>
+            <select id="languageSelect">
+              <option value="en">English</option>
+              <option value="zh">中文</option>
+              <option value="ja">日本語</option>
+              <option value="ko">한국어</option>
+            </select>
+          </label>
+        </div>
         <button type="button" data-open-account id="accountButton">Login</button>
         <button type="button" data-open-cart>Cart <span id="cartCount">0</span></button>
       </div>
@@ -595,7 +617,7 @@
             <span>Subtotal</span>
             <strong id="cartSubtotal">RMB 0</strong>
           </div>
-          <small>Shipping is calculated at checkout. Free shipping over RMB 599.</small>
+          <small id="shippingNote">Shipping is calculated at checkout. Free shipping over RMB 599.</small>
           <form class="checkout-form" id="checkoutForm">
             <label>
               Gift option
@@ -689,6 +711,6 @@
       </section>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="script.js?v=14"></script>
+    <script src="script.js?v=17"></script>
   </body>
 </html>

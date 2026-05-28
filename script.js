@@ -118,6 +118,10 @@ const newsletterMessage = document.querySelector("#newsletterMessage");
 const productSearch = document.querySelector("#productSearch");
 const priceFilter = document.querySelector("#priceFilter");
 const productResultCount = document.querySelector("#productResultCount");
+const marketSelect = document.querySelector("#marketSelect");
+const languageSelect = document.querySelector("#languageSelect");
+const topMessage = document.querySelector(".top-message");
+const shippingNote = document.querySelector("#shippingNote");
 let lastFocusedElement = null;
 let activeProduct = null;
 let cart = JSON.parse(localStorage.getItem("evrisCart") || "[]");
@@ -126,6 +130,77 @@ let favorites = JSON.parse(localStorage.getItem("evrisFavorites") || "[]");
 let localReviews = JSON.parse(localStorage.getItem("evrisReviews") || "{}");
 let currentCategory = "all";
 let accountMode = "login";
+
+const marketSettings = {
+  CN: { label: "China", currency: "CNY", locale: "zh-CN", prefix: "RMB", rate: 1, decimals: 0 },
+  JP: { label: "Japan", currency: "JPY", locale: "ja-JP", rate: 21.8, decimals: 0 },
+  HK: { label: "Hong Kong", currency: "HKD", locale: "zh-HK", prefix: "HK$", rate: 1.08, decimals: 0 },
+  US: { label: "United States", currency: "USD", locale: "en-US", rate: 0.14, decimals: 2 },
+  KR: { label: "Korea", currency: "KRW", locale: "ko-KR", rate: 191, decimals: 0 },
+  TW: { label: "Taiwan", currency: "TWD", locale: "zh-TW", prefix: "NT$", rate: 4.5, decimals: 0 },
+};
+
+const uiText = {
+  en: {
+    accountLogin: "Login",
+    accountMyPage: "My page",
+    cart: "Cart",
+    viewMore: "View more",
+    joinMember: "Join member",
+    addToCart: "Add to cart",
+    added: "Added",
+    quickView: "Quick view",
+    freeShipping: "Free shipping over {amount} / Member points 5%",
+    shippingNote: "Shipping is calculated at checkout. Free shipping over {amount}.",
+    searchPlaceholder: "stone, pearl, necklace...",
+    forgotPassword: "Forgot password?",
+  },
+  zh: {
+    accountLogin: "登入",
+    accountMyPage: "會員中心",
+    cart: "購物車",
+    viewMore: "查看更多",
+    joinMember: "加入會員",
+    addToCart: "加入購物車",
+    added: "已加入",
+    quickView: "快速查看",
+    freeShipping: "滿 {amount} 免運費 / 會員積分 5%",
+    shippingNote: "運費會於結帳時計算。滿 {amount} 免運費。",
+    searchPlaceholder: "天然石、珍珠、項鍊...",
+    forgotPassword: "忘記密碼？",
+  },
+  ja: {
+    accountLogin: "ログイン",
+    accountMyPage: "マイページ",
+    cart: "カート",
+    viewMore: "もっと見る",
+    joinMember: "会員登録",
+    addToCart: "カートに入れる",
+    added: "追加済み",
+    quickView: "詳細を見る",
+    freeShipping: "{amount} 以上で送料無料 / 会員ポイント 5%",
+    shippingNote: "送料はチェックアウト時に計算されます。{amount} 以上で送料無料。",
+    searchPlaceholder: "天然石、パール、ネックレス...",
+    forgotPassword: "パスワードを忘れた方",
+  },
+  ko: {
+    accountLogin: "로그인",
+    accountMyPage: "마이페이지",
+    cart: "장바구니",
+    viewMore: "더 보기",
+    joinMember: "회원가입",
+    addToCart: "장바구니 담기",
+    added: "추가됨",
+    quickView: "빠른 보기",
+    freeShipping: "{amount} 이상 무료배송 / 회원 포인트 5%",
+    shippingNote: "배송비는 결제 단계에서 계산됩니다. {amount} 이상 무료배송.",
+    searchPlaceholder: "스톤, 진주, 목걸이...",
+    forgotPassword: "비밀번호 찾기",
+  },
+};
+
+let currentMarket = localStorage.getItem("evrisMarket") || "CN";
+let currentLanguage = localStorage.getItem("evrisLanguage") || "en";
 
 function getSupabaseErrorMessage(error) {
   if (error?.message === "Invalid login credentials") {
@@ -253,21 +328,75 @@ function parsePrice(priceText) {
 }
 
 function formatPrice(amount) {
-  return `RMB ${amount}`;
+  const market = marketSettings[currentMarket] || marketSettings.CN;
+  const converted = amount * market.rate;
+  const decimals = market.decimals ?? 2;
+
+  if (market.prefix) {
+    return `${market.prefix} ${new Intl.NumberFormat(market.locale, {
+      maximumFractionDigits: decimals,
+      minimumFractionDigits: decimals,
+    }).format(converted)}`;
+  }
+
+  return new Intl.NumberFormat(market.locale, {
+    style: "currency",
+    currency: market.currency,
+    maximumFractionDigits: decimals,
+    minimumFractionDigits: decimals,
+  }).format(converted);
+}
+
+function t(key) {
+  return (uiText[currentLanguage] || uiText.en)[key] || uiText.en[key] || key;
+}
+
+function formatTemplate(key, values = {}) {
+  return t(key).replace(/\{(\w+)\}/g, (_match, token) => values[token] ?? "");
+}
+
+function getBasePriceFromElement(element) {
+  if (!element.dataset.basePrice) {
+    element.dataset.basePrice = String(parsePrice(element.textContent));
+  }
+  return Number(element.dataset.basePrice);
+}
+
+function initializeBasePrices() {
+  document.querySelectorAll(".product-info span").forEach(getBasePriceFromElement);
+  document.querySelectorAll(".buy-row strong").forEach(getBasePriceFromElement);
+}
+
+function updateDisplayedPrices() {
+  document.querySelectorAll(".product-info span").forEach((priceElement) => {
+    priceElement.textContent = formatPrice(getBasePriceFromElement(priceElement));
+  });
+
+  document.querySelectorAll(".buy-row strong").forEach((priceElement) => {
+    priceElement.textContent = formatPrice(getBasePriceFromElement(priceElement));
+  });
+
+  if (activeProduct) {
+    modalPrice.textContent = formatPrice(activeProduct.priceValue);
+  }
+
+  renderCart();
+  applyProductFilters();
 }
 
 function getProductFromCard(card) {
   const title = card.querySelector(".product-info p").textContent.trim();
   const meta = card.querySelector(".product-info small").textContent.trim();
-  const price = card.querySelector(".product-info span").textContent.trim();
+  const priceElement = card.querySelector(".product-info span");
+  const priceValue = getBasePriceFromElement(priceElement);
   const image = card.querySelector("img");
 
   return {
     id: title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""),
     title,
     meta,
-    price,
-    priceValue: parsePrice(price),
+    price: formatPrice(priceValue),
+    priceValue,
     image: image.src,
     imageAlt: image.alt,
   };
@@ -278,7 +407,7 @@ function getFeatureProduct() {
     id: "aqua-pearl-bracelet",
     title: "Aqua Pearl Bracelet",
     meta: "Bracelet / Natural stone",
-    price: "RMB 538",
+    price: formatPrice(538),
     priceValue: 538,
     image: new URL("assets/products/clean/aqua-pearl-bracelet.jpg", window.location.href).href,
     imageAlt: "Aqua stone and pearl bracelet",
@@ -294,6 +423,53 @@ function updateCartCount() {
   cartCount.textContent = count;
 }
 
+function updateLocaleText() {
+  const freeShippingAmount = formatPrice(599);
+  document.documentElement.lang = currentLanguage;
+  topMessage.textContent = formatTemplate("freeShipping", { amount: freeShippingAmount });
+  shippingNote.textContent = formatTemplate("shippingNote", { amount: freeShippingAmount });
+  productSearch.placeholder = t("searchPlaceholder");
+  forgotPasswordButton.textContent = t("forgotPassword");
+
+  document.querySelectorAll(".hero-actions .button.primary").forEach((button) => {
+    button.textContent = t("viewMore");
+  });
+
+  document.querySelectorAll("[data-open-account]").forEach((button) => {
+    if (button.id !== "accountButton") {
+      const text = button.textContent.trim().toLowerCase();
+      if (text.includes("join") || text.includes("会員") || text.includes("會員") || text.includes("회원")) {
+        button.textContent = t("joinMember");
+      }
+    }
+  });
+
+  document.querySelectorAll(".hover-label").forEach((label) => {
+    label.textContent = t("quickView");
+  });
+
+  document.querySelectorAll(".product-card .cart-button").forEach((button) => {
+    if (button.textContent.trim().toLowerCase() !== t("added").toLowerCase()) {
+      button.textContent = t("addToCart");
+    }
+  });
+
+  if (!member) {
+    accountButton.textContent = t("accountLogin");
+  }
+
+  document.querySelector('[data-open-cart]').firstChild.textContent = `${t("cart")} `;
+}
+
+function applyLocaleSettings() {
+  localStorage.setItem("evrisMarket", currentMarket);
+  localStorage.setItem("evrisLanguage", currentLanguage);
+  marketSelect.value = currentMarket;
+  languageSelect.value = currentLanguage;
+  updateLocaleText();
+  updateDisplayedPrices();
+}
+
 function saveMember() {
   if (member) {
     localStorage.setItem("evrisMember", JSON.stringify(member));
@@ -304,7 +480,7 @@ function saveMember() {
 
 function updateMemberUi() {
   const isLoggedIn = Boolean(member);
-  accountButton.textContent = isLoggedIn ? "My page" : "Login";
+  accountButton.textContent = isLoggedIn ? t("accountMyPage") : t("accountLogin");
   memberSummary.hidden = !isLoggedIn;
   accountForm.hidden = isLoggedIn;
   document.querySelector(".account-tabs").hidden = isLoggedIn;
@@ -332,7 +508,7 @@ function renderCart() {
 
   if (cart.length === 0) {
     cartEmpty.classList.add("is-visible");
-    cartSubtotal.textContent = "RMB 0";
+    cartSubtotal.textContent = formatPrice(0);
     checkoutForm.hidden = true;
     return;
   }
@@ -455,9 +631,9 @@ document.querySelectorAll(".product-card a").forEach((link) => {
 document.querySelectorAll(".product-card .cart-button").forEach((button) => {
   button.addEventListener("click", () => {
     addToCart(getProductFromCard(button.closest(".product-card")));
-    button.textContent = "Added";
+    button.textContent = t("added");
     window.setTimeout(() => {
-      button.textContent = "Add to cart";
+      button.textContent = t("addToCart");
     }, 900);
   });
 });
@@ -471,9 +647,9 @@ document.querySelector(".feature-card .mini-button").addEventListener("click", (
 modalCart.addEventListener("click", () => {
   if (!activeProduct) return;
   addToCart(activeProduct);
-  modalCart.textContent = "Added";
+  modalCart.textContent = t("added");
   window.setTimeout(() => {
-    modalCart.textContent = "Add to cart";
+    modalCart.textContent = t("addToCart");
   }, 1200);
 });
 
@@ -782,7 +958,7 @@ function applyProductFilters() {
   document.querySelectorAll(".product-card").forEach((card) => {
     const title = card.querySelector(".product-info p").textContent.toLowerCase();
     const meta = card.querySelector(".product-info small").textContent.toLowerCase();
-    const price = parsePrice(card.querySelector(".product-info span").textContent);
+    const price = getBasePriceFromElement(card.querySelector(".product-info span"));
     const categoryOk = currentCategory === "all" || meta.includes(currentCategory.slice(0, -1));
     const queryOk = !query || title.includes(query) || meta.includes(query);
     const priceOk =
@@ -800,6 +976,17 @@ function applyProductFilters() {
 
 productSearch.addEventListener("input", applyProductFilters);
 priceFilter.addEventListener("change", applyProductFilters);
+
+marketSelect.addEventListener("change", () => {
+  currentMarket = marketSelect.value;
+  applyLocaleSettings();
+});
+
+languageSelect.addEventListener("change", () => {
+  currentLanguage = languageSelect.value;
+  applyLocaleSettings();
+  updateMemberUi();
+});
 
 stylePreference.addEventListener("change", () => {
   if (!member) return;
@@ -819,10 +1006,10 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-renderCart();
+initializeBasePrices();
+applyLocaleSettings();
 updateMemberUi();
 updateFavoriteCount();
-applyProductFilters();
 
 async function initSupabaseSession() {
   if (!supabaseClient) return;
