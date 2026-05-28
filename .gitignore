@@ -1,0 +1,5 @@
+assets/products/raw/
+assets/products/contact-sheet.jpg
+assets/products/*.jpeg
+pdf-preview/
+.DS_Store
