@@ -8,7 +8,7 @@
       name="description"
       content="EVRIS is an EC-focused accessory brand with pearl jewelry, natural stone bracelets, delicate earrings, and minimal necklaces for daily styling."
     />
-    <link rel="stylesheet" href="styles.css?v=6" />
+    <link rel="stylesheet" href="styles.css?v=7" />
   </head>
   <body>
     <div class="top-message">Free shipping over RMB 599 / Member points 5%</div>
@@ -25,26 +25,20 @@
       </nav>
       <div class="header-actions" aria-label="Account and cart links">
         <div class="locale-controls" aria-label="Country and language settings">
-          <label>
-            <span>Country</span>
-            <select id="marketSelect">
-              <option value="CN">China / CNY</option>
-              <option value="JP">Japan / JPY</option>
-              <option value="HK">Hong Kong / HKD</option>
-              <option value="US">United States / USD</option>
-              <option value="KR">Korea / KRW</option>
-              <option value="TW">Taiwan / TWD</option>
-            </select>
-          </label>
-          <label>
-            <span>Language</span>
-            <select id="languageSelect">
-              <option value="en">English</option>
-              <option value="zh">中文</option>
-              <option value="ja">日本語</option>
-              <option value="ko">한국어</option>
-            </select>
-          </label>
+          <div class="locale-picker" id="marketPicker" aria-label="Choose country">
+            <button type="button" data-market="CN" aria-label="China, CNY">🇨🇳</button>
+            <button type="button" data-market="JP" aria-label="Japan, JPY">🇯🇵</button>
+            <button type="button" data-market="HK" aria-label="Hong Kong, HKD">🇭🇰</button>
+            <button type="button" data-market="US" aria-label="United States, USD">🇺🇸</button>
+            <button type="button" data-market="KR" aria-label="Korea, KRW">🇰🇷</button>
+            <button type="button" data-market="TW" aria-label="Taiwan, TWD">🇹🇼</button>
+          </div>
+          <div class="locale-picker compact" id="languagePicker" aria-label="Choose language">
+            <button type="button" data-language="en" aria-label="English">EN</button>
+            <button type="button" data-language="zh" aria-label="Chinese">中</button>
+            <button type="button" data-language="ja" aria-label="Japanese">日</button>
+            <button type="button" data-language="ko" aria-label="Korean">한</button>
+          </div>
         </div>
         <button type="button" data-open-account id="accountButton">Login</button>
         <button type="button" data-open-cart>Cart <span id="cartCount">0</span></button>
@@ -570,16 +564,26 @@
             <strong id="modalReview"></strong>
             <div class="review-list" id="reviewList"></div>
             <form class="review-form" id="reviewForm">
-              <label>
-                Rating
-                <select name="rating" required>
-                  <option value="5">★★★★★ 5</option>
-                  <option value="4">★★★★☆ 4</option>
-                  <option value="3">★★★☆☆ 3</option>
-                  <option value="2">★★☆☆☆ 2</option>
-                  <option value="1">★☆☆☆☆ 1</option>
-                </select>
-              </label>
+              <div class="rating-control">
+                <div class="rating-head">
+                  <span>Rating</span>
+                  <strong id="ratingValue">5.0</strong>
+                </div>
+                <div class="star-slider" style="--rating-percent: 100%">
+                  <span class="star-track" aria-hidden="true">★★★★★</span>
+                  <span class="star-fill" aria-hidden="true">★★★★★</span>
+                  <input
+                    id="ratingInput"
+                    name="rating"
+                    type="range"
+                    min="1"
+                    max="5"
+                    step="1"
+                    value="5"
+                    aria-label="Rating from 1 to 5 stars"
+                  />
+                </div>
+              </div>
               <label>
                 Comment
                 <textarea name="comment" rows="3" placeholder="Write your styling note..." required></textarea>
@@ -711,6 +715,6 @@
       </section>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="script.js?v=17"></script>
+    <script src="script.js?v=18"></script>
   </body>
 </html>

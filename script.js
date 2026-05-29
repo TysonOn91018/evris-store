@@ -118,10 +118,13 @@ const newsletterMessage = document.querySelector("#newsletterMessage");
 const productSearch = document.querySelector("#productSearch");
 const priceFilter = document.querySelector("#priceFilter");
 const productResultCount = document.querySelector("#productResultCount");
-const marketSelect = document.querySelector("#marketSelect");
-const languageSelect = document.querySelector("#languageSelect");
+const marketButtons = document.querySelectorAll("[data-market]");
+const languageButtons = document.querySelectorAll("[data-language]");
 const topMessage = document.querySelector(".top-message");
 const shippingNote = document.querySelector("#shippingNote");
+const ratingInput = document.querySelector("#ratingInput");
+const ratingValue = document.querySelector("#ratingValue");
+const starSlider = document.querySelector(".star-slider");
 let lastFocusedElement = null;
 let activeProduct = null;
 let cart = JSON.parse(localStorage.getItem("evrisCart") || "[]");
@@ -242,6 +245,13 @@ function getReviewText(title) {
 
 function formatStars(rating) {
   return "★★★★★".slice(0, rating) + "☆☆☆☆☆".slice(0, 5 - rating);
+}
+
+function updateRatingControl() {
+  const rating = Number(ratingInput.value);
+  const percent = (rating / 5) * 100;
+  starSlider.style.setProperty("--rating-percent", `${percent}%`);
+  ratingValue.textContent = `${rating}.0`;
 }
 
 function saveLocalReviews() {
@@ -464,8 +474,16 @@ function updateLocaleText() {
 function applyLocaleSettings() {
   localStorage.setItem("evrisMarket", currentMarket);
   localStorage.setItem("evrisLanguage", currentLanguage);
-  marketSelect.value = currentMarket;
-  languageSelect.value = currentLanguage;
+  marketButtons.forEach((button) => {
+    const isActive = button.dataset.market === currentMarket;
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
+  languageButtons.forEach((button) => {
+    const isActive = button.dataset.language === currentLanguage;
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
   updateLocaleText();
   updateDisplayedPrices();
 }
@@ -603,6 +621,7 @@ function openProductModal(card) {
   modalReview.textContent = details.review || getReviewText(product.title);
   modalFavorite.textContent = favorites.some((item) => item.id === product.id) ? "Saved" : "Save favorite";
   reviewForm.reset();
+  updateRatingControl();
   loadReviews(product.id);
 
   modal.classList.add("is-open");
@@ -977,16 +996,22 @@ function applyProductFilters() {
 productSearch.addEventListener("input", applyProductFilters);
 priceFilter.addEventListener("change", applyProductFilters);
 
-marketSelect.addEventListener("change", () => {
-  currentMarket = marketSelect.value;
-  applyLocaleSettings();
+marketButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    currentMarket = button.dataset.market;
+    applyLocaleSettings();
+  });
 });
 
-languageSelect.addEventListener("change", () => {
-  currentLanguage = languageSelect.value;
-  applyLocaleSettings();
-  updateMemberUi();
+languageButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    currentLanguage = button.dataset.language;
+    applyLocaleSettings();
+    updateMemberUi();
+  });
 });
+
+ratingInput.addEventListener("input", updateRatingControl);
 
 stylePreference.addEventListener("change", () => {
   if (!member) return;
@@ -1007,6 +1032,7 @@ document.addEventListener("keydown", (event) => {
 });
 
 initializeBasePrices();
+updateRatingControl();
 applyLocaleSettings();
 updateMemberUi();
 updateFavoriteCount();

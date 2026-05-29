@@ -887,7 +887,6 @@ footer span {
   text-transform: uppercase;
 }
 
-.review-form select,
 .review-form textarea {
   width: 100%;
   border: 1px solid var(--line);
@@ -898,14 +897,63 @@ footer span {
   text-transform: none;
 }
 
-.review-form select {
-  min-height: 38px;
-  padding: 0 10px;
-}
-
 .review-form textarea {
   resize: vertical;
   padding: 10px;
+}
+
+.rating-control {
+  display: grid;
+  gap: 8px;
+}
+
+.rating-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--soft-ink);
+  font-size: 0.62rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.rating-head strong {
+  color: var(--ink);
+  font-size: 0.78rem;
+}
+
+.star-slider {
+  position: relative;
+  width: min(240px, 100%);
+  height: 42px;
+  color: #c8c4ba;
+  font-size: 2rem;
+  letter-spacing: 0.08em;
+  line-height: 42px;
+}
+
+.star-track,
+.star-fill {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.star-fill {
+  width: var(--rating-percent);
+  color: var(--ink);
+}
+
+.star-slider input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: ew-resize;
+  opacity: 0;
 }
 
 .modal-actions {
@@ -1524,23 +1572,43 @@ nav {
   gap: 8px;
 }
 
-.locale-controls label {
-  display: grid;
-  gap: 2px;
-  color: var(--soft-ink);
-  font-size: 0.52rem;
-  line-height: 1;
-  text-transform: uppercase;
-}
-
-.locale-controls select {
-  min-height: 28px;
-  max-width: 142px;
+.locale-picker {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px;
   border: 1px solid var(--line);
   background: var(--paper);
-  color: var(--ink);
+}
+
+.locale-picker button {
+  display: grid;
+  width: 28px;
+  height: 26px;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: var(--soft-ink);
   font: inherit;
-  font-size: 0.62rem;
+  font-size: 0.72rem;
+  line-height: 1;
+  opacity: 0.62;
+}
+
+.locale-picker button::after {
+  display: none;
+}
+
+.locale-picker button.is-active,
+.locale-picker button:hover {
+  background: var(--ink);
+  color: var(--paper);
+  opacity: 1;
+}
+
+.locale-picker.compact button {
+  width: 24px;
+  font-size: 0.58rem;
 }
 
 .hero {
@@ -2128,15 +2196,13 @@ footer span {
   .locale-controls {
     order: 3;
     width: 100%;
+    flex-wrap: wrap;
     justify-content: flex-end;
   }
 
-  .locale-controls label span {
-    display: none;
-  }
-
-  .locale-controls select {
-    max-width: 118px;
+  .locale-picker button {
+    width: 26px;
+    height: 24px;
   }
 
   .category-mosaic,
