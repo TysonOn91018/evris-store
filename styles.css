@@ -1569,46 +1569,22 @@ nav {
 .locale-controls {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
-.locale-picker {
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  padding: 2px;
-  border: 1px solid var(--line);
-  background: var(--paper);
-}
-
-.locale-picker button {
-  display: grid;
-  width: 28px;
-  height: 26px;
-  place-items: center;
+.locale-controls select {
+  height: 28px;
+  min-width: 58px;
   border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
   background: transparent;
-  color: var(--soft-ink);
+  color: var(--ink);
   font: inherit;
-  font-size: 0.72rem;
-  line-height: 1;
-  opacity: 0.62;
-}
-
-.locale-picker button::after {
-  display: none;
-}
-
-.locale-picker button.is-active,
-.locale-picker button:hover {
-  background: var(--ink);
-  color: var(--paper);
-  opacity: 1;
-}
-
-.locale-picker.compact button {
-  width: 24px;
   font-size: 0.58rem;
+  font-weight: 800;
+  outline-offset: 4px;
+  text-transform: uppercase;
 }
 
 .hero {
@@ -2200,9 +2176,8 @@ footer span {
     justify-content: flex-end;
   }
 
-  .locale-picker button {
-    width: 26px;
-    height: 24px;
+  .locale-controls select {
+    min-width: 54px;
   }
 
   .category-mosaic,

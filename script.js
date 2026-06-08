@@ -118,8 +118,8 @@ const newsletterMessage = document.querySelector("#newsletterMessage");
 const productSearch = document.querySelector("#productSearch");
 const priceFilter = document.querySelector("#priceFilter");
 const productResultCount = document.querySelector("#productResultCount");
-const marketButtons = document.querySelectorAll("[data-market]");
-const languageButtons = document.querySelectorAll("[data-language]");
+const marketSelect = document.querySelector("#marketSelect");
+const languageSelect = document.querySelector("#languageSelect");
 const topMessage = document.querySelector(".top-message");
 const shippingNote = document.querySelector("#shippingNote");
 const ratingInput = document.querySelector("#ratingInput");
@@ -225,6 +225,24 @@ function setMemberFromUser(user, extra = {}) {
     birthday: extra.birthday || user.user_metadata?.birthday_month || "",
   };
   saveMember();
+}
+
+async function saveProfileToSupabase(user, email, birthday) {
+  if (!supabaseClient || !user?.id) return null;
+
+  const { error } = await supabaseClient.from("profiles").upsert({
+    id: user.id,
+    email,
+    birthday_month: birthday || null,
+    rank: "Silver",
+    points: 0,
+  });
+
+  if (error) {
+    console.warn("Profile sync skipped:", error.message);
+  }
+
+  return error;
 }
 
 function getStoneMeaning(title, meta) {
@@ -474,16 +492,8 @@ function updateLocaleText() {
 function applyLocaleSettings() {
   localStorage.setItem("evrisMarket", currentMarket);
   localStorage.setItem("evrisLanguage", currentLanguage);
-  marketButtons.forEach((button) => {
-    const isActive = button.dataset.market === currentMarket;
-    button.classList.toggle("is-active", isActive);
-    button.setAttribute("aria-pressed", String(isActive));
-  });
-  languageButtons.forEach((button) => {
-    const isActive = button.dataset.language === currentLanguage;
-    button.classList.toggle("is-active", isActive);
-    button.setAttribute("aria-pressed", String(isActive));
-  });
+  marketSelect.value = currentMarket;
+  languageSelect.value = currentLanguage;
   updateLocaleText();
   updateDisplayedPrices();
 }
@@ -876,13 +886,7 @@ accountForm.addEventListener("submit", async (event) => {
       if (result.error) throw result.error;
       if (result.data.user) {
         setMemberFromUser(result.data.user, { birthday });
-        await supabaseClient.from("profiles").upsert({
-          id: result.data.user.id,
-          email,
-          birthday_month: birthday || null,
-          rank: "Silver",
-          points: 0,
-        });
+        await saveProfileToSupabase(result.data.user, email, birthday);
       }
     } catch (error) {
       accountMessage.textContent = getSupabaseErrorMessage(error);
@@ -996,19 +1000,15 @@ function applyProductFilters() {
 productSearch.addEventListener("input", applyProductFilters);
 priceFilter.addEventListener("change", applyProductFilters);
 
-marketButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    currentMarket = button.dataset.market;
-    applyLocaleSettings();
-  });
+marketSelect.addEventListener("change", () => {
+  currentMarket = marketSelect.value;
+  applyLocaleSettings();
 });
 
-languageButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    currentLanguage = button.dataset.language;
-    applyLocaleSettings();
-    updateMemberUi();
-  });
+languageSelect.addEventListener("change", () => {
+  currentLanguage = languageSelect.value;
+  applyLocaleSettings();
+  updateMemberUi();
 });
 
 ratingInput.addEventListener("input", updateRatingControl);
@@ -1043,6 +1043,10 @@ async function initSupabaseSession() {
   const { data } = await supabaseClient.auth.getSession();
   if (data.session?.user) {
     setMemberFromUser(data.session.user);
+  } else {
+    member = null;
+    saveMember();
+    setAccountMode("login");
     updateMemberUi();
   }
 

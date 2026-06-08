@@ -8,7 +8,7 @@
       name="description"
       content="EVRIS is an EC-focused accessory brand with pearl jewelry, natural stone bracelets, delicate earrings, and minimal necklaces for daily styling."
     />
-    <link rel="stylesheet" href="styles.css?v=7" />
+    <link rel="stylesheet" href="styles.css?v=8" />
   </head>
   <body>
     <div class="top-message">Free shipping over RMB 599 / Member points 5%</div>
@@ -25,20 +25,20 @@
       </nav>
       <div class="header-actions" aria-label="Account and cart links">
         <div class="locale-controls" aria-label="Country and language settings">
-          <div class="locale-picker" id="marketPicker" aria-label="Choose country">
-            <button type="button" data-market="CN" aria-label="China, CNY">🇨🇳</button>
-            <button type="button" data-market="JP" aria-label="Japan, JPY">🇯🇵</button>
-            <button type="button" data-market="HK" aria-label="Hong Kong, HKD">🇭🇰</button>
-            <button type="button" data-market="US" aria-label="United States, USD">🇺🇸</button>
-            <button type="button" data-market="KR" aria-label="Korea, KRW">🇰🇷</button>
-            <button type="button" data-market="TW" aria-label="Taiwan, TWD">🇹🇼</button>
-          </div>
-          <div class="locale-picker compact" id="languagePicker" aria-label="Choose language">
-            <button type="button" data-language="en" aria-label="English">EN</button>
-            <button type="button" data-language="zh" aria-label="Chinese">中</button>
-            <button type="button" data-language="ja" aria-label="Japanese">日</button>
-            <button type="button" data-language="ko" aria-label="Korean">한</button>
-          </div>
+          <select id="marketSelect" aria-label="Country and currency">
+            <option value="CN">CN RMB</option>
+            <option value="JP">JP JPY</option>
+            <option value="HK">HK HKD</option>
+            <option value="US">US USD</option>
+            <option value="KR">KR KRW</option>
+            <option value="TW">TW TWD</option>
+          </select>
+          <select id="languageSelect" aria-label="Language">
+            <option value="en">EN</option>
+            <option value="zh">中</option>
+            <option value="ja">日</option>
+            <option value="ko">한</option>
+          </select>
         </div>
         <button type="button" data-open-account id="accountButton">Login</button>
         <button type="button" data-open-cart>Cart <span id="cartCount">0</span></button>
@@ -715,6 +715,6 @@
       </section>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="script.js?v=18"></script>
+    <script src="script.js?v=19"></script>
   </body>
 </html>
