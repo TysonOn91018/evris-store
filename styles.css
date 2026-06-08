@@ -1537,7 +1537,7 @@ footer span {
   top: 0;
   z-index: 100;
   display: grid;
-  grid-template-columns: 150px 1fr auto;
+  grid-template-columns: 180px 1fr auto;
   min-height: 58px;
   padding: 0 clamp(18px, 4vw, 48px);
   border-bottom: 1px solid #e8e6df;
@@ -1548,7 +1548,7 @@ footer span {
 
 .brand-mark {
   font-family: var(--sans);
-  font-size: 1.05rem;
+  font-size: 1.35rem;
   font-weight: 700;
   letter-spacing: 0.22em;
 }
