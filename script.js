@@ -113,6 +113,9 @@ const memberEmail = document.querySelector("#memberEmail");
 const logoutButton = document.querySelector("#logoutButton");
 const favoriteCount = document.querySelector("#favoriteCount");
 const stylePreference = document.querySelector("#stylePreference");
+const memberAddressForm = document.querySelector("#memberAddressForm");
+const memberAddress = document.querySelector("#memberAddress");
+const memberAddressMessage = document.querySelector("#memberAddressMessage");
 const newsletterForm = document.querySelector("#newsletterForm");
 const newsletterMessage = document.querySelector("#newsletterMessage");
 const productSearch = document.querySelector("#productSearch");
@@ -185,6 +188,12 @@ const uiText = {
     logout: "Logout",
     favoriteCount: "{count} item{plural}",
     memberMessage: "You can track orders, save favorites, and use member points at checkout.",
+    packageAddress: "Package address",
+    packageAddressHint: "This address will be used automatically at checkout.",
+    packageAddressPlaceholder: "Add your package delivery address",
+    saveAddress: "Save address",
+    addressSaved: "Address saved. It will be filled in at checkout.",
+    addressEmpty: "Please enter your package delivery address.",
     freeShipping: "Free shipping over {amount} / Member points 5%",
     shippingNote: "Shipping is calculated at checkout. Free shipping over {amount}.",
     searchPlaceholder: "stone, pearl, necklace...",
@@ -231,6 +240,12 @@ const uiText = {
     logout: "登出",
     favoriteCount: "{count} 件商品",
     memberMessage: "你可以查看訂單、保存收藏，並在結帳時使用會員積分。",
+    packageAddress: "收件地址",
+    packageAddressHint: "此地址會於結帳時自動填入。",
+    packageAddressPlaceholder: "輸入包裹配送地址",
+    saveAddress: "保存地址",
+    addressSaved: "地址已保存，結帳時會自動填入。",
+    addressEmpty: "請輸入包裹配送地址。",
     freeShipping: "滿 {amount} 免運費 / 會員積分 5%",
     shippingNote: "運費會於結帳時計算。滿 {amount} 免運費。",
     searchPlaceholder: "天然石、珍珠、項鍊...",
@@ -277,6 +292,12 @@ const uiText = {
     logout: "ログアウト",
     favoriteCount: "{count} 点",
     memberMessage: "注文確認、お気に入り保存、チェックアウト時のポイント利用ができます。",
+    packageAddress: "お届け先住所",
+    packageAddressHint: "この住所はチェックアウト時に自動入力されます。",
+    packageAddressPlaceholder: "荷物のお届け先住所を入力",
+    saveAddress: "住所を保存",
+    addressSaved: "住所を保存しました。チェックアウト時に自動入力されます。",
+    addressEmpty: "お届け先住所を入力してください。",
     freeShipping: "{amount} 以上で送料無料 / 会員ポイント 5%",
     shippingNote: "送料はチェックアウト時に計算されます。{amount} 以上で送料無料。",
     searchPlaceholder: "天然石、パール、ネックレス...",
@@ -323,6 +344,12 @@ const uiText = {
     logout: "로그아웃",
     favoriteCount: "{count}개",
     memberMessage: "주문 확인, 즐겨찾기 저장, 결제 시 포인트 사용이 가능합니다.",
+    packageAddress: "배송 주소",
+    packageAddressHint: "이 주소는 결제 시 자동으로 입력됩니다.",
+    packageAddressPlaceholder: "패키지를 받을 배송 주소를 입력하세요",
+    saveAddress: "주소 저장",
+    addressSaved: "주소가 저장되었습니다. 결제 시 자동 입력됩니다.",
+    addressEmpty: "배송 주소를 입력해주세요.",
     freeShipping: "{amount} 이상 무료배송 / 회원 포인트 5%",
     shippingNote: "배송비는 결제 단계에서 계산됩니다. {amount} 이상 무료배송.",
     searchPlaceholder: "스톤, 진주, 목걸이...",
@@ -861,11 +888,13 @@ function getSupabaseErrorMessage(error) {
 }
 
 function setMemberFromUser(user, extra = {}) {
+  const savedAddress = localStorage.getItem(`evrisShippingAddress:${user.email}`) || "";
   member = {
     id: user.id,
     email: user.email,
     createdAt: user.created_at || new Date().toISOString(),
     birthday: extra.birthday || user.user_metadata?.birthday_month || "",
+    shippingAddress: extra.shippingAddress || savedAddress,
   };
   saveMember();
 }
@@ -877,6 +906,7 @@ async function saveProfileToSupabase(user, email, birthday) {
     id: user.id,
     email,
     birthday_month: birthday || null,
+    shipping_address: member?.shippingAddress || null,
     rank: "Silver",
     points: 0,
   });
@@ -1136,6 +1166,7 @@ function updateLocaleText() {
   productSearch.placeholder = t("searchPlaceholder");
   document.querySelector("#newsletterForm input").placeholder = t("newsletterPlaceholder");
   reviewForm.querySelector("textarea").placeholder = t("commentPlaceholder");
+  memberAddress.placeholder = t("packageAddressPlaceholder");
   forgotPasswordButton.textContent = t("forgotPassword");
 
   document.querySelectorAll(".hero-actions .button.primary").forEach((button) => {
@@ -1174,6 +1205,32 @@ function updateLocaleText() {
   updateFavoriteCount();
 }
 
+function applyMemberAddressToCheckout() {
+  const checkoutAddress = checkoutForm.querySelector('textarea[name="address"]');
+  if (member?.shippingAddress && !checkoutAddress.value.trim()) {
+    checkoutAddress.value = member.shippingAddress;
+  }
+}
+
+async function saveMemberAddress(address) {
+  if (!member) return;
+
+  member.shippingAddress = address;
+  saveMember();
+  localStorage.setItem(`evrisShippingAddress:${member.email}`, address);
+
+  if (supabaseClient && member.id) {
+    const { error } = await supabaseClient
+      .from("profiles")
+      .update({ shipping_address: address })
+      .eq("id", member.id);
+
+    if (error) {
+      console.warn("Address sync skipped:", error.message);
+    }
+  }
+}
+
 function applyLocaleSettings() {
   localStorage.setItem("evrisMarket", currentMarket);
   localStorage.setItem("evrisLanguage", currentLanguage);
@@ -1201,6 +1258,7 @@ function updateMemberUi() {
   if (isLoggedIn) {
     accountTitle.textContent = t("accountTitleMember");
     memberEmail.textContent = member.email;
+    memberAddress.value = member.shippingAddress || localStorage.getItem(`evrisShippingAddress:${member.email}`) || "";
     if (member.stylePreference) {
       stylePreference.value = member.stylePreference;
     }
@@ -1278,6 +1336,7 @@ function changeCartQuantity(productId, change) {
 function openCartDrawer() {
   lastFocusedElement = document.activeElement;
   renderCart();
+  applyMemberAddressToCheckout();
   cartDrawer.classList.add("is-open");
   cartDrawer.setAttribute("aria-hidden", "false");
   document.body.classList.add("modal-open");
@@ -1705,6 +1764,21 @@ stylePreference.addEventListener("change", () => {
   if (!member) return;
   member.stylePreference = stylePreference.value;
   saveMember();
+});
+
+memberAddressForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const address = memberAddress.value.trim();
+
+  if (!address) {
+    memberAddressMessage.textContent = t("addressEmpty");
+    memberAddress.focus();
+    return;
+  }
+
+  await saveMemberAddress(address);
+  applyMemberAddressToCheckout();
+  memberAddressMessage.textContent = t("addressSaved");
 });
 
 document.addEventListener("keydown", (event) => {

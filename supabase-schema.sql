@@ -7,6 +7,7 @@ create table if not exists public.profiles (
   id uuid primary key references auth.users(id) on delete cascade,
   email text not null,
   birthday_month text,
+  shipping_address text,
   rank text not null default 'Silver',
   points integer not null default 0,
   created_at timestamptz not null default now(),
@@ -26,6 +27,9 @@ create table if not exists public.products (
   is_active boolean not null default true,
   created_at timestamptz not null default now()
 );
+
+alter table public.profiles
+add column if not exists shipping_address text;
 
 create table if not exists public.newsletter_subscribers (
   id uuid primary key default gen_random_uuid(),

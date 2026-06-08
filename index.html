@@ -8,7 +8,7 @@
       name="description"
       content="EVRIS is an EC-focused accessory brand with pearl jewelry, natural stone bracelets, delicate earrings, and minimal necklaces for daily styling."
     />
-    <link rel="stylesheet" href="styles.css?v=13" />
+    <link rel="stylesheet" href="styles.css?v=14" />
   </head>
   <body>
     <div class="top-message">Free shipping over RMB 599 / Member points 5%</div>
@@ -674,6 +674,21 @@
               <strong id="favoriteCount">0 items</strong>
             </div>
           </div>
+          <form class="member-address-form" id="memberAddressForm">
+            <label>
+              <span data-i18n="packageAddress">Package address</span>
+              <textarea
+                id="memberAddress"
+                name="shippingAddress"
+                rows="4"
+                autocomplete="shipping street-address"
+                placeholder="Add your package delivery address"
+              ></textarea>
+            </label>
+            <button class="mini-button" type="submit" data-i18n="saveAddress">Save address</button>
+            <small data-i18n="packageAddressHint">This address will be used automatically at checkout.</small>
+            <p class="form-message" id="memberAddressMessage" role="status"></p>
+          </form>
           <button class="mini-button" type="button" id="logoutButton" data-i18n="logout">Logout</button>
         </div>
         <div class="account-tabs" role="tablist" aria-label="Account mode">
@@ -714,6 +729,6 @@
       </section>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="script.js?v=22"></script>
+    <script src="script.js?v=23"></script>
   </body>
 </html>
