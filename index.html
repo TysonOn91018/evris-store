@@ -8,7 +8,7 @@
       name="description"
       content="EVRIS is an EC-focused accessory brand with pearl jewelry, natural stone bracelets, delicate earrings, and minimal necklaces for daily styling."
     />
-    <link rel="stylesheet" href="styles.css?v=8" />
+    <link rel="stylesheet" href="styles.css?v=9" />
   </head>
   <body>
     <div class="top-message">Free shipping over RMB 599 / Member points 5%</div>
@@ -26,12 +26,12 @@
       <div class="header-actions" aria-label="Account and cart links">
         <div class="locale-controls" aria-label="Country and language settings">
           <select id="marketSelect" aria-label="Country and currency">
-            <option value="CN">CN RMB</option>
-            <option value="JP">JP JPY</option>
-            <option value="HK">HK HKD</option>
-            <option value="US">US USD</option>
-            <option value="KR">KR KRW</option>
-            <option value="TW">TW TWD</option>
+            <option value="CN">RMB</option>
+            <option value="JP">JPY</option>
+            <option value="HK">HKD</option>
+            <option value="US">USD</option>
+            <option value="KR">KRW</option>
+            <option value="TW">TWD</option>
           </select>
           <select id="languageSelect" aria-label="Language">
             <option value="en">EN</option>
@@ -606,44 +606,44 @@
       <section class="drawer-panel" role="dialog" aria-modal="true">
         <div class="drawer-head">
           <div>
-            <p class="kicker">Shopping cart</p>
-            <h2 id="cartTitle">Your items</h2>
+            <p class="kicker" data-i18n="cartKicker">Shopping cart</p>
+            <h2 id="cartTitle" data-i18n="cartTitle">Your items</h2>
           </div>
-          <button class="icon-close" type="button" data-close-cart aria-label="Close cart">Close</button>
+          <button class="icon-close" type="button" data-close-cart aria-label="Close cart" data-i18n="close">Close</button>
         </div>
         <div class="cart-items" id="cartItems"></div>
         <div class="cart-empty" id="cartEmpty">
-          <p>Your cart is empty.</p>
-          <button class="mini-button" type="button" data-close-cart>Continue shopping</button>
+          <p data-i18n="cartEmpty">Your cart is empty.</p>
+          <button class="mini-button" type="button" data-close-cart data-i18n="continueShopping">Continue shopping</button>
         </div>
         <div class="cart-summary">
           <div>
-            <span>Subtotal</span>
+            <span data-i18n="subtotal">Subtotal</span>
             <strong id="cartSubtotal">RMB 0</strong>
           </div>
           <small id="shippingNote">Shipping is calculated at checkout. Free shipping over RMB 599.</small>
           <form class="checkout-form" id="checkoutForm">
             <label>
-              Gift option
+              <span data-i18n="giftOption">Gift option</span>
               <select name="giftOption">
-                <option value="none">No gift wrap</option>
-                <option value="wrap">Gift wrapping</option>
-                <option value="message">Gift wrapping + message card</option>
+                <option value="none" data-i18n="noGiftWrap">No gift wrap</option>
+                <option value="wrap" data-i18n="giftWrap">Gift wrapping</option>
+                <option value="message" data-i18n="giftMessage">Gift wrapping + message card</option>
               </select>
             </label>
             <label>
-              Name
+              <span data-i18n="name">Name</span>
               <input type="text" name="name" autocomplete="name" required />
             </label>
             <label>
-              Email
+              <span data-i18n="email">Email</span>
               <input type="email" name="email" autocomplete="email" required />
             </label>
             <label>
-              Address
+              <span data-i18n="address">Address</span>
               <textarea name="address" rows="3" required></textarea>
             </label>
-            <button class="cart-button" type="submit">Checkout</button>
+            <button class="cart-button" type="submit" data-i18n="checkout">Checkout</button>
           </form>
           <p class="form-message" id="checkoutMessage" role="status"></p>
         </div>
@@ -653,16 +653,16 @@
     <div class="account-modal" id="accountModal" aria-hidden="true">
       <button class="modal-backdrop" type="button" data-close-account aria-label="Close account form"></button>
       <section class="account-panel" role="dialog" aria-modal="true" aria-labelledby="accountTitle">
-        <button class="modal-close" type="button" data-close-account aria-label="Close account form">Close</button>
+        <button class="modal-close" type="button" data-close-account aria-label="Close account form" data-i18n="close">Close</button>
         <p class="kicker">EVRIS Member</p>
         <h2 id="accountTitle">Sign in</h2>
         <div class="member-summary" id="memberSummary" hidden>
-          <p>Logged in as</p>
+          <p data-i18n="loggedInAs">Logged in as</p>
           <strong id="memberEmail"></strong>
-          <span>Current rank: Silver / Points: 0 pt</span>
+          <span data-i18n="memberRank">Current rank: Silver / Points: 0 pt</span>
           <div class="member-preferences">
             <label>
-              Favorite mood
+              <span data-i18n="favoriteMood">Favorite mood</span>
               <select id="stylePreference">
                 <option>Minimal</option>
                 <option>Natural stone</option>
@@ -671,27 +671,27 @@
               </select>
             </label>
             <div>
-              <p>Saved favorites</p>
+              <p data-i18n="savedFavorites">Saved favorites</p>
               <strong id="favoriteCount">0 items</strong>
             </div>
           </div>
-          <button class="mini-button" type="button" id="logoutButton">Logout</button>
+          <button class="mini-button" type="button" id="logoutButton" data-i18n="logout">Logout</button>
         </div>
         <div class="account-tabs" role="tablist" aria-label="Account mode">
-          <button class="is-active" type="button" data-account-mode="login">Login</button>
-          <button type="button" data-account-mode="create">Create</button>
+          <button class="is-active" type="button" data-account-mode="login" data-i18n="accountLogin">Login</button>
+          <button type="button" data-account-mode="create" data-i18n="accountCreate">Create</button>
         </div>
         <form class="account-form" id="accountForm">
           <label>
-            Email
+            <span data-i18n="email">Email</span>
             <input type="email" name="email" autocomplete="email" required />
           </label>
           <label>
-            Password
+            <span data-i18n="password">Password</span>
             <input type="password" name="password" autocomplete="current-password" minlength="6" required />
           </label>
           <label class="create-only">
-            Birthday month
+            <span data-i18n="birthdayMonth">Birthday month</span>
             <select name="birthday">
               <option value="">Select month</option>
               <option>January</option>
@@ -715,6 +715,6 @@
       </section>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="script.js?v=19"></script>
+    <script src="script.js?v=20"></script>
   </body>
 </html>

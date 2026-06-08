@@ -147,12 +147,40 @@ const uiText = {
   en: {
     accountLogin: "Login",
     accountMyPage: "My page",
+    accountCreate: "Create",
+    accountTitleLogin: "Sign in",
+    accountTitleCreate: "Create account",
+    accountTitleMember: "Member page",
     cart: "Cart",
+    cartKicker: "Shopping cart",
+    cartTitle: "Your items",
+    cartEmpty: "Your cart is empty.",
     viewMore: "View more",
     joinMember: "Join member",
     addToCart: "Add to cart",
     added: "Added",
     quickView: "Quick view",
+    close: "Close",
+    continueShopping: "Continue shopping",
+    subtotal: "Subtotal",
+    checkout: "Checkout",
+    remove: "Remove",
+    giftOption: "Gift option",
+    noGiftWrap: "No gift wrap",
+    giftWrap: "Gift wrapping",
+    giftMessage: "Gift wrapping + message card",
+    name: "Name",
+    email: "Email",
+    address: "Address",
+    password: "Password",
+    birthdayMonth: "Birthday month",
+    loggedInAs: "Logged in as",
+    memberRank: "Current rank: Silver / Points: 0 pt",
+    favoriteMood: "Favorite mood",
+    savedFavorites: "Saved favorites",
+    logout: "Logout",
+    favoriteCount: "{count} item{plural}",
+    memberMessage: "You can track orders, save favorites, and use member points at checkout.",
     freeShipping: "Free shipping over {amount} / Member points 5%",
     shippingNote: "Shipping is calculated at checkout. Free shipping over {amount}.",
     searchPlaceholder: "stone, pearl, necklace...",
@@ -161,12 +189,40 @@ const uiText = {
   zh: {
     accountLogin: "登入",
     accountMyPage: "會員中心",
+    accountCreate: "建立帳戶",
+    accountTitleLogin: "會員登入",
+    accountTitleCreate: "建立帳戶",
+    accountTitleMember: "會員中心",
     cart: "購物車",
+    cartKicker: "購物車",
+    cartTitle: "你的商品",
+    cartEmpty: "購物車暫時沒有商品。",
     viewMore: "查看更多",
     joinMember: "加入會員",
     addToCart: "加入購物車",
     added: "已加入",
     quickView: "快速查看",
+    close: "關閉",
+    continueShopping: "繼續購物",
+    subtotal: "小計",
+    checkout: "結帳",
+    remove: "移除",
+    giftOption: "禮物包裝",
+    noGiftWrap: "不需要禮物包裝",
+    giftWrap: "禮物包裝",
+    giftMessage: "禮物包裝 + 訊息卡",
+    name: "姓名",
+    email: "電郵",
+    address: "地址",
+    password: "密碼",
+    birthdayMonth: "生日月份",
+    loggedInAs: "登入帳戶",
+    memberRank: "目前等級：Silver / 積分：0 pt",
+    favoriteMood: "喜歡風格",
+    savedFavorites: "收藏商品",
+    logout: "登出",
+    favoriteCount: "{count} 件商品",
+    memberMessage: "你可以查看訂單、保存收藏，並在結帳時使用會員積分。",
     freeShipping: "滿 {amount} 免運費 / 會員積分 5%",
     shippingNote: "運費會於結帳時計算。滿 {amount} 免運費。",
     searchPlaceholder: "天然石、珍珠、項鍊...",
@@ -175,12 +231,40 @@ const uiText = {
   ja: {
     accountLogin: "ログイン",
     accountMyPage: "マイページ",
+    accountCreate: "新規登録",
+    accountTitleLogin: "ログイン",
+    accountTitleCreate: "新規登録",
+    accountTitleMember: "マイページ",
     cart: "カート",
+    cartKicker: "ショッピングカート",
+    cartTitle: "カート内の商品",
+    cartEmpty: "カートは空です。",
     viewMore: "もっと見る",
     joinMember: "会員登録",
     addToCart: "カートに入れる",
     added: "追加済み",
     quickView: "詳細を見る",
+    close: "閉じる",
+    continueShopping: "買い物を続ける",
+    subtotal: "小計",
+    checkout: "チェックアウト",
+    remove: "削除",
+    giftOption: "ギフト設定",
+    noGiftWrap: "ギフト包装なし",
+    giftWrap: "ギフト包装",
+    giftMessage: "ギフト包装 + メッセージカード",
+    name: "お名前",
+    email: "メール",
+    address: "住所",
+    password: "パスワード",
+    birthdayMonth: "誕生月",
+    loggedInAs: "ログイン中",
+    memberRank: "現在のランク：Silver / ポイント：0 pt",
+    favoriteMood: "好きなムード",
+    savedFavorites: "お気に入り",
+    logout: "ログアウト",
+    favoriteCount: "{count} 点",
+    memberMessage: "注文確認、お気に入り保存、チェックアウト時のポイント利用ができます。",
     freeShipping: "{amount} 以上で送料無料 / 会員ポイント 5%",
     shippingNote: "送料はチェックアウト時に計算されます。{amount} 以上で送料無料。",
     searchPlaceholder: "天然石、パール、ネックレス...",
@@ -189,12 +273,40 @@ const uiText = {
   ko: {
     accountLogin: "로그인",
     accountMyPage: "마이페이지",
+    accountCreate: "가입",
+    accountTitleLogin: "로그인",
+    accountTitleCreate: "회원가입",
+    accountTitleMember: "마이페이지",
     cart: "장바구니",
+    cartKicker: "장바구니",
+    cartTitle: "담긴 상품",
+    cartEmpty: "장바구니가 비어 있습니다.",
     viewMore: "더 보기",
     joinMember: "회원가입",
     addToCart: "장바구니 담기",
     added: "추가됨",
     quickView: "빠른 보기",
+    close: "닫기",
+    continueShopping: "쇼핑 계속하기",
+    subtotal: "소계",
+    checkout: "결제하기",
+    remove: "삭제",
+    giftOption: "선물 옵션",
+    noGiftWrap: "선물 포장 없음",
+    giftWrap: "선물 포장",
+    giftMessage: "선물 포장 + 메시지 카드",
+    name: "이름",
+    email: "이메일",
+    address: "주소",
+    password: "비밀번호",
+    birthdayMonth: "생일 월",
+    loggedInAs: "로그인 계정",
+    memberRank: "현재 등급: Silver / 포인트: 0 pt",
+    favoriteMood: "선호 무드",
+    savedFavorites: "저장한 상품",
+    logout: "로그아웃",
+    favoriteCount: "{count}개",
+    memberMessage: "주문 확인, 즐겨찾기 저장, 결제 시 포인트 사용이 가능합니다.",
     freeShipping: "{amount} 이상 무료배송 / 회원 포인트 5%",
     shippingNote: "배송비는 결제 단계에서 계산됩니다. {amount} 이상 무료배송.",
     searchPlaceholder: "스톤, 진주, 목걸이...",
@@ -325,7 +437,10 @@ function saveFavorites() {
 }
 
 function updateFavoriteCount() {
-  favoriteCount.textContent = `${favorites.length} item${favorites.length === 1 ? "" : "s"}`;
+  favoriteCount.textContent = formatTemplate("favoriteCount", {
+    count: favorites.length,
+    plural: favorites.length === 1 ? "" : "s",
+  });
 }
 
 async function saveFavoriteToSupabase(product) {
@@ -381,6 +496,12 @@ function t(key) {
 
 function formatTemplate(key, values = {}) {
   return t(key).replace(/\{(\w+)\}/g, (_match, token) => values[token] ?? "");
+}
+
+function updateStaticTranslations() {
+  document.querySelectorAll("[data-i18n]").forEach((element) => {
+    element.textContent = t(element.dataset.i18n);
+  });
 }
 
 function getBasePriceFromElement(element) {
@@ -454,6 +575,7 @@ function updateCartCount() {
 function updateLocaleText() {
   const freeShippingAmount = formatPrice(599);
   document.documentElement.lang = currentLanguage;
+  updateStaticTranslations();
   topMessage.textContent = formatTemplate("freeShipping", { amount: freeShippingAmount });
   shippingNote.textContent = formatTemplate("shippingNote", { amount: freeShippingAmount });
   productSearch.placeholder = t("searchPlaceholder");
@@ -487,6 +609,8 @@ function updateLocaleText() {
   }
 
   document.querySelector('[data-open-cart]').firstChild.textContent = `${t("cart")} `;
+  setAccountMode(accountMode, { keepMessage: true });
+  updateFavoriteCount();
 }
 
 function applyLocaleSettings() {
@@ -514,13 +638,13 @@ function updateMemberUi() {
   document.querySelector(".account-tabs").hidden = isLoggedIn;
 
   if (isLoggedIn) {
-    accountTitle.textContent = "Member page";
+    accountTitle.textContent = t("accountTitleMember");
     memberEmail.textContent = member.email;
     if (member.stylePreference) {
       stylePreference.value = member.stylePreference;
     }
     updateFavoriteCount();
-    accountMessage.textContent = "You can track orders, save favorites, and use member points at checkout.";
+    accountMessage.textContent = t("memberMessage");
   } else {
     accountForm.hidden = false;
     document.querySelector(".account-tabs").hidden = false;
@@ -557,7 +681,7 @@ function renderCart() {
           <button class="qty-button" type="button" data-cart-minus="${item.id}" aria-label="Decrease ${item.title} quantity">-</button>
           <span>${item.quantity}</span>
           <button class="qty-button" type="button" data-cart-plus="${item.id}" aria-label="Increase ${item.title} quantity">+</button>
-          <button class="remove-button" type="button" data-cart-remove="${item.id}">Remove</button>
+          <button class="remove-button" type="button" data-cart-remove="${item.id}">${t("remove")}</button>
         </div>
       </div>
     `;
@@ -836,15 +960,17 @@ function closeAccountModal() {
   }
 }
 
-function setAccountMode(mode) {
+function setAccountMode(mode, options = {}) {
   if (member) return;
   accountMode = mode;
   const isCreate = accountMode === "create";
-  accountTitle.textContent = isCreate ? "Create account" : "Sign in";
-  accountSubmit.textContent = isCreate ? "Create account" : "Login";
+  accountTitle.textContent = isCreate ? t("accountTitleCreate") : t("accountTitleLogin");
+  accountSubmit.textContent = isCreate ? t("accountCreate") : t("accountLogin");
   accountForm.classList.toggle("is-create", isCreate);
   forgotPasswordButton.hidden = isCreate;
-  accountMessage.textContent = "";
+  if (!options.keepMessage) {
+    accountMessage.textContent = "";
+  }
   document.querySelectorAll("[data-account-mode]").forEach((button) => {
     button.classList.toggle("is-active", button.dataset.accountMode === accountMode);
   });
