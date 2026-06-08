@@ -8,7 +8,7 @@
       name="description"
       content="EVRIS is an EC-focused accessory brand with pearl jewelry, natural stone bracelets, delicate earrings, and minimal necklaces for daily styling."
     />
-    <link rel="stylesheet" href="styles.css?v=9" />
+    <link rel="stylesheet" href="styles.css?v=10" />
   </head>
   <body>
     <div class="top-message">Free shipping over RMB 599 / Member points 5%</div>
@@ -664,10 +664,10 @@
             <label>
               <span data-i18n="favoriteMood">Favorite mood</span>
               <select id="stylePreference">
-                <option>Minimal</option>
-                <option>Natural stone</option>
-                <option>Pearl classic</option>
-                <option>Gift styling</option>
+                <option value="Minimal" data-i18n="moodMinimal">Minimal</option>
+                <option value="Natural stone" data-i18n="moodNaturalStone">Natural stone</option>
+                <option value="Pearl classic" data-i18n="moodPearlClassic">Pearl classic</option>
+                <option value="Gift styling" data-i18n="moodGiftStyling">Gift styling</option>
               </select>
             </label>
             <div>
@@ -715,6 +715,6 @@
       </section>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="script.js?v=20"></script>
+    <script src="script.js?v=21"></script>
   </body>
 </html>
