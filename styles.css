@@ -1555,8 +1555,8 @@ footer span {
 
 nav {
   justify-content: center;
-  gap: clamp(12px, 1.7vw, 24px);
-  font-size: 0.58rem;
+  gap: clamp(16px, 2vw, 30px);
+  font-size: 0.72rem;
   font-weight: 700;
 }
 
