@@ -330,6 +330,521 @@ const uiText = {
   },
 };
 
+const extraUiText = {
+  en: {
+    navAllItem: "All item",
+    navMembership: "Membership",
+    navFeatured: "Featured",
+    navShop: "Shop",
+    navStyling: "Styling",
+    navStore: "Store",
+    navNews: "News",
+    heroKicker: "Online store / daily accessory edit",
+    heroTitle: "The New Collection",
+    heroText:
+      "Pearl, stone, and silver accessories selected for calm everyday styling. Minimal shapes, soft shine, and gift-ready pieces for every day.",
+    issueNote: "New items / Quiet luxury edit",
+    stripShipping: "Free shipping over {amount}",
+    stripPoints: "Member points on every order",
+    stripGift: "Gift wrapping available",
+    stripReturn: "7-day return support",
+    catPierce: "Pierce",
+    catNecklace: "Necklace",
+    catRing: "Ring",
+    catEyewear: "Eyewear",
+    catEarring: "Earring",
+    catOther: "Other",
+    catEarSleeve: "Ear sleeve",
+    catBracelet: "Bracelet",
+    newKicker: "New Collection",
+    newTitle: "Jewelry made easy for daily styling.",
+    featureMeta: "Bracelet / Natural stone",
+    featureText: "A soft blue stone bracelet made for ivory shirts, denim, and quiet summer styling.",
+    collectionLead: "EVRIS edits wearable art pieces with EC clarity: easy to browse, easy to compare, easy to buy.",
+    collectionText:
+      "Pearl jewelry, natural stone bracelets, delicate earrings, and minimal necklaces are organized by mood, category, and daily styling use.",
+    memberTitle: "More ways to enjoy choosing.",
+    memberText:
+      "Create an EVRIS account to save favorites, earn points, track orders, and receive early access to quiet-luxury drops.",
+    benefitPointsTitle: "5% point back",
+    benefitPointsText: "Earn points with every purchase and use them from the next order.",
+    benefitBirthdayTitle: "Birthday coupon",
+    benefitBirthdayText: "Receive a seasonal coupon and styling edit during your birthday month.",
+    benefitRankTitle: "Rank benefits",
+    benefitRankText: "Silver, Gold, and Muse ranks unlock early sales and limited gift wrapping.",
+    stylingKicker: "Recommended Styling",
+    stylingTitle: "Soft presence, quiet space.",
+    stylingText:
+      "Pair a slim necklace with an oversized shirt, layer one pearl bracelet with a natural stone piece, or keep the ear line delicate with a single drop.",
+    styleNoteIvory: "Ivory cotton",
+    styleNoteGray: "Soft gray knit",
+    styleNoteSilver: "Silver line",
+    styleNoteStone: "Natural stone accent",
+    featuredKicker: "Featured",
+    featuredSmall: "Special contents",
+    storyNovelty: "Novelty fair",
+    storyLayer: "Layer to define",
+    storyMinimalism: "Intense minimalism",
+    rankingKicker: "Ranking",
+    shopTitle: "Shop EVRIS accessories",
+    filterAll: "All",
+    filterBracelets: "Bracelets",
+    filterEarrings: "Earrings",
+    filterNecklaces: "Necklaces",
+    searchLabel: "Search",
+    priceLabel: "Price",
+    priceAll: "All price",
+    priceEntry: "Entry under {amount}",
+    priceStandard: "Standard {from}-{to}",
+    pricePremium: "Premium over {amount}",
+    itemCount: "{count} item{plural}",
+    materialKicker: "Surgical stainless",
+    materialTitle: "Daily jewelry made for lasting wear.",
+    materialText: "Water-friendly shine, soft silhouettes, and accessories designed for repeat styling from morning to night.",
+    stoneKicker: "Stone dictionary",
+    stoneSmall: "Choose by meaning, color, and daily mood.",
+    stoneCitrineTitle: "Positive clarity",
+    stoneCitrineText: "Warm yellow tone for confidence, brightness, and a light daily accent.",
+    stoneLapisTitle: "Quiet focus",
+    stoneLapisText: "Deep blue for calm styling, denim looks, and personal expression.",
+    stonePearlTitle: "Soft elegance",
+    stonePearlText: "A classic material that makes simple outfits feel finished.",
+    stoneTigerTitle: "Natural strength",
+    stoneTigerText: "Earthy depth for black, ivory, and soft gray coordinate looks.",
+    coordinateKicker: "Staff coordinate",
+    coordinateSmall: "Introducing EVRIS store staff styling",
+    storeSmall: "Shop list",
+    infoLabel: "Information",
+    newsOne: "New arrival collection is now available.",
+    newsTwo: "Novelty fair starts this weekend.",
+    newsThree: "Member points campaign has been updated.",
+    newsFour: "Store styling archive is open.",
+    newsletterKicker: "News letter",
+    newsletterText: "Receive new arrivals, campaigns, and styling notes.",
+    newsletterPlaceholder: "EMAIL",
+    send: "Send",
+    footerStoreLocation: "Store location",
+    footerText: "Accessory online store for calm daily styling. Member points, new arrivals, and gift-ready jewelry.",
+    detailStone: "Stone",
+    detailMaterial: "Material",
+    detailStyle: "Style",
+    detailShipping: "Shipping",
+    detailShippingText: "Ships in 2-4 business days",
+    reviewKicker: "Review",
+    rating: "Rating",
+    comment: "Comment",
+    commentPlaceholder: "Write your styling note...",
+    postComment: "Post comment",
+    saveFavorite: "Save favorite",
+    savedFavorite: "Saved",
+    share: "Share",
+    metaNecklaceSilver: "Necklace / Silver",
+    metaBraceletStone: "Bracelet / Natural stone",
+    metaEarringsCrystal: "Earrings / Crystal",
+    metaEarringsPearl: "Earrings / Freshwater pearl",
+    metaBraceletMix: "Bracelet / Stone mix",
+    metaBraceletCrystal: "Bracelet / White crystal",
+    metaBraceletColor: "Bracelet / Daily color",
+    metaBraceletAccent: "Bracelet / Color accent",
+    metaBraceletPearl: "Bracelet / Pearl",
+    metaBraceletBlue: "Bracelet / Blue stone",
+    metaBraceletWarm: "Bracelet / Warm stone",
+    metaBraceletSilver: "Bracelet / Fine silver",
+    copied: "Copied",
+    noComments: "No comments yet. Be the first to share a styling note.",
+    reviewPosted: "Comment posted. Thank you for sharing your styling note.",
+    cartNeedItem: "Please add an item before checkout.",
+    orderReceived: "Order received. We will email your confirmation shortly.",
+    newsletterThanks: "Thank you. You are subscribed to EVRIS news.",
+    resetNeedEmail: "Please enter your email first, then click Forgot password.",
+    resetNeedsConnection: "Password reset needs Supabase connection.",
+    resetSent: "Password reset email sent to {email}. Please check your inbox.",
+    loggedOut: "You have logged out.",
+  },
+  zh: {
+    navAllItem: "全部商品",
+    navMembership: "會員",
+    navFeatured: "精選",
+    navShop: "商店",
+    navStyling: "造型",
+    navStore: "店舖",
+    navNews: "消息",
+    heroKicker: "線上商店 / 日常飾品選物",
+    heroTitle: "全新系列",
+    heroText: "以珍珠、天然石與銀色線條，打造適合日常配搭的柔和飾品。",
+    issueNote: "新商品 / 靜奢選物",
+    stripShipping: "滿 {amount} 免運費",
+    stripPoints: "每次購買累積會員積分",
+    stripGift: "提供禮物包裝",
+    stripReturn: "7 日退換支援",
+    catPierce: "耳針",
+    catNecklace: "項鍊",
+    catRing: "戒指",
+    catEyewear: "眼鏡",
+    catEarring: "耳環",
+    catOther: "其他",
+    catEarSleeve: "耳套",
+    catBracelet: "手鍊",
+    newKicker: "全新系列",
+    newTitle: "為日常造型而選的飾品。",
+    featureMeta: "手鍊 / 天然石",
+    featureText: "柔和藍色天然石手鍊，適合白襯衫、牛仔與夏日造型。",
+    collectionLead: "EVRIS 以清晰易逛的 EC 體驗，編輯日常可佩戴的藝術飾品。",
+    collectionText: "珍珠、天然石手鍊、精緻耳環與極簡項鍊，按風格與日常用途整理。",
+    memberTitle: "越購買，越享受選物。",
+    memberText: "建立 EVRIS 帳戶可保存收藏、累積積分、追蹤訂單並優先收到新品資訊。",
+    benefitPointsTitle: "5% 積分回贈",
+    benefitPointsText: "每次購買都可累積積分，下次訂單即可使用。",
+    benefitBirthdayTitle: "生日優惠券",
+    benefitBirthdayText: "生日月份可收到季節優惠與造型推薦。",
+    benefitRankTitle: "會員等級福利",
+    benefitRankText: "Silver、Gold、Muse 等級可解鎖早鳥折扣與限定包裝。",
+    stylingKicker: "推薦造型",
+    stylingTitle: "柔和存在感，安靜留白。",
+    stylingText: "以細項鍊配寬鬆襯衫，或以珍珠手鍊疊戴天然石，營造不浮誇的細節。",
+    styleNoteIvory: "象牙白棉質",
+    styleNoteGray: "柔灰針織",
+    styleNoteSilver: "銀色線條",
+    styleNoteStone: "天然石點綴",
+    featuredKicker: "精選",
+    featuredSmall: "特別內容",
+    storyNovelty: "贈品活動",
+    storyLayer: "層次配搭",
+    storyMinimalism: "強烈極簡",
+    rankingKicker: "人氣排行",
+    shopTitle: "選購 EVRIS 飾品",
+    filterAll: "全部",
+    filterBracelets: "手鍊",
+    filterEarrings: "耳環",
+    filterNecklaces: "項鍊",
+    searchLabel: "搜尋",
+    priceLabel: "價格",
+    priceAll: "全部價格",
+    priceEntry: "{amount} 以下",
+    priceStandard: "{from}-{to}",
+    pricePremium: "{amount} 以上",
+    itemCount: "{count} 件商品",
+    materialKicker: "醫療級不鏽鋼",
+    materialTitle: "為長時間日常佩戴而設計。",
+    materialText: "親水光澤、柔和輪廓，從早到晚都容易重複配搭。",
+    stoneKicker: "天然石字典",
+    stoneSmall: "按寓意、色彩與每日心情挑選。",
+    stoneCitrineTitle: "明亮正向",
+    stoneCitrineText: "溫暖黃色調，帶來自信、明亮與輕盈點綴。",
+    stoneLapisTitle: "安靜專注",
+    stoneLapisText: "深藍色適合冷靜造型、牛仔與個性表達。",
+    stonePearlTitle: "柔和優雅",
+    stonePearlText: "經典材質，讓簡約穿搭更完整。",
+    stoneTigerTitle: "自然力量",
+    stoneTigerText: "大地色深度，適合黑、象牙白與柔灰配搭。",
+    coordinateKicker: "店員造型",
+    coordinateSmall: "EVRIS 店員配搭介紹",
+    storeSmall: "店舖列表",
+    infoLabel: "通知",
+    newsOne: "新品系列已上架。",
+    newsTwo: "贈品活動將於本週末開始。",
+    newsThree: "會員積分活動已更新。",
+    newsFour: "店舖造型檔案已公開。",
+    newsletterKicker: "電子報",
+    newsletterText: "接收新品、活動與造型筆記。",
+    newsletterPlaceholder: "電郵",
+    send: "送出",
+    footerStoreLocation: "店舖位置",
+    footerText: "適合安靜日常造型的飾品線上商店。會員積分、新品與禮物飾品。",
+    detailStone: "天然石",
+    detailMaterial: "材質",
+    detailStyle: "造型",
+    detailShipping: "配送",
+    detailShippingText: "2-4 個工作天內出貨",
+    reviewKicker: "評價",
+    rating: "評分",
+    comment: "留言",
+    commentPlaceholder: "寫下你的配搭心得...",
+    postComment: "發佈留言",
+    saveFavorite: "收藏",
+    savedFavorite: "已收藏",
+    share: "分享",
+    metaNecklaceSilver: "項鍊 / 銀色",
+    metaBraceletStone: "手鍊 / 天然石",
+    metaEarringsCrystal: "耳環 / 水晶",
+    metaEarringsPearl: "耳環 / 淡水珍珠",
+    metaBraceletMix: "手鍊 / 混合天然石",
+    metaBraceletCrystal: "手鍊 / 白水晶",
+    metaBraceletColor: "手鍊 / 日常色彩",
+    metaBraceletAccent: "手鍊 / 色彩點綴",
+    metaBraceletPearl: "手鍊 / 珍珠",
+    metaBraceletBlue: "手鍊 / 藍色天然石",
+    metaBraceletWarm: "手鍊 / 暖色天然石",
+    metaBraceletSilver: "手鍊 / 精緻銀色",
+    copied: "已複製",
+    noComments: "暫時沒有留言。成為第一個分享配搭心得的人。",
+    reviewPosted: "留言已發佈，多謝你的配搭分享。",
+    cartNeedItem: "請先加入商品再結帳。",
+    orderReceived: "訂單已收到。我們會稍後以電郵確認。",
+    newsletterThanks: "謝謝，你已訂閱 EVRIS 消息。",
+    resetNeedEmail: "請先輸入電郵，再按忘記密碼。",
+    resetNeedsConnection: "重設密碼需要 Supabase 連線。",
+    resetSent: "重設密碼電郵已發送到 {email}，請查看收件箱。",
+    loggedOut: "你已登出。",
+  },
+  ja: {
+    navAllItem: "すべて",
+    navMembership: "会員",
+    navFeatured: "特集",
+    navShop: "ショップ",
+    navStyling: "スタイリング",
+    navStore: "店舗",
+    navNews: "ニュース",
+    heroKicker: "オンラインストア / デイリーアクセサリー",
+    heroTitle: "ニューコレクション",
+    heroText: "パール、天然石、シルバーの輝きを日常に。やわらかな存在感のアクセサリー。",
+    issueNote: "新作 / クワイエットラグジュアリー",
+    stripShipping: "{amount} 以上で送料無料",
+    stripPoints: "お買い物ごとに会員ポイント",
+    stripGift: "ギフトラッピング対応",
+    stripReturn: "7日間返品サポート",
+    catPierce: "ピアス",
+    catNecklace: "ネックレス",
+    catRing: "リング",
+    catEyewear: "アイウェア",
+    catEarring: "イヤリング",
+    catOther: "その他",
+    catEarSleeve: "イヤーカフ",
+    catBracelet: "ブレスレット",
+    newKicker: "ニューコレクション",
+    newTitle: "毎日のスタイリングに寄り添うジュエリー。",
+    featureMeta: "ブレスレット / 天然石",
+    featureText: "白シャツやデニム、夏の装いに合うやわらかなブルーの天然石ブレスレット。",
+    collectionLead: "EVRIS は、選びやすく比べやすい EC 体験で日常のアートピースを編集します。",
+    collectionText: "パール、天然石ブレスレット、繊細なイヤーアクセ、ミニマルネックレスをムード別に提案。",
+    memberTitle: "選ぶほど、もっと楽しく。",
+    memberText: "EVRIS 会員になると、お気に入り保存、ポイント、注文確認、新作先行情報が利用できます。",
+    benefitPointsTitle: "5% ポイント還元",
+    benefitPointsText: "購入ごとにポイントが貯まり、次回のお買い物から使えます。",
+    benefitBirthdayTitle: "バースデークーポン",
+    benefitBirthdayText: "誕生月に季節のクーポンとスタイリング提案をお届けします。",
+    benefitRankTitle: "ランク特典",
+    benefitRankText: "Silver、Gold、Muse ランクで先行セールや限定ラッピングが利用できます。",
+    stylingKicker: "おすすめスタイリング",
+    stylingTitle: "やわらかな存在感、凛とした余白。",
+    stylingText: "細いネックレスをオーバーシャツに合わせたり、パールと天然石を重ねてさりげない個性に。",
+    styleNoteIvory: "アイボリーコットン",
+    styleNoteGray: "ソフトグレーニット",
+    styleNoteSilver: "シルバーライン",
+    styleNoteStone: "天然石アクセント",
+    featuredKicker: "特集",
+    featuredSmall: "スペシャルコンテンツ",
+    storyNovelty: "ノベルティフェア",
+    storyLayer: "重ねて整える",
+    storyMinimalism: "強いミニマル",
+    rankingKicker: "ランキング",
+    shopTitle: "EVRIS アクセサリーを探す",
+    filterAll: "すべて",
+    filterBracelets: "ブレスレット",
+    filterEarrings: "イヤーアクセ",
+    filterNecklaces: "ネックレス",
+    searchLabel: "検索",
+    priceLabel: "価格",
+    priceAll: "すべての価格",
+    priceEntry: "{amount} 未満",
+    priceStandard: "{from}-{to}",
+    pricePremium: "{amount} 以上",
+    itemCount: "{count} 点",
+    materialKicker: "サージカルステンレス",
+    materialTitle: "毎日に長く寄り添うジュエリー。",
+    materialText: "水に強い輝き、やわらかなシルエット、朝から夜まで使いやすいアクセサリー。",
+    stoneKicker: "天然石辞典",
+    stoneSmall: "意味、色、毎日のムードで選ぶ。",
+    stoneCitrineTitle: "前向きな透明感",
+    stoneCitrineText: "自信と明るさを添える、あたたかなイエロートーン。",
+    stoneLapisTitle: "静かな集中",
+    stoneLapisText: "深いブルーは落ち着いた装い、デニム、個性表現に。",
+    stonePearlTitle: "やわらかな上品さ",
+    stonePearlText: "シンプルな服をきちんと仕上げるクラシック素材。",
+    stoneTigerTitle: "自然な強さ",
+    stoneTigerText: "黒、アイボリー、ソフトグレーに合うアースカラーの奥行き。",
+    coordinateKicker: "スタッフコーディネート",
+    coordinateSmall: "EVRIS スタッフスタイリングを紹介",
+    storeSmall: "ショップリスト",
+    infoLabel: "お知らせ",
+    newsOne: "新作コレクションが入荷しました。",
+    newsTwo: "ノベルティフェアは今週末スタート。",
+    newsThree: "会員ポイントキャンペーンを更新しました。",
+    newsFour: "店舗スタイリングアーカイブを公開しました。",
+    newsletterKicker: "ニュースレター",
+    newsletterText: "新作、キャンペーン、スタイリングノートをお届けします。",
+    newsletterPlaceholder: "メール",
+    send: "送信",
+    footerStoreLocation: "店舗情報",
+    footerText: "静かな日常スタイリングのためのアクセサリーオンラインストア。会員ポイント、新作、ギフト対応ジュエリー。",
+    detailStone: "天然石",
+    detailMaterial: "素材",
+    detailStyle: "スタイル",
+    detailShipping: "配送",
+    detailShippingText: "2-4営業日以内に発送",
+    reviewKicker: "レビュー",
+    rating: "評価",
+    comment: "コメント",
+    commentPlaceholder: "スタイリングメモを書く...",
+    postComment: "コメントを投稿",
+    saveFavorite: "お気に入り保存",
+    savedFavorite: "保存済み",
+    share: "共有",
+    metaNecklaceSilver: "ネックレス / シルバー",
+    metaBraceletStone: "ブレスレット / 天然石",
+    metaEarringsCrystal: "イヤーアクセ / クリスタル",
+    metaEarringsPearl: "イヤーアクセ / 淡水パール",
+    metaBraceletMix: "ブレスレット / ストーンミックス",
+    metaBraceletCrystal: "ブレスレット / ホワイトクリスタル",
+    metaBraceletColor: "ブレスレット / デイリーカラー",
+    metaBraceletAccent: "ブレスレット / カラーアクセント",
+    metaBraceletPearl: "ブレスレット / パール",
+    metaBraceletBlue: "ブレスレット / ブルーストーン",
+    metaBraceletWarm: "ブレスレット / ウォームストーン",
+    metaBraceletSilver: "ブレスレット / ファインシルバー",
+    copied: "コピーしました",
+    noComments: "まだコメントはありません。最初のスタイリングメモを投稿しましょう。",
+    reviewPosted: "コメントを投稿しました。スタイリングメモをありがとうございます。",
+    cartNeedItem: "チェックアウト前に商品を追加してください。",
+    orderReceived: "注文を受け付けました。確認メールをお送りします。",
+    newsletterThanks: "ありがとうございます。EVRIS ニュースに登録されました。",
+    resetNeedEmail: "先にメールアドレスを入力してから、パスワード再設定を押してください。",
+    resetNeedsConnection: "パスワード再設定には Supabase 接続が必要です。",
+    resetSent: "{email} にパスワード再設定メールを送信しました。受信箱をご確認ください。",
+    loggedOut: "ログアウトしました。",
+  },
+  ko: {
+    navAllItem: "전체",
+    navMembership: "멤버십",
+    navFeatured: "기획전",
+    navShop: "샵",
+    navStyling: "스타일링",
+    navStore: "스토어",
+    navNews: "뉴스",
+    heroKicker: "온라인 스토어 / 데일리 액세서리",
+    heroTitle: "뉴 컬렉션",
+    heroText: "진주, 천연석, 실버 포인트로 매일 착용하기 좋은 액세서리를 제안합니다.",
+    issueNote: "신상품 / 조용한 럭셔리",
+    stripShipping: "{amount} 이상 무료배송",
+    stripPoints: "주문마다 회원 포인트 적립",
+    stripGift: "선물 포장 가능",
+    stripReturn: "7일 반품 지원",
+    catPierce: "피어스",
+    catNecklace: "목걸이",
+    catRing: "반지",
+    catEyewear: "아이웨어",
+    catEarring: "귀걸이",
+    catOther: "기타",
+    catEarSleeve: "이어커프",
+    catBracelet: "팔찌",
+    newKicker: "뉴 컬렉션",
+    newTitle: "데일리 스타일링을 위한 주얼리.",
+    featureMeta: "팔찌 / 천연석",
+    featureText: "아이보리 셔츠, 데님, 여름 스타일링에 어울리는 부드러운 블루 스톤 팔찌.",
+    collectionLead: "EVRIS는 보기 쉽고 비교하기 쉬운 EC 경험으로 매일 착용할 수 있는 아트 피스를 큐레이션합니다.",
+    collectionText: "진주, 천연석 팔찌, 섬세한 귀걸이, 미니멀 목걸이를 무드와 용도별로 구성했습니다.",
+    memberTitle: "고를수록 더 즐거운 멤버십.",
+    memberText: "EVRIS 계정으로 즐겨찾기 저장, 포인트 적립, 주문 조회, 신상품 선공개를 이용하세요.",
+    benefitPointsTitle: "5% 포인트 적립",
+    benefitPointsText: "구매마다 포인트를 적립하고 다음 주문부터 사용할 수 있습니다.",
+    benefitBirthdayTitle: "생일 쿠폰",
+    benefitBirthdayText: "생일 월에 시즌 쿠폰과 스타일링 제안을 받을 수 있습니다.",
+    benefitRankTitle: "등급 혜택",
+    benefitRankText: "Silver, Gold, Muse 등급별 선세일과 한정 포장을 제공합니다.",
+    stylingKicker: "추천 스타일링",
+    stylingTitle: "부드러운 존재감, 차분한 여백.",
+    stylingText: "얇은 목걸이를 오버셔츠에 매치하거나, 진주와 천연석 팔찌를 레이어링해보세요.",
+    styleNoteIvory: "아이보리 코튼",
+    styleNoteGray: "소프트 그레이 니트",
+    styleNoteSilver: "실버 라인",
+    styleNoteStone: "천연석 포인트",
+    featuredKicker: "기획전",
+    featuredSmall: "스페셜 콘텐츠",
+    storyNovelty: "노벨티 페어",
+    storyLayer: "레이어 스타일",
+    storyMinimalism: "강한 미니멀리즘",
+    rankingKicker: "랭킹",
+    shopTitle: "EVRIS 액세서리 쇼핑",
+    filterAll: "전체",
+    filterBracelets: "팔찌",
+    filterEarrings: "귀걸이",
+    filterNecklaces: "목걸이",
+    searchLabel: "검색",
+    priceLabel: "가격",
+    priceAll: "전체 가격",
+    priceEntry: "{amount} 미만",
+    priceStandard: "{from}-{to}",
+    pricePremium: "{amount} 이상",
+    itemCount: "{count}개",
+    materialKicker: "서지컬 스테인리스",
+    materialTitle: "오래 착용하기 좋은 데일리 주얼리.",
+    materialText: "물에 강한 광택, 부드러운 실루엣, 아침부터 밤까지 반복 착용하기 좋은 액세서리.",
+    stoneKicker: "스톤 딕셔너리",
+    stoneSmall: "의미, 색감, 데일리 무드로 선택하세요.",
+    stoneCitrineTitle: "긍정적인 선명함",
+    stoneCitrineText: "자신감과 밝음을 더하는 따뜻한 옐로 톤.",
+    stoneLapisTitle: "차분한 집중",
+    stoneLapisText: "딥 블루는 차분한 스타일링, 데님, 개성 표현에 잘 어울립니다.",
+    stonePearlTitle: "부드러운 우아함",
+    stonePearlText: "심플한 옷차림을 완성해주는 클래식 소재.",
+    stoneTigerTitle: "자연스러운 힘",
+    stoneTigerText: "블랙, 아이보리, 소프트 그레이에 어울리는 어스 톤의 깊이.",
+    coordinateKicker: "스태프 코디네이트",
+    coordinateSmall: "EVRIS 스토어 스태프 스타일링 소개",
+    storeSmall: "샵 리스트",
+    infoLabel: "안내",
+    newsOne: "신상품 컬렉션이 입고되었습니다.",
+    newsTwo: "노벨티 페어가 이번 주말 시작됩니다.",
+    newsThree: "회원 포인트 캠페인이 업데이트되었습니다.",
+    newsFour: "스토어 스타일링 아카이브가 공개되었습니다.",
+    newsletterKicker: "뉴스레터",
+    newsletterText: "신상품, 캠페인, 스타일링 노트를 받아보세요.",
+    newsletterPlaceholder: "이메일",
+    send: "보내기",
+    footerStoreLocation: "스토어 위치",
+    footerText: "차분한 데일리 스타일링을 위한 액세서리 온라인 스토어. 회원 포인트, 신상품, 선물용 주얼리.",
+    detailStone: "스톤",
+    detailMaterial: "소재",
+    detailStyle: "스타일",
+    detailShipping: "배송",
+    detailShippingText: "영업일 기준 2-4일 내 발송",
+    reviewKicker: "리뷰",
+    rating: "평점",
+    comment: "댓글",
+    commentPlaceholder: "스타일링 메모를 남겨주세요...",
+    postComment: "댓글 작성",
+    saveFavorite: "즐겨찾기 저장",
+    savedFavorite: "저장됨",
+    share: "공유",
+    metaNecklaceSilver: "목걸이 / 실버",
+    metaBraceletStone: "팔찌 / 천연석",
+    metaEarringsCrystal: "귀걸이 / 크리스털",
+    metaEarringsPearl: "귀걸이 / 담수진주",
+    metaBraceletMix: "팔찌 / 스톤 믹스",
+    metaBraceletCrystal: "팔찌 / 화이트 크리스털",
+    metaBraceletColor: "팔찌 / 데일리 컬러",
+    metaBraceletAccent: "팔찌 / 컬러 포인트",
+    metaBraceletPearl: "팔찌 / 진주",
+    metaBraceletBlue: "팔찌 / 블루 스톤",
+    metaBraceletWarm: "팔찌 / 웜 스톤",
+    metaBraceletSilver: "팔찌 / 파인 실버",
+    copied: "복사됨",
+    noComments: "아직 댓글이 없습니다. 첫 스타일링 메모를 남겨보세요.",
+    reviewPosted: "댓글이 게시되었습니다. 스타일링 메모를 공유해 주셔서 감사합니다.",
+    cartNeedItem: "결제 전에 상품을 추가해주세요.",
+    orderReceived: "주문이 접수되었습니다. 확인 이메일을 보내드리겠습니다.",
+    newsletterThanks: "감사합니다. EVRIS 뉴스 구독이 완료되었습니다.",
+    resetNeedEmail: "먼저 이메일을 입력한 뒤 비밀번호 찾기를 눌러주세요.",
+    resetNeedsConnection: "비밀번호 재설정에는 Supabase 연결이 필요합니다.",
+    resetSent: "{email}로 비밀번호 재설정 이메일을 보냈습니다. 받은 편지함을 확인해주세요.",
+    loggedOut: "로그아웃되었습니다.",
+  },
+};
+
+Object.entries(extraUiText).forEach(([language, entries]) => {
+  Object.assign(uiText[language], entries);
+});
+
 let currentMarket = localStorage.getItem("evrisMarket") || "CN";
 let currentLanguage = localStorage.getItem("evrisLanguage") || "en";
 
@@ -408,7 +923,7 @@ function renderReviews(productId, reviews = []) {
   reviewList.innerHTML = "";
 
   if (reviews.length === 0) {
-    reviewList.innerHTML = "<p>No comments yet. Be the first to share a styling note.</p>";
+    reviewList.innerHTML = `<p>${t("noComments")}</p>`;
     return;
   }
 
@@ -520,6 +1035,26 @@ function updateStaticTranslations() {
   });
 }
 
+function updatePriceFilterLabels() {
+  const priceLabels = {
+    all: t("priceAll"),
+    entry: formatTemplate("priceEntry", { amount: formatPrice(300) }),
+    standard: formatTemplate("priceStandard", { from: formatPrice(300), to: formatPrice(500) }),
+    premium: formatTemplate("pricePremium", { amount: formatPrice(500) }),
+  };
+
+  priceFilter.querySelectorAll("option").forEach((option) => {
+    option.textContent = priceLabels[option.value] || option.textContent;
+  });
+}
+
+function updateProductResultCount(count) {
+  productResultCount.textContent = formatTemplate("itemCount", {
+    count,
+    plural: count === 1 ? "" : "s",
+  });
+}
+
 function getBasePriceFromElement(element) {
   if (!element.dataset.basePrice) {
     element.dataset.basePrice = String(parsePrice(element.textContent));
@@ -592,9 +1127,15 @@ function updateLocaleText() {
   const freeShippingAmount = formatPrice(599);
   document.documentElement.lang = currentLanguage;
   updateStaticTranslations();
+  updatePriceFilterLabels();
   topMessage.textContent = formatTemplate("freeShipping", { amount: freeShippingAmount });
+  document.querySelector("[data-i18n='stripShipping']").textContent = formatTemplate("stripShipping", {
+    amount: freeShippingAmount,
+  });
   shippingNote.textContent = formatTemplate("shippingNote", { amount: freeShippingAmount });
   productSearch.placeholder = t("searchPlaceholder");
+  document.querySelector("#newsletterForm input").placeholder = t("newsletterPlaceholder");
+  reviewForm.querySelector("textarea").placeholder = t("commentPlaceholder");
   forgotPasswordButton.textContent = t("forgotPassword");
 
   document.querySelectorAll(".hero-actions .button.primary").forEach((button) => {
@@ -622,6 +1163,10 @@ function updateLocaleText() {
 
   if (!member) {
     accountButton.textContent = t("accountLogin");
+  }
+
+  if (activeProduct) {
+    modalFavorite.textContent = favorites.some((item) => item.id === activeProduct.id) ? t("savedFavorite") : t("saveFavorite");
   }
 
   document.querySelector('[data-open-cart]').firstChild.textContent = `${t("cart")} `;
@@ -769,7 +1314,7 @@ function openProductModal(card) {
   modalMaterial.textContent = details.material;
   modalStyle.textContent = details.style;
   modalReview.textContent = details.review || getReviewText(product.title);
-  modalFavorite.textContent = favorites.some((item) => item.id === product.id) ? "Saved" : "Save favorite";
+  modalFavorite.textContent = favorites.some((item) => item.id === product.id) ? t("savedFavorite") : t("saveFavorite");
   reviewForm.reset();
   updateRatingControl();
   loadReviews(product.id);
@@ -824,7 +1369,7 @@ modalCart.addEventListener("click", () => {
 
 modalFavorite.addEventListener("click", () => {
   if (!activeProduct) return;
-  modalFavorite.textContent = toggleFavorite(activeProduct) ? "Saved" : "Save favorite";
+  modalFavorite.textContent = toggleFavorite(activeProduct) ? t("savedFavorite") : t("saveFavorite");
 });
 
 modalShare.addEventListener("click", async () => {
@@ -836,9 +1381,9 @@ modalShare.addEventListener("click", async () => {
     await navigator.share({ title: shareText, text: shareText, url: shareUrl });
   } else {
     await navigator.clipboard.writeText(`${shareText} ${shareUrl}`);
-    modalShare.textContent = "Copied";
+    modalShare.textContent = t("copied");
     window.setTimeout(() => {
-      modalShare.textContent = "Share";
+      modalShare.textContent = t("share");
     }, 1000);
   }
 });
@@ -866,7 +1411,7 @@ reviewForm.addEventListener("submit", async (event) => {
     saveLocalReviews();
   }
 
-  reviewMessage.textContent = "Comment posted. Thank you for sharing your styling note.";
+  reviewMessage.textContent = t("reviewPosted");
   reviewForm.reset();
   loadReviews(activeProduct.id);
 });
@@ -902,7 +1447,7 @@ checkoutForm.addEventListener("submit", (event) => {
   checkoutMessage.textContent = "";
 
   if (cart.length === 0) {
-    checkoutMessage.textContent = "Please add an item before checkout.";
+    checkoutMessage.textContent = t("cartNeedItem");
     return;
   }
 
@@ -946,7 +1491,7 @@ async function submitOrder(formData) {
     }
   }
 
-  checkoutMessage.textContent = "Order received. We will email your confirmation shortly.";
+  checkoutMessage.textContent = t("orderReceived");
   checkoutForm.reset();
   cart = [];
   saveCart();
@@ -994,7 +1539,7 @@ function setAccountMode(mode, options = {}) {
 
 document.querySelectorAll("[data-open-account]").forEach((button) => {
   button.addEventListener("click", () => {
-    const mode = button.textContent.toLowerCase().includes("create") ? "create" : "login";
+    const mode = button.dataset.accountOpenMode || (button.textContent.toLowerCase().includes("create") ? "create" : "login");
     openAccountModal(mode);
   });
 });
@@ -1054,13 +1599,13 @@ forgotPasswordButton.addEventListener("click", async () => {
   const email = emailInput.value.trim();
 
   if (!email) {
-    accountMessage.textContent = "Please enter your email first, then click Forgot password.";
+    accountMessage.textContent = t("resetNeedEmail");
     emailInput.focus();
     return;
   }
 
   if (!supabaseClient) {
-    accountMessage.textContent = "Password reset needs Supabase connection.";
+    accountMessage.textContent = t("resetNeedsConnection");
     return;
   }
 
@@ -1073,7 +1618,7 @@ forgotPasswordButton.addEventListener("click", async () => {
     return;
   }
 
-  accountMessage.textContent = `Password reset email sent to ${email}. Please check your inbox.`;
+  accountMessage.textContent = formatTemplate("resetSent", { email });
 });
 
 logoutButton.addEventListener("click", async () => {
@@ -1084,7 +1629,7 @@ logoutButton.addEventListener("click", async () => {
   saveMember();
   setAccountMode("login");
   updateMemberUi();
-  accountMessage.textContent = "You have logged out.";
+  accountMessage.textContent = t("loggedOut");
   accountForm.querySelector("input").focus();
 });
 
@@ -1101,13 +1646,13 @@ newsletterForm.addEventListener("submit", async (event) => {
     }
   }
 
-  newsletterMessage.textContent = "Thank you. You are subscribed to EVRIS news.";
+  newsletterMessage.textContent = t("newsletterThanks");
   newsletterForm.reset();
 });
 
 document.querySelectorAll(".filters button").forEach((button) => {
   button.addEventListener("click", () => {
-    currentCategory = button.textContent.trim().toLowerCase();
+    currentCategory = button.dataset.filter || "all";
     document.querySelectorAll(".filters button").forEach((filter) => {
       filter.classList.toggle("is-active", filter === button);
     });
@@ -1124,7 +1669,8 @@ function applyProductFilters() {
     const title = card.querySelector(".product-info p").textContent.toLowerCase();
     const meta = card.querySelector(".product-info small").textContent.toLowerCase();
     const price = getBasePriceFromElement(card.querySelector(".product-info span"));
-    const categoryOk = currentCategory === "all" || meta.includes(currentCategory.slice(0, -1));
+    const category = card.dataset.category || "";
+    const categoryOk = currentCategory === "all" || category === currentCategory.slice(0, -1);
     const queryOk = !query || title.includes(query) || meta.includes(query);
     const priceOk =
       priceMode === "all" ||
@@ -1136,7 +1682,7 @@ function applyProductFilters() {
     if (!card.hidden) visibleCount += 1;
   });
 
-  productResultCount.textContent = `${visibleCount} item${visibleCount === 1 ? "" : "s"}`;
+  updateProductResultCount(visibleCount);
 }
 
 productSearch.addEventListener("input", applyProductFilters);

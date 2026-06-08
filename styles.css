@@ -2055,6 +2055,13 @@ h1 {
   text-transform: uppercase;
 }
 
+.news-lines .news-copy {
+  color: var(--soft-ink);
+  font-size: inherit;
+  font-weight: 400;
+  text-transform: none;
+}
+
 .newsletter {
   display: grid;
   justify-items: center;
