@@ -11,3 +11,6 @@
 
 .product-image-preview { width:180px; height:180px; object-fit:contain; border:1px solid #deded5; margin:12px 0; background:#fff; }
 .image-help { font-size:12px; line-height:1.7; color:#74776b; margin:0 0 16px; }
+
+.inventory-actions { flex-wrap:wrap; }
+.admin-page .admin-unpublish { color:#9b3d31; border-color:#d9b6af; }

@@ -46,6 +46,35 @@
         const button = document.createElement('button'); button.type = 'button'; button.textContent = label;
         button.addEventListener('click', () => edit(item, mode)); actions.append(button);
       }
+      const visibility = document.createElement('button');
+      visibility.type = 'button';
+      visibility.textContent = item.is_active ? '下架商品' : '重新上架';
+      visibility.className = item.is_active ? 'admin-unpublish' : '';
+      visibility.setAttribute('aria-label', `${visibility.textContent}：${item.name}`);
+      visibility.addEventListener('click', async () => {
+        const current = generation;
+        actions.querySelectorAll('button').forEach(button => { button.disabled = true; });
+        $('#inventoryMessage').textContent = item.is_active ? '正在下架商品…' : '正在上架商品…';
+        const values = Object.fromEntries(['name','price','stock','category','image_path','description','material','style'].map(key => [key,item[key]]));
+        values.is_active = !item.is_active;
+        try {
+          const response = await api.saveInventory(item.slug,values,item);
+          if (current !== generation) return;
+          if (response.error) throw response.error;
+          // Update the row immediately, even if refreshing the inventory later fails.
+          inventory = inventory.map(product => product.slug === item.slug ? { ...product, is_active: values.is_active, revision: product.revision + 1 } : product);
+          render();
+          $('#inventoryMessage').textContent = values.is_active
+            ? `「${item.name}」已重新上架。`
+            : `「${item.name}」已下架，商品資料及庫存已保留，可以隨時重新上架。`;
+        } catch (error) {
+          if (current === generation) {
+            $('#inventoryMessage').textContent = report(error);
+            actions.querySelectorAll('button').forEach(button => { button.disabled = false; });
+          }
+        }
+      });
+      actions.append(visibility);
       row.append(actions); $('#inventoryRows').append(row);
     }
   }
