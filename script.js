@@ -72,10 +72,7 @@ const productDetails = {
     style: "Wear alone for simplicity or stack with natural stone bracelets.",
   },
 };
-
-const SUPABASE_URL = "https://mkdxpvqvgezwbixwzbwv.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_3mfBQM-ZXkRDbBUn4HK5xg_CbMGczw_";
-const supabaseClient = window.supabase?.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY) || null;
+const backendClient = window.EvrisBackend;
 
 const modal = document.querySelector("#productModal");
 const modalImage = document.querySelector("#modalImage");
@@ -131,7 +128,7 @@ const starSlider = document.querySelector(".star-slider");
 let lastFocusedElement = null;
 let activeProduct = null;
 let cart = JSON.parse(localStorage.getItem("evrisCart") || "[]");
-let member = JSON.parse(localStorage.getItem("evrisMember") || "null");
+let member = null; // Only an authenticated session may populate member state.
 let favorites = JSON.parse(localStorage.getItem("evrisFavorites") || "[]");
 let localReviews = JSON.parse(localStorage.getItem("evrisReviews") || "{}");
 let currentCategory = "all";
@@ -362,19 +359,24 @@ const extraUiText = {
     navAllItem: "All item",
     navMembership: "Membership",
     navFeatured: "Featured",
-    navShop: "Shop",
+    navShop: "Online Store",
+    navArchive: "Stone Archive",
     navStyling: "Styling",
-    navStore: "Store",
+    navStore: "Shop",
     navNews: "News",
     heroKicker: "Online store / daily accessory edit",
     heroTitle: "The New Collection",
+    heroSub: "Quiet shine for everyday styling.",
     heroText:
       "Pearl, stone, and silver accessories selected for calm everyday styling. Minimal shapes, soft shine, and gift-ready pieces for every day.",
     issueNote: "New items / Quiet luxury edit",
+    storeStripKicker: "Official online store",
+    storeStripTitle: "Details that make daily shopping easy.",
     stripShipping: "Free shipping over {amount}",
     stripPoints: "Member points on every order",
     stripGift: "Gift wrapping available",
     stripReturn: "7-day return support",
+    catAll: "All",
     catPierce: "Pierce",
     catNecklace: "Necklace",
     catRing: "Ring",
@@ -413,6 +415,8 @@ const extraUiText = {
     storyLayer: "Layer to define",
     storyMinimalism: "Intense minimalism",
     rankingKicker: "Ranking",
+    rankingTitle: "Most loved right now.",
+    viewAllItems: "View all items",
     shopTitle: "Shop EVRIS accessories",
     filterAll: "All",
     filterBracelets: "Bracelets",
@@ -428,8 +432,19 @@ const extraUiText = {
     materialKicker: "Surgical stainless",
     materialTitle: "Daily jewelry made for lasting wear.",
     materialText: "Water-friendly shine, soft silhouettes, and accessories designed for repeat styling from morning to night.",
-    stoneKicker: "Stone dictionary",
+    stoneKicker: "Stone Archive",
     stoneSmall: "Choose by meaning, color, and daily mood.",
+    stoneGuideCta: "View stone archive",
+    gameKicker: "GAME",
+    gameTitle: "GAME · NATURAL STONE 2048",
+    gameSmall: "A quiet little game for a moment between browsing.",
+    gameCta: "Play GAME · NATURAL STONE 2048",
+    gameRuleMergeTitle: "Match gems",
+    gameRuleMergeText: "Slide two matching gems together to discover the next natural stone. Reach 2048 to complete a collection.",
+    gameRuleEnergyTitle: "Take your time",
+    gameRuleEnergyText: "Each game uses 1 energy. Recover 1 every 2 hours, or browse EVRIS products and the stone archive for 2× recovery.",
+    gameRuleRewardTitle: "Open rewards",
+    gameRuleRewardText: "First 256, 512, 1024 and 2048 merges unlock one random product coupon each.",
     stoneCitrineTitle: "Positive clarity",
     stoneCitrineText: "Warm yellow tone for confidence, brightness, and a light daily accent.",
     stoneLapisTitle: "Quiet focus",
@@ -484,7 +499,7 @@ const extraUiText = {
     orderReceived: "Order received. We will email your confirmation shortly.",
     newsletterThanks: "Thank you. You are subscribed to EVRIS news.",
     resetNeedEmail: "Please enter your email first, then click Forgot password.",
-    resetNeedsConnection: "Password reset needs Supabase connection.",
+    resetNeedsConnection: "Password reset needs Firebase connection.",
     resetSent: "Password reset email sent to {email}. Please check your inbox.",
     loggedOut: "You have logged out.",
   },
@@ -492,18 +507,23 @@ const extraUiText = {
     navAllItem: "全部商品",
     navMembership: "會員",
     navFeatured: "精選",
-    navShop: "商店",
+    navShop: "線上商店",
+    navArchive: "天然石圖鑑",
     navStyling: "造型",
     navStore: "店舖",
     navNews: "消息",
     heroKicker: "線上商店 / 日常飾品選物",
     heroTitle: "全新系列",
+    heroSub: "安靜光澤，適合每日造型。",
     heroText: "以珍珠、天然石與銀色線條，打造適合日常配搭的柔和飾品。",
     issueNote: "新商品 / 靜奢選物",
+    storeStripKicker: "官方網上商店",
+    storeStripTitle: "讓日常購物更輕鬆的服務。",
     stripShipping: "滿 {amount} 免運費",
     stripPoints: "每次購買累積會員積分",
     stripGift: "提供禮物包裝",
     stripReturn: "7 日退換支援",
+    catAll: "全部",
     catPierce: "耳針",
     catNecklace: "項鍊",
     catRing: "戒指",
@@ -539,6 +559,8 @@ const extraUiText = {
     storyLayer: "層次配搭",
     storyMinimalism: "強烈極簡",
     rankingKicker: "人氣排行",
+    rankingTitle: "本週最受歡迎單品。",
+    viewAllItems: "查看全部商品",
     shopTitle: "選購 EVRIS 飾品",
     filterAll: "全部",
     filterBracelets: "手鍊",
@@ -554,8 +576,19 @@ const extraUiText = {
     materialKicker: "醫療級不鏽鋼",
     materialTitle: "為長時間日常佩戴而設計。",
     materialText: "親水光澤、柔和輪廓，從早到晚都容易重複配搭。",
-    stoneKicker: "天然石字典",
+    stoneKicker: "天然石圖鑑",
     stoneSmall: "按寓意、色彩與每日心情挑選。",
+    stoneGuideCta: "前往天然石圖鑑",
+    gameKicker: "遊戲",
+    gameTitle: "GAME · 天然石2048",
+    gameSmall: "在瀏覽商品之間，留一點時間給小遊戲。",
+    gameCta: "開始 GAME · 天然石2048",
+    gameRuleMergeTitle: "合成寶石",
+    gameRuleMergeText: "滑動兩顆相同寶石，發現下一種天然石。合成至 2048 即完成本次鑑藏。",
+    gameRuleEnergyTitle: "慢慢玩",
+    gameRuleEnergyText: "每局消耗 1 點體力；每 2 小時恢復 1 點。瀏覽 EVRIS 商品或天然石圖鑑時，恢復速度為 2 倍。",
+    gameRuleRewardTitle: "開啟獎勵",
+    gameRuleRewardText: "每局首次合成 256、512、1024、2048，都可獲得一張隨機商品券。",
     stoneCitrineTitle: "明亮正向",
     stoneCitrineText: "溫暖黃色調，帶來自信、明亮與輕盈點綴。",
     stoneLapisTitle: "安靜專注",
@@ -610,7 +643,7 @@ const extraUiText = {
     orderReceived: "訂單已收到。我們會稍後以電郵確認。",
     newsletterThanks: "謝謝，你已訂閱 EVRIS 消息。",
     resetNeedEmail: "請先輸入電郵，再按忘記密碼。",
-    resetNeedsConnection: "重設密碼需要 Supabase 連線。",
+    resetNeedsConnection: "重設密碼需要 Firebase 連線。",
     resetSent: "重設密碼電郵已發送到 {email}，請查看收件箱。",
     loggedOut: "你已登出。",
   },
@@ -618,18 +651,23 @@ const extraUiText = {
     navAllItem: "すべて",
     navMembership: "会員",
     navFeatured: "特集",
-    navShop: "ショップ",
+    navShop: "オンラインストア",
+    navArchive: "天然石図鑑",
     navStyling: "スタイリング",
     navStore: "店舗",
     navNews: "ニュース",
     heroKicker: "オンラインストア / デイリーアクセサリー",
     heroTitle: "ニューコレクション",
+    heroSub: "毎日に寄り添う、静かな輝き。",
     heroText: "パール、天然石、シルバーの輝きを日常に。やわらかな存在感のアクセサリー。",
     issueNote: "新作 / クワイエットラグジュアリー",
+    storeStripKicker: "公式オンラインストア",
+    storeStripTitle: "毎日のショッピングを心地よくするサービス。",
     stripShipping: "{amount} 以上で送料無料",
     stripPoints: "お買い物ごとに会員ポイント",
     stripGift: "ギフトラッピング対応",
     stripReturn: "7日間返品サポート",
+    catAll: "すべて",
     catPierce: "ピアス",
     catNecklace: "ネックレス",
     catRing: "リング",
@@ -665,6 +703,8 @@ const extraUiText = {
     storyLayer: "重ねて整える",
     storyMinimalism: "強いミニマル",
     rankingKicker: "ランキング",
+    rankingTitle: "今、選ばれているアイテム。",
+    viewAllItems: "すべて見る",
     shopTitle: "EVRIS アクセサリーを探す",
     filterAll: "すべて",
     filterBracelets: "ブレスレット",
@@ -680,8 +720,19 @@ const extraUiText = {
     materialKicker: "サージカルステンレス",
     materialTitle: "毎日に長く寄り添うジュエリー。",
     materialText: "水に強い輝き、やわらかなシルエット、朝から夜まで使いやすいアクセサリー。",
-    stoneKicker: "天然石辞典",
+    stoneKicker: "天然石図鑑",
     stoneSmall: "意味、色、毎日のムードで選ぶ。",
+    stoneGuideCta: "天然石図鑑を見る",
+    gameKicker: "ゲーム",
+    gameTitle: "GAME・天然石2048",
+    gameSmall: "ショッピングの合間に、静かなひとときのゲームを。",
+    gameCta: "GAME・天然石2048を遊ぶ",
+    gameRuleMergeTitle: "宝石を合わせる",
+    gameRuleMergeText: "同じ宝石をスライドして、次の天然石を見つけます。2048で今回のコレクションが完成。",
+    gameRuleEnergyTitle: "ゆっくり楽しむ",
+    gameRuleEnergyText: "1ゲームにつきエネルギーを1消費。2時間ごとに1回復し、EVRIS商品や天然石図鑑の閲覧中は回復速度が2倍になります。",
+    gameRuleRewardTitle: "報酬を開く",
+    gameRuleRewardText: "各ゲームで初めて256・512・1024・2048を合成すると、ランダムな商品クーポンを1枚獲得。",
     stoneCitrineTitle: "前向きな透明感",
     stoneCitrineText: "自信と明るさを添える、あたたかなイエロートーン。",
     stoneLapisTitle: "静かな集中",
@@ -736,7 +787,7 @@ const extraUiText = {
     orderReceived: "注文を受け付けました。確認メールをお送りします。",
     newsletterThanks: "ありがとうございます。EVRIS ニュースに登録されました。",
     resetNeedEmail: "先にメールアドレスを入力してから、パスワード再設定を押してください。",
-    resetNeedsConnection: "パスワード再設定には Supabase 接続が必要です。",
+    resetNeedsConnection: "パスワード再設定には Firebase 接続が必要です。",
     resetSent: "{email} にパスワード再設定メールを送信しました。受信箱をご確認ください。",
     loggedOut: "ログアウトしました。",
   },
@@ -745,17 +796,22 @@ const extraUiText = {
     navMembership: "멤버십",
     navFeatured: "기획전",
     navShop: "샵",
+    navArchive: "천연석 도감",
     navStyling: "스타일링",
     navStore: "스토어",
     navNews: "뉴스",
     heroKicker: "온라인 스토어 / 데일리 액세서리",
     heroTitle: "뉴 컬렉션",
+    heroSub: "매일을 위한 차분한 반짝임.",
     heroText: "진주, 천연석, 실버 포인트로 매일 착용하기 좋은 액세서리를 제안합니다.",
     issueNote: "신상품 / 조용한 럭셔리",
+    storeStripKicker: "공식 온라인 스토어",
+    storeStripTitle: "매일의 쇼핑을 더 편하게 하는 서비스.",
     stripShipping: "{amount} 이상 무료배송",
     stripPoints: "주문마다 회원 포인트 적립",
     stripGift: "선물 포장 가능",
     stripReturn: "7일 반품 지원",
+    catAll: "전체",
     catPierce: "피어스",
     catNecklace: "목걸이",
     catRing: "반지",
@@ -791,6 +847,8 @@ const extraUiText = {
     storyLayer: "레이어 스타일",
     storyMinimalism: "강한 미니멀리즘",
     rankingKicker: "랭킹",
+    rankingTitle: "지금 가장 사랑받는 아이템.",
+    viewAllItems: "전체 상품 보기",
     shopTitle: "EVRIS 액세서리 쇼핑",
     filterAll: "전체",
     filterBracelets: "팔찌",
@@ -806,8 +864,19 @@ const extraUiText = {
     materialKicker: "서지컬 스테인리스",
     materialTitle: "오래 착용하기 좋은 데일리 주얼리.",
     materialText: "물에 강한 광택, 부드러운 실루엣, 아침부터 밤까지 반복 착용하기 좋은 액세서리.",
-    stoneKicker: "스톤 딕셔너리",
+    stoneKicker: "천연석 도감",
     stoneSmall: "의미, 색감, 데일리 무드로 선택하세요.",
+    stoneGuideCta: "천연석 도감 보기",
+    gameKicker: "게임",
+    gameTitle: "GAME · 천연석 2048",
+    gameSmall: "쇼핑 사이, 잠시 즐기는 조용한 미니 게임입니다.",
+    gameCta: "GAME · 천연석 2048 플레이",
+    gameRuleMergeTitle: "보석 합성",
+    gameRuleMergeText: "같은 보석 두 개를 밀어 다음 천연석을 발견하세요. 2048에 도달하면 이번 컬렉션이 완성됩니다.",
+    gameRuleEnergyTitle: "천천히 즐기기",
+    gameRuleEnergyText: "게임마다 에너지 1을 사용합니다. 2시간마다 1 회복되며 EVRIS 상품과 천연석 도감을 둘러보는 동안 회복 속도가 2배가 됩니다.",
+    gameRuleRewardTitle: "보상 열기",
+    gameRuleRewardText: "게임마다 처음으로 256·512·1024·2048을 합성하면 무작위 상품 쿠폰을 한 장씩 받을 수 있어요.",
     stoneCitrineTitle: "긍정적인 선명함",
     stoneCitrineText: "자신감과 밝음을 더하는 따뜻한 옐로 톤.",
     stoneLapisTitle: "차분한 집중",
@@ -862,7 +931,7 @@ const extraUiText = {
     orderReceived: "주문이 접수되었습니다. 확인 이메일을 보내드리겠습니다.",
     newsletterThanks: "감사합니다. EVRIS 뉴스 구독이 완료되었습니다.",
     resetNeedEmail: "먼저 이메일을 입력한 뒤 비밀번호 찾기를 눌러주세요.",
-    resetNeedsConnection: "비밀번호 재설정에는 Supabase 연결이 필요합니다.",
+    resetNeedsConnection: "비밀번호 재설정에는 Firebase 연결이 필요합니다.",
     resetSent: "{email}로 비밀번호 재설정 이메일을 보냈습니다. 받은 편지함을 확인해주세요.",
     loggedOut: "로그아웃되었습니다.",
   },
@@ -875,16 +944,8 @@ Object.entries(extraUiText).forEach(([language, entries]) => {
 let currentMarket = localStorage.getItem("evrisMarket") || "CN";
 let currentLanguage = localStorage.getItem("evrisLanguage") || "en";
 
-function getSupabaseErrorMessage(error) {
-  if (error?.message === "Invalid login credentials") {
-    return "Login failed: this email is not registered yet, the password is incorrect, or the account email has not been confirmed. Please try Create account or Forgot password.";
-  }
-
-  if (error?.message?.toLowerCase().includes("email not confirmed")) {
-    return "Please confirm your email first. Check the confirmation email from Supabase.";
-  }
-
-  return error?.message || "Supabase connection failed. Please check the database setup.";
+function getBackendErrorMessage(error) {
+  return window.EvrisAuthFeedback.text(window.EvrisAuthFeedback.classify(error));
 }
 
 function setMemberFromUser(user, extra = {}) {
@@ -899,11 +960,10 @@ function setMemberFromUser(user, extra = {}) {
   saveMember();
 }
 
-async function saveProfileToSupabase(user, email, birthday) {
-  if (!supabaseClient || !user?.id) return null;
+async function saveProfileToBackend(user, email, birthday) {
+  if (!backendClient || !user?.id) return null;
 
-  const { error } = await supabaseClient.from("profiles").upsert({
-    id: user.id,
+  const { error } = await backendClient.saveProfile(user.id, {
     email,
     birthday_month: birthday || null,
     shipping_address: member?.shippingAddress || null,
@@ -960,11 +1020,11 @@ function renderReviews(productId, reviews = []) {
   reviews.forEach((review) => {
     const article = document.createElement("article");
     article.className = "review-item";
-    article.innerHTML = `
-      <span>${formatStars(Number(review.rating))}</span>
-      <p>${review.comment}</p>
-      <small>${review.user_email || "EVRIS member"}</small>
-    `;
+    for (const [tag, value] of [["span", formatStars(Number(review.rating))], ["p", review.comment], ["small", review.user_email || "EVRIS member"]]) {
+      const node = document.createElement(tag);
+      node.textContent = value;
+      article.append(node);
+    }
     reviewList.append(article);
   });
 }
@@ -973,20 +1033,16 @@ async function loadReviews(productId) {
   reviewMessage.textContent = "";
   const fallbackReviews = localReviews[productId] || [];
 
-  if (!supabaseClient) {
+  if (!backendClient) {
     renderReviews(productId, fallbackReviews);
     return;
   }
 
-  const { data, error } = await supabaseClient
-    .from("reviews")
-    .select("rating, comment, user_email, created_at")
-    .eq("product_slug", productId)
-    .order("created_at", { ascending: false });
+  const { data, error } = await backendClient.getReviews(productId);
 
   if (error) {
     renderReviews(productId, fallbackReviews);
-    reviewMessage.textContent = getSupabaseErrorMessage(error);
+    reviewMessage.textContent = getBackendErrorMessage(error);
     return;
   }
 
@@ -1004,18 +1060,10 @@ function updateFavoriteCount() {
   });
 }
 
-async function saveFavoriteToSupabase(product) {
-  if (!supabaseClient || !member?.id) return;
+async function saveFavoriteToBackend(product) {
+  if (!backendClient || !member?.id) return;
 
-  await supabaseClient.from("favorites").upsert(
-    {
-      user_id: member.id,
-      product_slug: product.id,
-      product_name: product.title,
-      image_url: product.image,
-    },
-    { onConflict: "user_id,product_slug" },
-  );
+  await backendClient.setFavorite(product, favorites.some(item => item.id === product.id));
 }
 
 function toggleFavorite(product) {
@@ -1023,7 +1071,7 @@ function toggleFavorite(product) {
   favorites = exists ? favorites.filter((item) => item.id !== product.id) : [...favorites, product];
   saveFavorites();
   updateFavoriteCount();
-  saveFavoriteToSupabase(product);
+  saveFavoriteToBackend(product);
   return !exists;
 }
 
@@ -1139,13 +1187,14 @@ function getFeatureProduct() {
     meta: "Bracelet / Natural stone",
     price: formatPrice(538),
     priceValue: 538,
-    image: new URL("assets/products/clean/aqua-pearl-bracelet.jpg", window.location.href).href,
+    image: new URL("assets/products/aqua-pearl-bracelet.jpg", window.location.href).href,
     imageAlt: "Aqua stone and pearl bracelet",
   };
 }
 
 function saveCart() {
   localStorage.setItem("evrisCart", JSON.stringify(cart));
+  document.dispatchEvent(new CustomEvent("evris:cart-updated"));
 }
 
 function updateCartCount() {
@@ -1201,6 +1250,7 @@ function updateLocaleText() {
   }
 
   document.querySelector('[data-open-cart]').firstChild.textContent = `${t("cart")} `;
+  window.EVRISCoupons?.render();
   setAccountMode(accountMode, { keepMessage: true });
   updateFavoriteCount();
 }
@@ -1219,11 +1269,8 @@ async function saveMemberAddress(address) {
   saveMember();
   localStorage.setItem(`evrisShippingAddress:${member.email}`, address);
 
-  if (supabaseClient && member.id) {
-    const { error } = await supabaseClient
-      .from("profiles")
-      .update({ shipping_address: address })
-      .eq("id", member.id);
+  if (backendClient && member.id) {
+    const { error } = await backendClient.saveProfile(member.id, { shipping_address: address });
 
     if (error) {
       console.warn("Address sync skipped:", error.message);
@@ -1396,6 +1443,7 @@ function closeProductModal() {
 
 document.querySelectorAll(".product-card a").forEach((link) => {
   link.addEventListener("click", (event) => {
+    if (!link.getAttribute("href")?.startsWith("#")) return;
     event.preventDefault();
     openProductModal(link.closest(".product-card"));
   });
@@ -1459,10 +1507,10 @@ reviewForm.addEventListener("submit", async (event) => {
     comment: formData.get("comment").trim(),
   };
 
-  if (supabaseClient) {
-    const { error } = await supabaseClient.from("reviews").insert(review);
+  if (backendClient) {
+    const { error } = await backendClient.addReview(review);
     if (error) {
-      reviewMessage.textContent = getSupabaseErrorMessage(error);
+      reviewMessage.textContent = getBackendErrorMessage(error);
       return;
     }
   } else {
@@ -1513,44 +1561,47 @@ checkoutForm.addEventListener("submit", (event) => {
   submitOrder(new FormData(checkoutForm));
 });
 
+let orderSubmitting = false;
+let pendingOrder = null;
+
 async function submitOrder(formData) {
-  const subtotal = cart.reduce((total, item) => total + item.priceValue * item.quantity, 0);
+  if (orderSubmitting) return;
+  if (!backendClient) {
+    checkoutMessage.textContent = window.EvrisAuthFeedback.text("unavailable");
+    return;
+  }
+  const coupon = window.EVRISCoupons?.getAppliedDiscount(cart) || { discount: 0 };
 
-  if (supabaseClient) {
+  if (backendClient) {
     try {
-      const orderId = crypto.randomUUID();
-      const { error: orderError } = await supabaseClient.from("orders").insert({
-        id: orderId,
-        user_id: member?.id || null,
-        customer_name: formData.get("name"),
-        customer_email: formData.get("email"),
-        shipping_address: formData.get("address"),
-        gift_option: formData.get("giftOption"),
-        subtotal,
-        status: "received",
-      });
-
-      if (orderError) throw orderError;
-
-      const { error: itemError } = await supabaseClient.from("order_items").insert(
-        cart.map((item) => ({
-          order_id: orderId,
-          product_slug: item.id,
-          product_name: item.title,
-          unit_price: item.priceValue,
-          quantity: item.quantity,
-          image_url: item.image,
-        })),
-      );
-
-      if (itemError) throw itemError;
+      // Price, stock availability, the final discount and stock deduction are
+      // all calculated by the trusted Firebase backend. Cart metadata is deliberately omitted.
+      const payload = {
+        p_customer_name: formData.get("name"),
+        p_customer_email: formData.get("email"),
+        p_shipping_address: formData.get("address"),
+        p_gift_option: formData.get("giftOption"),
+        p_items: cart.map((item) => ({ product_slug: item.id, quantity: item.quantity })),
+        p_coupon_code: coupon.code || null,
+      };
+      const fingerprint = JSON.stringify(payload);
+      if (pendingOrder?.fingerprint !== fingerprint) {
+        pendingOrder = { fingerprint, request_id: crypto.randomUUID() };
+      }
+      orderSubmitting = true;
+      const { error } = await backendClient.placeOrder({ ...payload, request_id: pendingOrder.request_id });
+      if (error) throw error;
     } catch (error) {
-      checkoutMessage.textContent = getSupabaseErrorMessage(error);
+      checkoutMessage.textContent = getBackendErrorMessage(error);
       return;
+    } finally {
+      orderSubmitting = false;
     }
   }
 
+  pendingOrder = null;
   checkoutMessage.textContent = t("orderReceived");
+  if (coupon.code) window.EVRISCoupons.consume(coupon.code);
   checkoutForm.reset();
   cart = [];
   saveCart();
@@ -1571,6 +1622,7 @@ function openAccountModal(mode = "login") {
 }
 
 function closeAccountModal() {
+    accountForm.hidePassword?.();
   accountModal.classList.remove("is-open");
   accountModal.setAttribute("aria-hidden", "true");
   document.body.classList.remove("modal-open");
@@ -1581,6 +1633,7 @@ function closeAccountModal() {
 }
 
 function setAccountMode(mode, options = {}) {
+    accountForm.hidePassword?.();
   if (member) return;
   accountMode = mode;
   const isCreate = accountMode === "create";
@@ -1611,78 +1664,71 @@ document.querySelectorAll("[data-account-mode]").forEach((button) => {
   button.addEventListener("click", () => setAccountMode(button.dataset.accountMode));
 });
 
+const authFeedback = window.EvrisAuthFeedback;
+authFeedback.setup(accountForm, accountMessage);
+
 accountForm.addEventListener("submit", async (event) => {
   event.preventDefault();
+  if (accountSubmit.disabled || !authFeedback.validate(accountForm, accountMessage, accountMode)) return;
+  if (!backendClient) {
+    authFeedback.show(accountMessage, "unavailable");
+    return;
+  }
   const formData = new FormData(accountForm);
-  const email = formData.get("email");
-  const password = formData.get("password");
+  const email = String(formData.get("email")).trim();
+  const password = String(formData.get("password"));
   const birthday = formData.get("birthday") || "";
-
-  if (supabaseClient) {
-    try {
-      const result =
-        accountMode === "create"
-          ? await supabaseClient.auth.signUp({
-              email,
-              password,
-              options: { data: { birthday_month: birthday } },
-            })
-          : await supabaseClient.auth.signInWithPassword({ email, password });
-
-      if (result.error) throw result.error;
-      if (result.data.user) {
-        setMemberFromUser(result.data.user, { birthday });
-        await saveProfileToSupabase(result.data.user, email, birthday);
-      }
-    } catch (error) {
-      accountMessage.textContent = getSupabaseErrorMessage(error);
+  const mode = accountMode;
+  accountSubmit.disabled = true;
+  authFeedback.show(accountMessage, mode === "create" ? "creating" : "signingIn", false);
+  try {
+    const result = mode === "create"
+      ? await backendClient.auth.signUp({ email, password, options: { data: { birthday_month: birthday } } })
+      : await backendClient.auth.signInWithPassword({ email, password });
+    if (result.error) throw result.error;
+    if (mode === "create" && !result.data.session) {
+      await authFeedback.confirmThenLogin(accountForm, accountMessage, email,
+        () => setAccountMode("login", { keepMessage: true }),
+        () => !member && accountMode === "create" && accountModal.classList.contains("is-open"));
       return;
     }
-  } else {
-    member = {
-      email,
-      createdAt: new Date().toISOString(),
-      birthday,
-    };
-    saveMember();
+    if (!result.data.session || !result.data.user) throw new Error("Missing authenticated session");
+    setMemberFromUser(result.data.user, { birthday });
+    updateMemberUi();
+    accountForm.reset();
+    // Profile synchronization must not turn a successful login into a login error.
+    saveProfileToBackend(result.data.user, email, birthday).catch(() => {});
+  } catch (error) {
+    authFeedback.error(accountMessage, error);
+  } finally {
+    accountSubmit.disabled = false;
   }
-
-  updateMemberUi();
-  accountMessage.textContent =
-    accountMode === "create" ? `Welcome to EVRIS Member, ${email}. Your account is ready.` : `Welcome back, ${email}.`;
-  accountForm.reset();
 });
 
 forgotPasswordButton.addEventListener("click", async () => {
-  const emailInput = accountForm.querySelector('input[name="email"]');
-  const email = emailInput.value.trim();
-
-  if (!email) {
-    accountMessage.textContent = t("resetNeedEmail");
-    emailInput.focus();
+  if (forgotPasswordButton.disabled || !authFeedback.validate(accountForm, accountMessage, accountMode, true)) return;
+  if (!backendClient) {
+    authFeedback.show(accountMessage, "unavailable");
     return;
   }
-
-  if (!supabaseClient) {
-    accountMessage.textContent = t("resetNeedsConnection");
-    return;
+  const email = accountForm.querySelector('[name="email"]').value.trim();
+  forgotPasswordButton.disabled = true;
+  try {
+    const { error } = await backendClient.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}${window.location.pathname}?reset=password`,
+    });
+    if (error) throw error;
+    accountMessage.textContent = formatTemplate("resetSent", { email });
+  } catch (error) {
+    authFeedback.error(accountMessage, error);
+  } finally {
+    forgotPasswordButton.disabled = false;
   }
-
-  const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
-    redirectTo: `${window.location.origin}${window.location.pathname}?reset=password`,
-  });
-
-  if (error) {
-    accountMessage.textContent = getSupabaseErrorMessage(error);
-    return;
-  }
-
-  accountMessage.textContent = formatTemplate("resetSent", { email });
 });
 
 logoutButton.addEventListener("click", async () => {
-  if (supabaseClient) {
-    await supabaseClient.auth.signOut();
+  if (backendClient) {
+    await backendClient.auth.signOut();
   }
   member = null;
   saveMember();
@@ -1696,11 +1742,11 @@ newsletterForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   const email = newsletterForm.querySelector("input").value.trim();
 
-  if (supabaseClient) {
-    const { error } = await supabaseClient.from("newsletter_subscribers").upsert({ email }, { onConflict: "email" });
+  if (backendClient) {
+    const { error } = await backendClient.subscribe(email);
 
     if (error) {
-      newsletterMessage.textContent = getSupabaseErrorMessage(error);
+      newsletterMessage.textContent = getBackendErrorMessage(error);
       return;
     }
   }
@@ -1799,10 +1845,10 @@ applyLocaleSettings();
 updateMemberUi();
 updateFavoriteCount();
 
-async function initSupabaseSession() {
-  if (!supabaseClient) return;
+async function initBackendSession() {
+  if (!backendClient) return;
 
-  const { data } = await supabaseClient.auth.getSession();
+  const { data } = await backendClient.auth.getSession();
   if (data.session?.user) {
     setMemberFromUser(data.session.user);
   } else {
@@ -1812,7 +1858,7 @@ async function initSupabaseSession() {
     updateMemberUi();
   }
 
-  supabaseClient.auth.onAuthStateChange((_event, session) => {
+  backendClient.auth.onAuthStateChange((_event, session) => {
     if (session?.user) {
       setMemberFromUser(session.user);
     } else {
@@ -1823,4 +1869,138 @@ async function initSupabaseSession() {
   });
 }
 
-initSupabaseSession();
+initBackendSession();
+
+function initCustomDropdowns() {
+  const selects = document.querySelectorAll(".locale-controls select");
+  selects.forEach(select => {
+    // Hide original select
+    select.style.display = "none";
+
+    // Create wrapper div
+    const dropdown = document.createElement("div");
+    dropdown.className = "custom-dropdown";
+    dropdown.id = select.id + "Custom";
+
+    // Create trigger button
+    const trigger = document.createElement("button");
+    trigger.type = "button";
+    trigger.className = "dropdown-trigger";
+    trigger.setAttribute("aria-haspopup", "listbox");
+    trigger.setAttribute("aria-expanded", "false");
+
+    const selectedText = document.createElement("span");
+    selectedText.className = "selected-value";
+    selectedText.textContent = select.options[select.selectedIndex]?.text || "";
+
+    // SVG Chevron Down
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("class", "chevron");
+    svg.setAttribute("width", "8");
+    svg.setAttribute("height", "5");
+    svg.setAttribute("viewBox", "0 0 10 6");
+    svg.setAttribute("fill", "none");
+
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", "M1 1L5 5L9 1");
+    path.setAttribute("stroke", "currentColor");
+    path.setAttribute("stroke-linecap", "round");
+    svg.appendChild(path);
+
+    trigger.appendChild(selectedText);
+    trigger.appendChild(svg);
+    dropdown.appendChild(trigger);
+
+    // Create options list
+    const list = document.createElement("ul");
+    list.className = "dropdown-options";
+    list.setAttribute("role", "listbox");
+
+    Array.from(select.options).forEach(opt => {
+      const item = document.createElement("li");
+      item.setAttribute("role", "option");
+      item.setAttribute("data-value", opt.value);
+      item.textContent = opt.text;
+      if (opt.selected) {
+        item.classList.add("is-selected");
+      }
+
+      item.addEventListener("click", (e) => {
+        e.stopPropagation();
+        select.value = opt.value;
+        select.dispatchEvent(new Event("change"));
+        dropdown.classList.remove("is-active");
+        trigger.setAttribute("aria-expanded", "false");
+      });
+
+      list.appendChild(item);
+    });
+
+    dropdown.appendChild(list);
+    select.parentNode.insertBefore(dropdown, select.nextSibling);
+
+    trigger.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isActive = dropdown.classList.contains("is-active");
+
+      document.querySelectorAll(".custom-dropdown").forEach(d => {
+        d.classList.remove("is-active");
+        d.querySelector(".dropdown-trigger").setAttribute("aria-expanded", "false");
+      });
+
+      if (!isActive) {
+        dropdown.classList.add("is-active");
+        trigger.setAttribute("aria-expanded", "true");
+      }
+    });
+
+    // Listen for select changes to keep dropdown value in sync
+    select.addEventListener("change", () => {
+      selectedText.textContent = select.options[select.selectedIndex]?.text || "";
+      list.querySelectorAll("li").forEach(li => {
+        if (li.getAttribute("data-value") === select.value) {
+          li.classList.add("is-selected");
+        } else {
+          li.classList.remove("is-selected");
+        }
+      });
+    });
+  });
+
+  document.addEventListener("click", () => {
+    document.querySelectorAll(".custom-dropdown").forEach(d => {
+      d.classList.remove("is-active");
+      d.querySelector(".dropdown-trigger").setAttribute("aria-expanded", "false");
+    });
+  });
+}
+
+initCustomDropdowns();
+
+if (window.location.hash === "#checkout") {
+  window.setTimeout(() => {
+    openCartDrawer();
+    checkoutForm.scrollIntoView({ block: "start", behavior: "smooth" });
+  }, 0);
+}
+
+// Keep the home page's curated products in step with the live catalog.
+document.addEventListener('evris:catalog-updated', () => {
+  if (window.EvrisCatalog?.state !== 'ready') return;
+  document.querySelectorAll('.product-card').forEach(card => {
+    const link = card.querySelector('a[href*="product.html?product="]');
+    if (!link) return;
+    const slug = new URL(link.href).searchParams.get('product');
+    const item = window.EVRIS_PRODUCTS.find(product => product.id === slug);
+    card.hidden = !item;
+    if (!item) return;
+    const label = card.querySelector('.product-info p');
+    if (label) label.textContent = item.title;
+    const price = card.querySelector('.product-info > span');
+    if (price) { price.dataset.basePrice = item.priceValue; price.textContent = formatPrice(item.priceValue); }
+    const photo = card.querySelector('img');
+    if (photo) { photo.src = item.image; photo.alt = item.title; }
+    const button = card.querySelector('.cart-button');
+    if (button) button.disabled = item.stock <= 0;
+  });
+});

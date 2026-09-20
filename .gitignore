@@ -1,5 +1,15 @@
-assets/products/raw/
-assets/products/contact-sheet.jpg
-assets/products/*.jpeg
-pdf-preview/
+node_modules/
+.env
+.env.*
+*service-account*.json
+firebase-debug.log
+firestore-debug.log
+.firebase/
+
+# Local files and credentials
 .DS_Store
+*.pem
+*.key
+*.p12
+*.pfx
+*-debug.log

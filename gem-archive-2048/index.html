@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#11110f" />
+    <meta
+      name="description"
+      content="EVRIS GEM ARCHIVE 矿物宝石 2048 会员小游戏，合成珍稀宝石并解锁商品专属折扣券。"
+    />
+    <title>GAME · 天然石2048 | EVRIS</title>
+    <link rel="preload" href="assets/gem-sprite.png" as="image" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="top-message" data-i18n="topMessage">EVRIS 会员小游戏 / 商品专属券</div>
+
+    <header class="site-header" id="top" aria-label="小游戏导航" data-i18n-aria="gameNav">
+      <a class="brand-mark" href="../index.html" aria-label="EVRIS 游戏首页" data-i18n-aria="home">EVRIS</a>
+      <nav aria-label="页面导航" data-i18n-aria="pageNav">
+        <a href="../products.html" data-i18n="browseProducts">逛商品 · 加速恢复 ↗</a>
+        <a href="#archive" data-i18n="archive">宝石图鉴</a>
+        <a href="#rewards" data-i18n="rewards">奖励</a>
+      </nav>
+      <div class="header-actions">
+      <select id="languageSelect" class="language-select" aria-label="语言" data-i18n-aria="language">
+        <option value="en" lang="en">EN</option>
+        <option value="zh" lang="zh-CN" selected>中文</option>
+        <option value="ja" lang="ja">日本語</option>
+        <option value="ko" lang="ko">한국어</option>
+      </select>
+      <div class="header-energy" aria-label="当前体力" data-i18n-aria="currentEnergy">
+        <span data-i18n="energy">体力</span>
+        <div class="energy-dots" id="headerEnergyDots" aria-hidden="true"></div>
+        <strong id="headerEnergyCount">5/5</strong>
+      </div>
+      </div>
+    </header>
+
+    <main class="game-page" id="archive">
+      <section class="game-intro" aria-labelledby="gameTitle">
+        <p class="kicker" data-i18n="stoneStudy">矿物研究 / 001</p>
+        <h1 id="gameTitle" data-i18n="gameTitle">GAME · 天然石2048</h1>
+        <p class="intro-jp" data-i18n="introTitle">收藏每一次矿物奇遇。</p>
+        <p class="intro-copy" data-i18n="introCopy">让珍珠与矿石层层相遇，发现色彩各异的高阶宝石。</p>
+
+        <div class="mineral-ledger" aria-label="矿物合成图鉴" data-i18n-aria="mineralIndex">
+          <div class="ledger-heading">
+            <span data-i18n="archiveIndex">合成图鉴</span>
+            <span>2 → 2048</span>
+          </div>
+          <ol id="mineralLedger"></ol>
+        </div>
+      </section>
+
+      <section class="play-area" aria-label="宝石 2048 棋盘" data-i18n-aria="playArea">
+        <div class="game-toolbar">
+          <div class="score-block">
+            <span data-i18n="score">积分</span>
+            <strong id="scoreValue">0</strong>
+          </div>
+          <div class="score-block">
+            <span data-i18n="best">最高分</span>
+            <strong id="bestValue">0</strong>
+          </div>
+          <button class="restart-button" id="restartButton" type="button">
+            <span aria-hidden="true">↻</span>
+            <span data-i18n="newGame">新局 · −1</span>
+          </button>
+        </div>
+
+        <div class="board-shell">
+          <div class="board" id="gameBoard" tabindex="0" aria-label="4乘4宝石合成棋盘" data-i18n-aria="board"></div>
+          <div class="start-overlay" id="startOverlay">
+            <p class="kicker" data-i18n="privateCollection">私人鉴藏</p>
+            <h2 id="overlayTitle">开启本次鉴藏</h2>
+            <p id="overlayMessage">每局消耗 1 点体力</p>
+            <button class="primary-button" id="startButton" type="button">开始游戏 · −1</button>
+          </div>
+        </div>
+
+        <div class="board-caption" aria-live="polite">
+          <p id="gameStatus">Next archive: 黄玛瑙 · 4</p>
+          <span data-i18n="boardHint">方向键 / WASD / 滑动合成</span>
+        </div>
+
+        <div class="touch-controls" aria-label="移动棋盘" data-i18n-aria="controls">
+          <button type="button" data-direction="up" aria-label="向上移动" data-i18n-aria="up">↑</button>
+          <button type="button" data-direction="left" aria-label="向左移动" data-i18n-aria="left">←</button>
+          <button type="button" data-direction="down" aria-label="向下移动" data-i18n-aria="down">↓</button>
+          <button type="button" data-direction="right" aria-label="向右移动" data-i18n-aria="right">→</button>
+        </div>
+      </section>
+
+      <aside class="reward-column" id="rewards" aria-label="体力和奖励" data-i18n-aria="energyRewards">
+        <section class="energy-panel">
+          <div class="section-title-row">
+            <p class="kicker" data-i18n="energy">体力</p>
+            <strong id="energyCount">5 / 5</strong>
+          </div>
+          <div class="energy-dots large" id="energyDots" aria-hidden="true"></div>
+          <div class="recovery-heading">
+            <span id="recoveryMode">自然恢复</span>
+            <strong id="recoveryPercent">100%</strong>
+          </div>
+          <div class="recovery-meter" id="recoveryMeter" role="progressbar" aria-label="体力恢复进度" data-i18n-aria="energyProgress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><span id="recoveryMeterFill"></span></div>
+          <p class="energy-note" id="energyNote">体力已满，随时开启新的鉴藏</p>
+          <p class="energy-rule" data-i18n="energyRule">每 2 小时自动恢复 1 点，离线也有效。浏览商品或图鉴时 2 倍恢复。</p>
+          <a class="browse-button" id="browseButton" href="../products.html?from=gem-archive" data-i18n="browseProducts">逛商品 · 加速恢复 ↗</a>
+        </section>
+
+        <section class="blindbox-panel">
+          <div class="section-title-row">
+            <div>
+              <p class="kicker" data-i18n="memberReward">会员礼遇</p>
+              <h2 data-i18n="gemBox">宝石盲盒</h2>
+            </div>
+            <span class="ticket-count"><strong id="ticketCount">0</strong> <span data-i18n="tickets">抽取券</span></span>
+          </div>
+
+          <div class="blindbox-object" aria-hidden="true">
+            <span>?</span>
+            <small>EVRIS<br /><span data-i18n="privateCoupon">专属商品券</span></small>
+          </div>
+
+          <div class="reward-progress">
+            <div>
+              <span id="progressLabel">下一档奖励</span>
+              <strong id="progressText">0 / 256</strong>
+            </div>
+            <div class="progress-track" aria-hidden="true"><span id="progressFill"></span></div>
+          </div>
+
+          <ol class="milestone-rewards" id="milestoneRewards" aria-label="等级奖励" data-i18n-aria="milestoneRewards"></ol>
+
+          <button class="draw-button" id="drawButton" type="button" disabled>尚未获得抽取资格</button>
+          <p class="reward-note" data-i18n="rewardNote">每局首次合成 256、512、1024、2048 各奖励一次，最多 4 张。商品随机，折扣随等级增加。</p>
+        </section>
+
+        <section class="coupon-history" aria-labelledby="couponHistoryTitle">
+          <div class="section-title-row">
+            <p class="kicker" id="couponHistoryTitle" data-i18n="myCoupons">我的商品券</p>
+            <span id="couponHistoryCount">0</span>
+          </div>
+          <div id="couponHistoryList" class="coupon-history-list">
+            <p class="empty-copy" data-i18n="emptyCoupons">尚无已收藏的商品券</p>
+          </div>
+        </section>
+      </aside>
+    </main>
+
+    <footer>
+      <p>EVRIS</p>
+      <span data-i18n="memberEdition">GEM ARCHIVE / 会员版</span>
+      <a href="#top" data-i18n="backToTop">回到顶部 ↑</a>
+    </footer>
+
+    <dialog class="browse-dialog" id="browseDialog" aria-labelledby="browseTitle">
+      <button class="dialog-close" id="closeBrowseButton" type="button" aria-label="关闭" data-i18n-aria="close">×</button>
+      <p class="kicker">EVRIS / COLLECTION</p>
+      <h2 id="browseTitle" data-i18n="browseTitle">逛逛商品</h2>
+      <p class="browse-hint" data-i18n="browseHint">浏览时享 2 倍恢复；1 分钟无操作或切到后台后，恢复普通速度。</p>
+      <div class="browse-recovery">
+        <p id="browseEnergyNote"></p>
+        <div class="recovery-meter" aria-hidden="true"><span id="browseMeterFill"></span></div>
+      </div>
+      <div class="browse-products" id="browseProducts"></div>
+      <button class="browse-button" id="returnToGameButton" type="button" data-i18n="returnToGame">返回游戏</button>
+    </dialog>
+
+    <dialog class="reward-dialog" id="rewardDialog" aria-labelledby="rewardProduct">
+      <button class="dialog-close" type="button" data-close-dialog aria-label="关闭" data-i18n-aria="close">×</button>
+      <div class="reward-dialog-grid">
+        <img id="rewardImage" src="assets/citrine-drop-earrings.jpg" alt="" />
+        <div class="reward-copy">
+          <p class="kicker" data-i18n="boxUnlocked">宝石盲盒 / 已开启</p>
+          <p class="reward-number" id="rewardDiscount">3% OFF</p>
+          <h2 id="rewardProduct">Citrine Drop Earrings</h2>
+          <p class="reward-detail" id="rewardDetail">此商品专属 · 7 天内有效</p>
+          <div class="coupon-code-row">
+            <code id="rewardCode">—</code>
+            <button id="copyCouponButton" type="button" data-i18n="copy">复制</button>
+          </div>
+          <button class="primary-button dark" type="button" data-close-dialog data-i18n="collectCoupon">收下商品券</button>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="gameover-dialog" id="gameoverDialog" aria-labelledby="gameoverTitle">
+      <button class="dialog-close" type="button" data-close-gameover aria-label="关闭" data-i18n-aria="close">×</button>
+      <p class="kicker" data-i18n="archiveComplete">鉴藏结束</p>
+      <h2 id="gameoverTitle">本次鉴藏完成</h2>
+      <div class="final-score">
+        <span data-i18n="score">积分</span>
+        <strong id="finalScore">0</strong>
+      </div>
+      <p id="gameoverMessage">新的矿物组合正在等待。</p>
+      <button class="primary-button dark" id="claimRewardButton" type="button" hidden>领取待开奖奖励</button>
+      <button class="primary-button dark" id="playAgainButton" type="button" data-i18n="playAgain">再开一局 · −1</button>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="locales.js"></script>
+    <script src="energy.js"></script>
+    <script src="../firebase-config.js?v=2"></script>
+    <script src="../firebase-backend.js?v=5"></script>
+    <script src="game.js?v=10"></script>
+  </body>
+</html>

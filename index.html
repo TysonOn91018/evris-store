@@ -1,734 +1,701 @@
 <!doctype html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EVRIS | Accessory Online Store</title>
-    <meta
-      name="description"
-      content="EVRIS is an EC-focused accessory brand with pearl jewelry, natural stone bracelets, delicate earrings, and minimal necklaces for daily styling."
-    />
-    <link rel="stylesheet" href="styles.css?v=14" />
-  </head>
-  <body>
-    <div class="top-message">Free shipping over RMB 599 / Member points 5%</div>
-    <header class="site-header" aria-label="Primary navigation">
-      <a class="brand-mark" href="#top" aria-label="EVRIS home">EVRIS</a>
-      <nav>
-        <a href="#member" data-i18n="navMembership">Membership</a>
-        <a href="#new" data-i18n="navFeatured">Featured</a>
-        <a href="#shop" data-i18n="navShop">Shop</a>
-        <a href="#styling" data-i18n="navStyling">Styling</a>
-        <a href="#store" data-i18n="navStore">Store</a>
-        <a href="#news" data-i18n="navNews">News</a>
-      </nav>
-      <div class="header-actions" aria-label="Account and cart links">
-        <div class="locale-controls" aria-label="Country and language settings">
-          <select id="marketSelect" aria-label="Country and currency">
-            <option value="CN">RMB</option>
-            <option value="JP">JPY</option>
-            <option value="HK">HKD</option>
-            <option value="US">USD</option>
-            <option value="KR">KRW</option>
-            <option value="TW">TWD</option>
-          </select>
-          <select id="languageSelect" aria-label="Language">
-            <option value="en">EN</option>
-            <option value="zh">中</option>
-            <option value="ja">日</option>
-            <option value="ko">한</option>
-          </select>
-        </div>
-        <button type="button" data-open-account id="accountButton">Login</button>
-        <button type="button" data-open-cart>Cart <span id="cartCount">0</span></button>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EVRIS | Accessory Online Store</title>
+  <meta name="description"
+    content="EVRIS is an EC-focused accessory brand with pearl jewelry, natural stone bracelets, delicate earrings, and minimal necklaces for daily styling." />
+  <link rel="icon" href="assets/icon.png" type="image/png" />
+  <link rel="stylesheet" href="styles.css?v=73" />
+  <script src="homepage-motion.js?v=5" defer></script>
+</head>
+
+<body class="home-page">
+  <div class="top-message">Free shipping over RMB 599 / Member points 5%</div>
+  <header class="site-header" aria-label="Primary navigation">
+    <a class="brand-mark" href="#top" aria-label="EVRIS home">EVRIS</a>
+    <nav>
+      <a href="#new" data-i18n="navFeatured">Featured</a>
+      <a href="#member" data-i18n="navMembership">Membership</a>
+      <a href="#styling" data-i18n="navStyling">Styling</a>
+      <a href="#store" data-i18n="navStore">Shop</a>
+      <a href="#news" data-i18n="navNews">News</a>
+      <a href="products.html" data-i18n="navShop">Online Store</a>
+      <a href="stone-archive/index.html" data-i18n="navArchive">Stone Archive</a>
+      <a href="gem-archive-2048/index.html">GEM 2048</a>
+    </nav>
+    <div class="header-actions" aria-label="Account and cart links">
+      <div class="locale-controls" aria-label="Country and language settings">
+        <select id="marketSelect" aria-label="Country and currency">
+          <option value="CN">RMB</option>
+          <option value="JP">JPY</option>
+          <option value="HK">HKD</option>
+          <option value="US">USD</option>
+          <option value="KR">KRW</option>
+          <option value="TW">TWD</option>
+        </select>
+        <select id="languageSelect" aria-label="Language">
+          <option value="en">EN</option>
+          <option value="zh">中</option>
+          <option value="ja">日</option>
+          <option value="ko">한</option>
+        </select>
       </div>
-    </header>
+      <button type="button" data-open-account id="accountButton">Login</button>
+      <button type="button" data-open-cart>Cart <span id="cartCount">0</span></button>
+    </div>
+  </header>
 
-    <main id="top">
-      <section class="hero" aria-label="EVRIS editorial hero">
-        <img class="hero-image" src="assets/editorial/studio-desk.png" alt="Woman wearing delicate daily jewelry in an atelier" />
-        <div class="hero-shade"></div>
-        <div class="hero-copy">
-          <p class="kicker" data-i18n="heroKicker">Online store / daily accessory edit</p>
-          <h1 data-i18n="heroTitle">The New Collection</h1>
-          <p class="hero-ja">自然体のままで、私らしく輝く。</p>
-          <p class="hero-text" data-i18n="heroText">
-            Pearl, stone, and silver accessories selected for calm everyday styling. Minimal shapes, soft shine, and gift-ready pieces for every day.
-          </p>
-          <div class="hero-actions">
-            <a class="button primary" href="#shop">View more</a>
-            <button class="button secondary" type="button" data-open-account>Join member</button>
+  <main id="top">
+    <section class="hero" aria-label="EVRIS editorial hero">
+      <img class="hero-image" src="assets/editorial/studio-desk-wide.jpg" width="1448" height="1086"
+        fetchpriority="high" alt="Wide view of a woman wearing jewelry at a desk in a sunlit atelier" />
+      <div class="hero-shade"></div>
+      <div class="hero-copy">
+        <div class="hero-copy-wordmark" aria-hidden="true">EVRIS</div>
+        <p class="kicker" data-i18n="heroKicker">Online store / daily accessory edit</p>
+        <h1 data-i18n="heroTitle">The New Collection</h1>
+        <p class="hero-ja" data-i18n="heroSub">Quiet shine for everyday styling.</p>
+        <p class="hero-text" data-i18n="heroText">
+          Pearl, stone, and silver accessories selected for calm everyday styling. Minimal shapes, soft shine, and
+          gift-ready pieces for every day.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="products.html">View more</a>
+          <button class="button secondary" type="button" data-open-account>Join member</button>
+        </div>
+      </div>
+      <aside class="issue-note" aria-label="Store campaign">
+        <span>16</span>
+        <small data-i18n="issueNote">New items<br />Quiet luxury edit</small>
+      </aside>
+    </section>
+
+    <section class="store-strip" aria-label="Shopping benefits">
+      <div class="store-benefit-grid">
+        <article class="store-benefit">
+          <span class="store-benefit-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35">
+              <path d="M3 6h11v9H3z" />
+              <path d="M14 9h3l4 4v2h-7z" />
+              <circle cx="7" cy="17" r="1.5" />
+              <circle cx="18" cy="17" r="1.5" />
+            </svg>
+          </span>
+          <p data-i18n="stripShipping">Free shipping over RMB 599</p>
+        </article>
+        <article class="store-benefit">
+          <span class="store-benefit-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35">
+              <circle cx="12" cy="12" r="8" />
+              <path d="m12 7 1.6 3.3 3.6.5-2.6 2.5.6 3.6-3.2-1.7-3.2 1.7.6-3.6-2.6-2.5 3.6-.5z" />
+            </svg>
+          </span>
+          <p data-i18n="stripPoints">Member points on every order</p>
+        </article>
+        <article class="store-benefit">
+          <span class="store-benefit-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35">
+              <path d="M4 9h16v11H4z" />
+              <path d="M3 9h18" />
+              <path d="M12 9v11" />
+              <path d="M12 9H8.5a2.5 2.5 0 1 1 2.2-3.7L12 9Z" />
+              <path d="M12 9h3.5a2.5 2.5 0 1 0-2.2-3.7L12 9Z" />
+            </svg>
+          </span>
+          <p data-i18n="stripGift">Gift wrapping available</p>
+        </article>
+        <article class="store-benefit">
+          <span class="store-benefit-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35">
+              <path d="M20 11a8 8 0 0 0-14.5-4L3 9" />
+              <path d="M3 4v5h5" />
+              <path d="M4 13a8 8 0 0 0 14.5 4L21 15" />
+              <path d="M21 20v-5h-5" />
+            </svg>
+          </span>
+          <p data-i18n="stripReturn">7-day return support</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="category-mosaic" aria-label="Accessory categories">
+      <a href="products.html">
+        <img src="assets/products/baroque-arc-earrings.jpg" alt="All accessories" />
+        <span data-i18n="catAll">All</span>
+      </a>
+      <a href="products.html?category=necklace">
+        <img src="assets/products/citrine-pearl-necklace.jpg" alt="Necklace category" />
+        <span data-i18n="catNecklace">Necklace</span>
+      </a>
+      <a href="products.html?category=earring">
+        <img src="assets/products/citrine-drop-earrings.jpg" alt="Earrings category" />
+        <span data-i18n="catEarring">Earring</span>
+      </a>
+      <a href="products.html?category=bracelet">
+        <img src="assets/products/aqua-pearl-bracelet.jpg" alt="Bracelet category" />
+        <span data-i18n="catBracelet">Bracelet</span>
+      </a>
+    </section>
+
+    <section class="section collection" id="new">
+      <div class="section-heading">
+        <p class="kicker" data-i18n="newKicker">New Collection</p>
+        <div class="collection-heading-copy">
+          <h2 data-i18n="newTitle">Jewelry made easy for daily styling.</h2>
+        </div>
+      </div>
+      <div class="collection-layout">
+        <article class="feature-card">
+          <div class="feature-media">
+            <span class="feature-media-index" aria-hidden="true">01</span>
+            <img src="assets/products/aqua-pearl-bracelet.jpg" alt="Aqua stone and pearl bracelet" />
+            <span class="feature-media-caption" aria-hidden="true">AQUA SERIES / 2026</span>
           </div>
+          <div class="feature-details">
+            <p class="item-meta" data-i18n="featureMeta">Bracelet / Natural stone</p>
+            <span class="feature-card-note" aria-hidden="true">SEASONAL EDIT</span>
+            <h3>Aqua Pearl Bracelet</h3>
+            <p data-i18n="featureText">
+              A soft blue stone bracelet made for ivory shirts, denim, and quiet summer styling.
+            </p>
+            <div class="buy-row">
+              <strong>RMB 538</strong>
+              <a class="mini-button" href="product.html?product=aqua-pearl-bracelet" data-i18n="addToCart">Add to
+                cart</a>
+            </div>
+          </div>
+        </article>
+        <div class="collection-copy">
+          <span class="collection-copy-label" aria-hidden="true">EVRIS / DAILY OBJECTS</span>
+          <p class="large-serif" data-i18n="collectionLead">
+            EVRIS edits wearable art pieces with EC clarity: easy to browse, easy to compare, easy to buy.
+          </p>
+          <div class="collection-copy-divider" aria-hidden="true"></div>
+          <p data-i18n="collectionText">
+            Pearl jewelry, natural stone bracelets, delicate earrings, and minimal necklaces are organized by mood,
+            category, and daily styling use.
+          </p>
+          <span class="collection-copy-index" aria-hidden="true">01 — NEW ARRIVAL</span>
         </div>
-        <aside class="issue-note" aria-label="Store campaign">
-          <span>16</span>
-          <small data-i18n="issueNote">New items<br />Quiet luxury edit</small>
-        </aside>
-      </section>
+      </div>
+    </section>
 
-      <section class="store-strip" aria-label="Shopping benefits">
-        <p data-i18n="stripShipping">Free shipping over RMB 599</p>
-        <p data-i18n="stripPoints">Member points on every order</p>
-        <p data-i18n="stripGift">Gift wrapping available</p>
-        <p data-i18n="stripReturn">7-day return support</p>
-      </section>
-
-      <section class="category-mosaic" aria-label="Accessory categories">
-        <a href="#shop">
-          <img src="assets/products/clean/baroque-arc-earrings.jpg" alt="Pearl earrings category" />
-          <span data-i18n="catPierce">Pierce</span>
-        </a>
-        <a href="#shop">
-          <img src="assets/products/clean/citrine-pearl-necklace.jpg" alt="Necklace category" />
-          <span data-i18n="catNecklace">Necklace</span>
-        </a>
-        <a href="#shop">
-          <img src="assets/products/clean/tiger-eye-bracelet.jpg" alt="Ring and bracelet category" />
-          <span data-i18n="catRing">Ring</span>
-        </a>
-        <a href="#shop">
-          <img src="assets/editorial/street-clean.png" alt="Eyewear and styling category" />
-          <span data-i18n="catEyewear">Eyewear</span>
-        </a>
-        <a href="#shop">
-          <img src="assets/products/clean/citrine-drop-earrings.jpg" alt="Earrings category" />
-          <span data-i18n="catEarring">Earring</span>
-        </a>
-        <a href="#shop">
-          <img src="assets/products/clean/smoky-quartz-bracelet.jpg" alt="Other accessories category" />
-          <span data-i18n="catOther">Other</span>
-        </a>
-        <a href="#shop">
-          <img src="assets/products/clean/minimal-pearl-chain.jpg" alt="Ear sleeve category" />
-          <span data-i18n="catEarSleeve">Ear sleeve</span>
-        </a>
-        <a href="#shop">
-          <img src="assets/products/clean/aqua-pearl-bracelet.jpg" alt="Bracelet category" />
-          <span data-i18n="catBracelet">Bracelet</span>
-        </a>
-      </section>
-
-      <section class="section collection" id="new">
-        <div class="section-heading">
-          <p class="kicker" data-i18n="newKicker">New Collection</p>
-          <h2 data-i18n="newTitle">すぐに買える、毎日のジュエリー。</h2>
+    <section class="section member" id="member">
+      <div class="member-copy">
+        <p class="kicker">EVRIS Member</p>
+        <h2 data-i18n="memberTitle">More ways to enjoy choosing.</h2>
+        <p data-i18n="memberText">
+          Create an EVRIS account to save favorites, earn points, track orders, and receive early access to quiet-luxury
+          drops.
+        </p>
+        <div class="hero-actions">
+          <button class="button dark" type="button" data-open-account data-account-open-mode="create"
+            data-i18n="accountCreate">Create account</button>
+          <button class="button light" type="button" data-open-account data-account-open-mode="login"
+            data-i18n="accountTitleLogin">Sign in</button>
         </div>
-        <div class="collection-layout">
-          <article class="feature-card">
-            <img src="assets/products/clean/aqua-pearl-bracelet.jpg" alt="Aqua stone and pearl bracelet" />
+      </div>
+      <div class="member-card" aria-label="Member benefits">
+        <div>
+          <span>01</span>
+          <h3 data-i18n="benefitPointsTitle">5% point back</h3>
+          <p data-i18n="benefitPointsText">Earn points with every purchase and use them from the next order.</p>
+        </div>
+        <div>
+          <span>02</span>
+          <h3 data-i18n="benefitBirthdayTitle">Birthday coupon</h3>
+          <p data-i18n="benefitBirthdayText">Receive a seasonal coupon and styling edit during your birthday month.</p>
+        </div>
+        <div>
+          <span>03</span>
+          <h3 data-i18n="benefitRankTitle">Rank benefits</h3>
+          <p data-i18n="benefitRankText">Silver, Gold, and Muse ranks unlock early sales and limited gift wrapping.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section styling" id="styling">
+      <div class="styling-photo">
+        <img src="assets/editorial/street-styling-expanded.png"
+          alt="Woman wearing delicate pearl and stone jewelry on a quiet sunlit street" />
+      </div>
+      <div class="styling-panel">
+        <p class="kicker" data-i18n="stylingKicker">Recommended Styling</p>
+        <h2 data-i18n="stylingTitle">Soft presence, quiet space.</h2>
+        <p data-i18n="stylingText">
+          Pair a slim necklace with an oversized shirt, layer one pearl bracelet with a natural stone piece, or keep the
+          ear line delicate with a single drop.
+        </p>
+        <div class="style-notes">
+          <span data-i18n="styleNoteIvory">Ivory cotton</span>
+          <span data-i18n="styleNoteGray">Soft gray knit</span>
+          <span data-i18n="styleNoteSilver">Silver line</span>
+          <span data-i18n="styleNoteStone">Natural stone accent</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section feature-stories" aria-label="Featured editorials">
+      <div class="section-label">
+        <p class="kicker" data-i18n="featuredKicker">Featured</p>
+        <small data-i18n="featuredSmall">Special contents</small>
+      </div>
+      <div class="story-grid">
+        <article>
+          <img src="assets/products/citrine-pearl-bracelet.jpg" alt="Novelty fair bracelet styling" />
+          <p data-i18n="storyNovelty">Novelty fair</p>
+        </article>
+        <article>
+          <img src="assets/editorial/street-clean.png" alt="Layered necklace styling" />
+          <p data-i18n="storyLayer">Layer to define</p>
+        </article>
+        <article>
+          <img src="assets/products/baroque-arc-earrings.jpg" alt="Minimal earring styling" />
+          <p data-i18n="storyMinimalism">Intense minimalism</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section shop ranking" id="shop">
+      <div class="ranking-head">
+        <div>
+          <p class="kicker" data-i18n="rankingKicker">Ranking</p>
+          <h2 data-i18n="rankingTitle">Most loved right now.</h2>
+        </div>
+        <a class="ranking-view-all" href="products.html" data-i18n="viewAllItems">View all items</a>
+      </div>
+      <form class="shop-tools" id="shopTools" role="search" aria-label="Search products" hidden>
+        <label>
+          <span data-i18n="searchLabel">Search</span>
+          <input id="productSearch" type="search" placeholder="stone, pearl, necklace..." />
+        </label>
+        <label>
+          <span data-i18n="priceLabel">Price</span>
+          <select id="priceFilter">
+            <option value="all" data-i18n="priceAll">All price</option>
+            <option value="entry" data-i18n="priceEntry">Entry under RMB 300</option>
+            <option value="standard" data-i18n="priceStandard">Standard RMB 300-500</option>
+            <option value="premium" data-i18n="pricePremium">Premium over RMB 500</option>
+          </select>
+        </label>
+        <p id="productResultCount" role="status">4 items</p>
+      </form>
+      <ol class="product-grid ranking-grid">
+        <li class="product-card" data-category="necklace">
+          <span class="ranking-number" aria-label="Rank 1">01</span>
+          <a href="product.html?product=citrine-pearl-necklace" aria-label="View Citrine pearl necklace">
+            <img src="assets/products/citrine-pearl-necklace.jpg" alt="Citrine pearl necklace" />
+            <span class="hover-label">Quick view</span>
+          </a>
+          <div class="product-info">
             <div>
-              <p class="item-meta" data-i18n="featureMeta">Bracelet / Natural stone</p>
-              <h3>Aqua Pearl Bracelet</h3>
-              <p data-i18n="featureText">
-                A soft blue stone bracelet made for ivory shirts, denim, and quiet summer styling.
-              </p>
-              <div class="buy-row">
-                <strong>RMB 538</strong>
-                <a class="mini-button" href="#shop" data-i18n="addToCart">Add to cart</a>
+              <p>Citrine Pearl Necklace</p>
+              <small data-i18n="metaNecklaceSilver">Necklace / Silver</small>
+            </div>
+            <span>RMB 588</span>
+          </div>
+          <button type="button" class="cart-button">Add to cart</button>
+        </li>
+        <li class="product-card" data-category="bracelet">
+          <span class="ranking-number" aria-label="Rank 2">02</span>
+          <a href="product.html?product=citrine-pearl-bracelet" aria-label="View Citrine pearl bracelet">
+            <img src="assets/products/citrine-pearl-bracelet.jpg" alt="Citrine pearl bracelet" />
+            <span class="hover-label">Quick view</span>
+          </a>
+          <div class="product-info">
+            <div>
+              <p>Citrine Pearl Bracelet</p>
+              <small data-i18n="metaBraceletStone">Bracelet / Natural stone</small>
+            </div>
+            <span>RMB 358</span>
+          </div>
+          <button type="button" class="cart-button">Add to cart</button>
+        </li>
+        <li class="product-card" data-category="earring">
+          <span class="ranking-number" aria-label="Rank 3">03</span>
+          <a href="product.html?product=citrine-drop-earrings" aria-label="View Citrine drop earrings">
+            <img src="assets/products/citrine-drop-earrings.jpg" alt="Citrine drop earrings" />
+            <span class="hover-label">Quick view</span>
+          </a>
+          <div class="product-info">
+            <div>
+              <p>Citrine Drop Earrings</p>
+              <small data-i18n="metaEarringsCrystal">Earrings / Crystal</small>
+            </div>
+            <span>RMB 278</span>
+          </div>
+          <button type="button" class="cart-button">Add to cart</button>
+        </li>
+        <li class="product-card" data-category="earring">
+          <span class="ranking-number" aria-label="Rank 4">04</span>
+          <a href="product.html?product=baroque-arc-earrings" aria-label="View Baroque arc earrings">
+            <img src="assets/products/baroque-arc-earrings.jpg" alt="Baroque arc pearl earrings" />
+            <span class="hover-label">Quick view</span>
+          </a>
+          <div class="product-info">
+            <div>
+              <p>Baroque Arc Earrings</p>
+              <small data-i18n="metaEarringsPearl">Earrings / Freshwater pearl</small>
+            </div>
+            <span>RMB 198</span>
+          </div>
+          <button type="button" class="cart-button">Add to cart</button>
+        </li>
+      </ol>
+    </section>
+
+    <section class="section stone-guide" id="stone-guide">
+      <div class="section-label">
+        <p class="kicker" data-i18n="stoneKicker">Stone Archive</p>
+        <small data-i18n="stoneSmall">Choose by meaning, color, and daily mood.</small>
+        <a class="stone-guide-link" href="stone-archive/index.html" data-i18n="stoneGuideCta">View stone archive</a>
+      </div>
+      <div class="stone-grid">
+        <article>
+          <span>Citrine</span>
+          <h3 data-i18n="stoneCitrineTitle">Positive clarity</h3>
+          <p data-i18n="stoneCitrineText">Warm yellow tone for confidence, brightness, and a light daily accent.</p>
+        </article>
+        <article>
+          <span>Lapis</span>
+          <h3 data-i18n="stoneLapisTitle">Quiet focus</h3>
+          <p data-i18n="stoneLapisText">Deep blue for calm styling, denim looks, and personal expression.</p>
+        </article>
+        <article>
+          <span>Pearl</span>
+          <h3 data-i18n="stonePearlTitle">Soft elegance</h3>
+          <p data-i18n="stonePearlText">A classic material that makes simple outfits feel finished.</p>
+        </article>
+        <article>
+          <span>Tiger eye</span>
+          <h3 data-i18n="stoneTigerTitle">Natural strength</h3>
+          <p data-i18n="stoneTigerText">Earthy depth for black, ivory, and soft gray coordinate looks.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section game-guide" id="game">
+      <div class="section-label">
+        <p class="kicker" data-i18n="gameKicker">Member game</p>
+        <h2 data-i18n="gameTitle">GAME · Natural Stone 2048</h2>
+        <small data-i18n="gameSmall">A quiet little game for a moment between browsing.</small>
+        <a class="stone-guide-link" href="gem-archive-2048/index.html" data-i18n="gameCta">Play GAME · Natural Stone 2048</a>
+      </div>
+      <div class="game-grid" aria-label="Game rules">
+        <article>
+          <span>01 / MERGE</span>
+          <h3 data-i18n="gameRuleMergeTitle">Match gems</h3>
+          <p data-i18n="gameRuleMergeText">Slide two matching gems together to discover the next natural stone. Reach 2048 to complete a collection.</p>
+        </article>
+        <article>
+          <span>02 / ENERGY</span>
+          <h3 data-i18n="gameRuleEnergyTitle">Take your time</h3>
+          <p data-i18n="gameRuleEnergyText">Each game uses 1 energy. Recover 1 every 2 hours, or browse EVRIS products and the stone archive for 2× recovery.</p>
+        </article>
+        <article>
+          <span>03 / REWARD</span>
+          <h3 data-i18n="gameRuleRewardTitle">Open rewards</h3>
+          <p data-i18n="gameRuleRewardText">First 256, 512, 1024 and 2048 merges unlock one random product coupon each.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section coordinate">
+      <div class="section-label">
+        <p class="kicker" data-i18n="coordinateKicker">Staff coordinate</p>
+        <small data-i18n="coordinateSmall">Introducing EVRIS store staff styling</small>
+        <a href="products.html" data-i18n="viewMore">View more</a>
+      </div>
+      <div class="coordinate-grid">
+        <img src="assets/editorial/street-clean.png" alt="Daily accessory coordinate" />
+        <img src="assets/products/teal-pearl-bracelet.jpg" alt="Teal bracelet coordinate" />
+        <img src="assets/products/amber-pearl-bracelet.jpg" alt="Bracelet close up" />
+        <img src="assets/products/lapis-pearl-bracelet.jpg" alt="Stone bracelet close up" />
+      </div>
+    </section>
+
+    <section class="section store-list" id="store">
+      <div class="section-label">
+        <p class="kicker">EVRIS Shop</p>
+        <small data-i18n="storeSmall">Shop list</small>
+      </div>
+      <div class="store-columns">
+        <article>
+          <img class="store-photo" src="assets/stores/harajuku-jewelry.png"
+            alt="Light stone jewelry storefront with large windows" width="1536" height="1024" loading="lazy" />
+          <h3>EVRIS Shop Harajuku</h3>
+          <p>Harajuku Jingumae<br />Tokyo</p>
+        </article>
+        <article>
+          <img class="store-photo" src="assets/stores/shinjuku-lumine-jewelry.png"
+            alt="Glass-front jewelry boutique with silver display cases" width="1536" height="1024" loading="lazy" />
+          <h3>EVRIS Shop Shinjuku Lumine</h3>
+          <p>Shinjuku Lumine 2<br />Tokyo</p>
+        </article>
+        <article>
+          <img class="store-photo" src="assets/stores/osaka-jewelry.png"
+            alt="Warm wood jewelry boutique with illuminated displays" width="1536" height="1024" loading="lazy" />
+          <h3>EVRIS Shop Osaka</h3>
+          <p>Lucua Osaka 8F<br />Osaka</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section news-list" id="news">
+      <div class="section-label">
+        <p class="kicker" data-i18n="navNews">News</p>
+      </div>
+      <div class="news-lines">
+        <p><span data-i18n="infoLabel">Information</span> <span class="news-copy" data-i18n="newsOne">New arrival
+            collection is now available.</span></p>
+        <p><span data-i18n="infoLabel">Information</span> <span class="news-copy" data-i18n="newsTwo">Novelty fair
+            starts this weekend.</span></p>
+        <p><span data-i18n="infoLabel">Information</span> <span class="news-copy" data-i18n="newsThree">Member points
+            campaign has been updated.</span></p>
+        <p><span data-i18n="infoLabel">Information</span> <span class="news-copy" data-i18n="newsFour">Store styling
+            archive is open.</span></p>
+      </div>
+    </section>
+
+    <section class="newsletter">
+      <p class="kicker" data-i18n="newsletterKicker">News letter</p>
+      <p data-i18n="newsletterText">Receive new arrivals, campaigns, and styling notes.</p>
+      <form id="newsletterForm">
+        <input type="email" placeholder="EMAIL" aria-label="Email address" />
+        <button type="submit" data-i18n="send">Send</button>
+      </form>
+      <p class="form-message" id="newsletterMessage" role="status"></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>EVRIS</p>
+    <div>
+      <a href="products.html" data-i18n="navShop">Shop</a>
+      <a href="#member" data-i18n="navMembership">Member</a>
+      <a href="#news" data-i18n="navNews">News</a>
+      <a href="#store" data-i18n="footerStoreLocation">Store location</a>
+      <a href="stone-archive/index.html" data-i18n="navArchive">Stone Archive</a>
+      <a href="gem-archive-2048/index.html">GEM 2048</a>
+    </div>
+    <span data-i18n="footerText">Accessory online store for calm daily styling. Member points, new arrivals, and
+      gift-ready jewelry.</span>
+  </footer>
+
+  <div class="product-modal" id="productModal" aria-hidden="true">
+    <button class="modal-backdrop" type="button" data-close-modal aria-label="Close product information"></button>
+    <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle"
+      aria-describedby="modalDescription">
+      <button class="modal-close" type="button" data-close-modal aria-label="Close product information"
+        data-i18n="close">Close</button>
+      <div class="modal-image-wrap">
+        <img id="modalImage" src="" alt="" />
+      </div>
+      <div class="modal-copy">
+        <p class="item-meta" id="modalMeta"></p>
+        <h2 id="modalTitle"></h2>
+        <p class="modal-price" id="modalPrice"></p>
+        <p id="modalDescription"></p>
+        <dl class="modal-details">
+          <div>
+            <dt data-i18n="detailStone">Stone</dt>
+            <dd id="modalStone"></dd>
+          </div>
+          <div>
+            <dt data-i18n="detailMaterial">Material</dt>
+            <dd id="modalMaterial"></dd>
+          </div>
+          <div>
+            <dt data-i18n="detailStyle">Style</dt>
+            <dd id="modalStyle"></dd>
+          </div>
+          <div>
+            <dt data-i18n="detailShipping">Shipping</dt>
+            <dd data-i18n="detailShippingText">Ships in 2-4 business days</dd>
+          </div>
+        </dl>
+        <div class="modal-review">
+          <p class="kicker" data-i18n="reviewKicker">Review</p>
+          <strong id="modalReview"></strong>
+          <div class="review-list" id="reviewList"></div>
+          <form class="review-form" id="reviewForm">
+            <div class="rating-control">
+              <div class="rating-head">
+                <span data-i18n="rating">Rating</span>
+                <strong id="ratingValue">5.0</strong>
+              </div>
+              <div class="star-slider" style="--rating-percent: 100%">
+                <span class="star-track" aria-hidden="true">★★★★★</span>
+                <span class="star-fill" aria-hidden="true">★★★★★</span>
+                <input id="ratingInput" name="rating" type="range" min="1" max="5" step="1" value="5"
+                  aria-label="Rating from 1 to 5 stars" />
               </div>
             </div>
-          </article>
-          <div class="collection-copy">
-            <p class="large-serif" data-i18n="collectionLead">
-              EVRIS edits wearable art pieces with EC clarity: easy to browse, easy to compare, easy to buy.
-            </p>
-            <p data-i18n="collectionText">
-              Pearl jewelry, natural stone bracelets, delicate earrings, and minimal necklaces are organized by mood, category, and daily styling use.
-            </p>
-          </div>
+            <label>
+              <span data-i18n="comment">Comment</span>
+              <textarea name="comment" rows="3" placeholder="Write your styling note..." required></textarea>
+            </label>
+            <button type="submit" class="favorite-button" data-i18n="postComment">Post comment</button>
+            <p class="form-message" id="reviewMessage" role="status"></p>
+          </form>
         </div>
-      </section>
+        <div class="modal-actions">
+          <button type="button" class="cart-button modal-cart" data-i18n="addToCart">Add to cart</button>
+          <button type="button" class="favorite-button modal-favorite" data-i18n="saveFavorite">Save favorite</button>
+          <button type="button" class="favorite-button modal-share" data-i18n="share">Share</button>
+        </div>
+      </div>
+    </section>
+  </div>
 
-      <section class="section member" id="member">
-        <div class="member-copy">
-          <p class="kicker">EVRIS Member</p>
-          <h2 data-i18n="memberTitle">買うほど、選ぶのが楽しくなる。</h2>
-          <p data-i18n="memberText">
-            Create an EVRIS account to save favorites, earn points, track orders, and receive early access to quiet-luxury drops.
-          </p>
-          <div class="hero-actions">
-            <button class="button dark" type="button" data-open-account data-account-open-mode="create" data-i18n="accountCreate">Create account</button>
-            <button class="button light" type="button" data-open-account data-account-open-mode="login" data-i18n="accountTitleLogin">Sign in</button>
-          </div>
+  <aside class="cart-drawer" id="cartDrawer" aria-hidden="true" aria-labelledby="cartTitle">
+    <button class="drawer-backdrop" type="button" data-close-cart aria-label="Close cart"></button>
+    <section class="drawer-panel" role="dialog" aria-modal="true">
+      <div class="drawer-head">
+        <div>
+          <p class="kicker" data-i18n="cartKicker">Shopping cart</p>
+          <h2 id="cartTitle" data-i18n="cartTitle">Your items</h2>
         </div>
-        <div class="member-card" aria-label="Member benefits">
-          <div>
-            <span>01</span>
-            <h3 data-i18n="benefitPointsTitle">5% point back</h3>
-            <p data-i18n="benefitPointsText">Earn points with every purchase and use them from the next order.</p>
-          </div>
-          <div>
-            <span>02</span>
-            <h3 data-i18n="benefitBirthdayTitle">Birthday coupon</h3>
-            <p data-i18n="benefitBirthdayText">Receive a seasonal coupon and styling edit during your birthday month.</p>
-          </div>
-          <div>
-            <span>03</span>
-            <h3 data-i18n="benefitRankTitle">Rank benefits</h3>
-            <p data-i18n="benefitRankText">Silver, Gold, and Muse ranks unlock early sales and limited gift wrapping.</p>
-          </div>
+        <button class="icon-close" type="button" data-close-cart aria-label="Close cart"
+          data-i18n="close">Close</button>
+      </div>
+      <div class="cart-items" id="cartItems"></div>
+      <div class="cart-empty" id="cartEmpty">
+        <p data-i18n="cartEmpty">Your cart is empty.</p>
+        <button class="mini-button" type="button" data-close-cart data-i18n="continueShopping">Continue
+          shopping</button>
+      </div>
+      <div class="cart-summary">
+        <div>
+          <span data-i18n="subtotal">Subtotal</span>
+          <strong id="cartSubtotal">RMB 0</strong>
         </div>
-      </section>
-
-      <section class="section styling" id="styling">
-        <div class="styling-photo">
-          <img src="assets/editorial/street-clean.png" alt="Woman wearing delicate pearl and stone jewelry on a quiet sunlit street" />
-        </div>
-        <div class="styling-panel">
-          <p class="kicker" data-i18n="stylingKicker">Recommended Styling</p>
-          <h2 data-i18n="stylingTitle">소프트한 존재감,<br />凛とした余白。</h2>
-          <p data-i18n="stylingText">
-            Pair a slim necklace with an oversized shirt, layer one pearl bracelet with a natural stone piece, or keep the ear line delicate with a single drop.
-          </p>
-          <div class="style-notes">
-            <span data-i18n="styleNoteIvory">Ivory cotton</span>
-            <span data-i18n="styleNoteGray">Soft gray knit</span>
-            <span data-i18n="styleNoteSilver">Silver line</span>
-            <span data-i18n="styleNoteStone">Natural stone accent</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="section feature-stories" aria-label="Featured editorials">
-        <div class="section-label">
-          <p class="kicker" data-i18n="featuredKicker">Featured</p>
-          <small data-i18n="featuredSmall">Special contents</small>
-        </div>
-        <div class="story-grid">
-          <article>
-            <img src="assets/products/clean/citrine-pearl-bracelet.jpg" alt="Novelty fair bracelet styling" />
-            <p data-i18n="storyNovelty">Novelty fair</p>
-          </article>
-          <article>
-            <img src="assets/editorial/street-clean.png" alt="Layered necklace styling" />
-            <p data-i18n="storyLayer">Layer to define</p>
-          </article>
-          <article>
-            <img src="assets/products/clean/baroque-arc-earrings.jpg" alt="Minimal earring styling" />
-            <p data-i18n="storyMinimalism">Intense minimalism</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section shop" id="shop">
-        <div class="shop-head">
-          <div>
-            <p class="kicker" data-i18n="rankingKicker">Ranking</p>
-            <h2 data-i18n="shopTitle">Shop EVRIS accessories</h2>
-          </div>
-          <div class="filters" aria-label="Product filters">
-            <button class="is-active" type="button" data-filter="all" data-i18n="filterAll">All</button>
-            <button type="button" data-filter="bracelets" data-i18n="filterBracelets">Bracelets</button>
-            <button type="button" data-filter="earrings" data-i18n="filterEarrings">Earrings</button>
-            <button type="button" data-filter="necklaces" data-i18n="filterNecklaces">Necklaces</button>
-          </div>
-        </div>
-        <form class="shop-tools" id="shopTools" role="search" aria-label="Search products">
+        <small id="shippingNote">Shipping is calculated at checkout. Free shipping over RMB 599.</small>
+        <section class="coupon-panel" data-coupon-panel aria-live="polite">
+          <p class="coupon-panel-kicker">GAME COUPON</p>
           <label>
-            <span data-i18n="searchLabel">Search</span>
-            <input id="productSearch" type="search" placeholder="stone, pearl, necklace..." />
+            <span>Coupon</span>
+            <select data-coupon-select></select>
           </label>
+          <p class="coupon-panel-note" data-coupon-note></p>
+          <p class="coupon-panel-total" data-coupon-total></p>
+        </section>
+        <form class="checkout-form" id="checkoutForm">
           <label>
-            <span data-i18n="priceLabel">Price</span>
-            <select id="priceFilter">
-              <option value="all" data-i18n="priceAll">All price</option>
-              <option value="entry" data-i18n="priceEntry">Entry under RMB 300</option>
-              <option value="standard" data-i18n="priceStandard">Standard RMB 300-500</option>
-              <option value="premium" data-i18n="pricePremium">Premium over RMB 500</option>
+            <span data-i18n="giftOption">Gift option</span>
+            <select name="giftOption">
+              <option value="none" data-i18n="noGiftWrap">No gift wrap</option>
+              <option value="wrap" data-i18n="giftWrap">Gift wrapping</option>
+              <option value="message" data-i18n="giftMessage">Gift wrapping + message card</option>
             </select>
           </label>
-          <p id="productResultCount" role="status">12 items</p>
-        </form>
-        <div class="product-grid">
-          <article class="product-card" data-category="necklace">
-            <a href="#" aria-label="View Citrine pearl necklace">
-              <img src="assets/products/clean/citrine-pearl-necklace.jpg" alt="Citrine pearl necklace" />
-              <span class="hover-label">Quick view</span>
-            </a>
-            <div class="product-info">
-              <div>
-                <p>Citrine Pearl Necklace</p>
-                <small data-i18n="metaNecklaceSilver">Necklace / Silver</small>
-              </div>
-              <span>RMB 588</span>
-            </div>
-            <button type="button" class="cart-button">Add to cart</button>
-          </article>
-          <article class="product-card" data-category="bracelet">
-            <a href="#" aria-label="View Citrine pearl bracelet">
-              <img src="assets/products/clean/citrine-pearl-bracelet.jpg" alt="Citrine pearl bracelet" />
-              <span class="hover-label">Quick view</span>
-            </a>
-            <div class="product-info">
-              <div>
-                <p>Citrine Pearl Bracelet</p>
-                <small data-i18n="metaBraceletStone">Bracelet / Natural stone</small>
-              </div>
-              <span>RMB 358</span>
-            </div>
-            <button type="button" class="cart-button">Add to cart</button>
-          </article>
-          <article class="product-card" data-category="earring">
-            <a href="#" aria-label="View Citrine drop earrings">
-              <img src="assets/products/clean/citrine-drop-earrings.jpg" alt="Citrine drop earrings" />
-              <span class="hover-label">Quick view</span>
-            </a>
-            <div class="product-info">
-              <div>
-                <p>Citrine Drop Earrings</p>
-                <small data-i18n="metaEarringsCrystal">Earrings / Crystal</small>
-              </div>
-              <span>RMB 278</span>
-            </div>
-            <button type="button" class="cart-button">Add to cart</button>
-          </article>
-          <article class="product-card" data-category="earring">
-            <a href="#" aria-label="View Baroque arc earrings">
-              <img src="assets/products/clean/baroque-arc-earrings.jpg" alt="Baroque arc pearl earrings" />
-              <span class="hover-label">Quick view</span>
-            </a>
-            <div class="product-info">
-              <div>
-                <p>Baroque Arc Earrings</p>
-                <small data-i18n="metaEarringsPearl">Earrings / Freshwater pearl</small>
-              </div>
-              <span>RMB 198</span>
-            </div>
-            <button type="button" class="cart-button">Add to cart</button>
-          </article>
-          <article class="product-card" data-category="bracelet">
-            <a href="#" aria-label="View Tiger eye bracelet">
-              <img src="assets/products/clean/tiger-eye-bracelet.jpg" alt="Tiger eye natural stone bracelet" />
-              <span class="hover-label">Quick view</span>
-            </a>
-            <div class="product-info">
-              <div>
-                <p>Tiger Eye Bracelet</p>
-                <small data-i18n="metaBraceletMix">Bracelet / Stone mix</small>
-              </div>
-              <span>RMB 428</span>
-            </div>
-            <button type="button" class="cart-button">Add to cart</button>
-          </article>
-          <article class="product-card" data-category="bracelet">
-            <a href="#" aria-label="View Clear crystal bracelet">
-              <img src="assets/products/clean/clear-crystal-bracelet.jpg" alt="Clear crystal bracelet with pearls" />
-              <span class="hover-label">Quick view</span>
-            </a>
-            <div class="product-info">
-              <div>
-                <p>Clear Crystal Bracelet</p>
-                <small data-i18n="metaBraceletCrystal">Bracelet / White crystal</small>
-              </div>
-              <span>RMB 488</span>
-            </div>
-            <button type="button" class="cart-button">Add to cart</button>
-          </article>
-          <article class="product-card" data-category="bracelet">
-            <a href="#" aria-label="View Green stone bracelet">
-              <img src="assets/products/clean/green-stone-bracelet.jpg" alt="Green stone bracelet" />
-              <span class="hover-label">Quick view</span>
-            </a>
-            <div class="product-info">
-              <div>
-                <p>Green Stone Bracelet</p>
-                <small data-i18n="metaBraceletColor">Bracelet / Daily color</small>
-              </div>
-              <span>RMB 308</span>
-            </div>
-            <button type="button" class="cart-button">Add to cart</button>
-          </article>
-          <article class="product-card" data-category="bracelet">
-            <a href="#" aria-label="View Mix stone bracelet">
-              <img src="assets/products/clean/mix-stone-bracelet.jpg" alt="Mixed color stone bracelet" />
-              <span class="hover-label">Quick view</span>
-            </a>
-            <div class="product-info">
-              <div>
-                <p>Mix Stone Bracelet</p>
-                <small data-i18n="metaBraceletAccent">Bracelet / Color accent</small>
-              </div>
-              <span>RMB 388</span>
-            </div>
-            <button type="button" class="cart-button">Add to cart</button>
-          </article>
-          <article class="product-card" data-category="bracelet">
-            <a href="#" aria-label="View Moon pearl bracelet">
-              <img src="assets/products/clean/moon-pearl-bracelet.jpg" alt="Moon pearl bracelet" />
-              <span class="hover-label">Quick view</span>
-            </a>
-            <div class="product-info">
-              <div>
-                <p>Moon Pearl Bracelet</p>
-                <small data-i18n="metaBraceletPearl">Bracelet / Pearl</small>
-              </div>
-              <span>RMB 458</span>
-            </div>
-            <button type="button" class="cart-button">Add to cart</button>
-          </article>
-          <article class="product-card" data-category="bracelet">
-            <a href="#" aria-label="View Lapis pearl bracelet">
-              <img src="assets/products/clean/lapis-pearl-bracelet.jpg" alt="Lapis and pearl bracelet" />
-              <span class="hover-label">Quick view</span>
-            </a>
-            <div class="product-info">
-              <div>
-                <p>Lapis Pearl Bracelet</p>
-                <small data-i18n="metaBraceletBlue">Bracelet / Blue stone</small>
-              </div>
-              <span>RMB 518</span>
-            </div>
-            <button type="button" class="cart-button">Add to cart</button>
-          </article>
-          <article class="product-card" data-category="bracelet">
-            <a href="#" aria-label="View Amber pearl bracelet">
-              <img src="assets/products/clean/amber-pearl-bracelet.jpg" alt="Amber pearl bracelet" />
-              <span class="hover-label">Quick view</span>
-            </a>
-            <div class="product-info">
-              <div>
-                <p>Amber Pearl Bracelet</p>
-                <small data-i18n="metaBraceletWarm">Bracelet / Warm stone</small>
-              </div>
-              <span>RMB 568</span>
-            </div>
-            <button type="button" class="cart-button">Add to cart</button>
-          </article>
-          <article class="product-card" data-category="bracelet">
-            <a href="#" aria-label="View Minimal pearl chain">
-              <img src="assets/products/clean/minimal-pearl-chain.jpg" alt="Minimal pearl chain bracelet" />
-              <span class="hover-label">Quick view</span>
-            </a>
-            <div class="product-info">
-              <div>
-                <p>Minimal Pearl Chain</p>
-                <small data-i18n="metaBraceletSilver">Bracelet / Fine silver</small>
-              </div>
-              <span>RMB 298</span>
-            </div>
-            <button type="button" class="cart-button">Add to cart</button>
-          </article>
-        </div>
-      </section>
-
-      <section class="section material-story">
-        <img src="assets/editorial/studio-desk.png" alt="Hands wearing pearl and silver accessories" />
-        <div>
-          <p class="kicker" data-i18n="materialKicker">Surgical stainless</p>
-          <h2 data-i18n="materialTitle">Daily jewelry made for lasting wear.</h2>
-          <p data-i18n="materialText">
-            Water-friendly shine, soft silhouettes, and accessories designed for repeat styling from morning to night.
-          </p>
-          <a class="mini-button" href="#shop" data-i18n="viewMore">View more</a>
-        </div>
-      </section>
-
-      <section class="section stone-guide" id="stone-guide">
-        <div class="section-label">
-          <p class="kicker" data-i18n="stoneKicker">Stone dictionary</p>
-          <small data-i18n="stoneSmall">Choose by meaning, color, and daily mood.</small>
-        </div>
-        <div class="stone-grid">
-          <article>
-            <span>Citrine</span>
-            <h3 data-i18n="stoneCitrineTitle">Positive clarity</h3>
-            <p data-i18n="stoneCitrineText">Warm yellow tone for confidence, brightness, and a light daily accent.</p>
-          </article>
-          <article>
-            <span>Lapis</span>
-            <h3 data-i18n="stoneLapisTitle">Quiet focus</h3>
-            <p data-i18n="stoneLapisText">Deep blue for calm styling, denim looks, and personal expression.</p>
-          </article>
-          <article>
-            <span>Pearl</span>
-            <h3 data-i18n="stonePearlTitle">Soft elegance</h3>
-            <p data-i18n="stonePearlText">A classic material that makes simple outfits feel finished.</p>
-          </article>
-          <article>
-            <span>Tiger eye</span>
-            <h3 data-i18n="stoneTigerTitle">Natural strength</h3>
-            <p data-i18n="stoneTigerText">Earthy depth for black, ivory, and soft gray coordinate looks.</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section coordinate">
-        <div class="section-label">
-          <p class="kicker" data-i18n="coordinateKicker">Staff coordinate</p>
-          <small data-i18n="coordinateSmall">Introducing EVRIS store staff styling</small>
-          <a href="#shop" data-i18n="viewMore">View more</a>
-        </div>
-        <div class="coordinate-grid">
-          <img src="assets/editorial/street-clean.png" alt="Daily accessory coordinate" />
-          <img src="assets/products/clean/teal-pearl-bracelet.jpg" alt="Teal bracelet coordinate" />
-          <img src="assets/products/clean/amber-pearl-bracelet.jpg" alt="Bracelet close up" />
-          <img src="assets/products/clean/lapis-pearl-bracelet.jpg" alt="Stone bracelet close up" />
-        </div>
-      </section>
-
-      <section class="section store-list" id="store">
-        <div class="section-label">
-          <p class="kicker">EVRIS Store</p>
-          <small data-i18n="storeSmall">Shop list</small>
-          <a href="#shop" data-i18n="viewMore">View more</a>
-        </div>
-        <div class="store-columns">
-          <article>
-            <h3>EVRIS Store Harajuku</h3>
-            <p>Harajuku Jingumae<br />Tokyo</p>
-          </article>
-          <article>
-            <h3>EVRIS Store Shinjuku Lumine</h3>
-            <p>Shinjuku Lumine 2<br />Tokyo</p>
-          </article>
-          <article>
-            <h3>EVRIS Store Osaka</h3>
-            <p>Lucua Osaka 8F<br />Osaka</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section news-list" id="news">
-        <div class="section-label">
-          <p class="kicker" data-i18n="navNews">News</p>
-        </div>
-        <div class="news-lines">
-          <p><span data-i18n="infoLabel">Information</span> <span class="news-copy" data-i18n="newsOne">New arrival collection is now available.</span></p>
-          <p><span data-i18n="infoLabel">Information</span> <span class="news-copy" data-i18n="newsTwo">Novelty fair starts this weekend.</span></p>
-          <p><span data-i18n="infoLabel">Information</span> <span class="news-copy" data-i18n="newsThree">Member points campaign has been updated.</span></p>
-          <p><span data-i18n="infoLabel">Information</span> <span class="news-copy" data-i18n="newsFour">Store styling archive is open.</span></p>
-        </div>
-      </section>
-
-      <section class="newsletter">
-        <p class="kicker" data-i18n="newsletterKicker">News letter</p>
-        <p data-i18n="newsletterText">Receive new arrivals, campaigns, and styling notes.</p>
-        <form id="newsletterForm">
-          <input type="email" placeholder="EMAIL" aria-label="Email address" />
-          <button type="submit" data-i18n="send">Send</button>
-        </form>
-        <p class="form-message" id="newsletterMessage" role="status"></p>
-      </section>
-    </main>
-
-    <footer>
-      <p>EVRIS</p>
-      <div>
-        <a href="#shop" data-i18n="navShop">Shop</a>
-        <a href="#member" data-i18n="navMembership">Member</a>
-        <a href="#news" data-i18n="navNews">News</a>
-        <a href="#store" data-i18n="footerStoreLocation">Store location</a>
-      </div>
-      <span data-i18n="footerText">Accessory online store for calm daily styling. Member points, new arrivals, and gift-ready jewelry.</span>
-    </footer>
-
-    <div class="product-modal" id="productModal" aria-hidden="true">
-      <button class="modal-backdrop" type="button" data-close-modal aria-label="Close product information"></button>
-      <section
-        class="modal-panel"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="modalTitle"
-        aria-describedby="modalDescription"
-      >
-        <button class="modal-close" type="button" data-close-modal aria-label="Close product information" data-i18n="close">Close</button>
-        <div class="modal-image-wrap">
-          <img id="modalImage" src="" alt="" />
-        </div>
-        <div class="modal-copy">
-          <p class="item-meta" id="modalMeta"></p>
-          <h2 id="modalTitle"></h2>
-          <p class="modal-price" id="modalPrice"></p>
-          <p id="modalDescription"></p>
-          <dl class="modal-details">
-            <div>
-              <dt data-i18n="detailStone">Stone</dt>
-              <dd id="modalStone"></dd>
-            </div>
-            <div>
-              <dt data-i18n="detailMaterial">Material</dt>
-              <dd id="modalMaterial"></dd>
-            </div>
-            <div>
-              <dt data-i18n="detailStyle">Style</dt>
-              <dd id="modalStyle"></dd>
-            </div>
-            <div>
-              <dt data-i18n="detailShipping">Shipping</dt>
-              <dd data-i18n="detailShippingText">Ships in 2-4 business days</dd>
-            </div>
-          </dl>
-          <div class="modal-review">
-            <p class="kicker" data-i18n="reviewKicker">Review</p>
-            <strong id="modalReview"></strong>
-            <div class="review-list" id="reviewList"></div>
-            <form class="review-form" id="reviewForm">
-              <div class="rating-control">
-                <div class="rating-head">
-                  <span data-i18n="rating">Rating</span>
-                  <strong id="ratingValue">5.0</strong>
-                </div>
-                <div class="star-slider" style="--rating-percent: 100%">
-                  <span class="star-track" aria-hidden="true">★★★★★</span>
-                  <span class="star-fill" aria-hidden="true">★★★★★</span>
-                  <input
-                    id="ratingInput"
-                    name="rating"
-                    type="range"
-                    min="1"
-                    max="5"
-                    step="1"
-                    value="5"
-                    aria-label="Rating from 1 to 5 stars"
-                  />
-                </div>
-              </div>
-              <label>
-                <span data-i18n="comment">Comment</span>
-                <textarea name="comment" rows="3" placeholder="Write your styling note..." required></textarea>
-              </label>
-              <button type="submit" class="favorite-button" data-i18n="postComment">Post comment</button>
-              <p class="form-message" id="reviewMessage" role="status"></p>
-            </form>
-          </div>
-          <div class="modal-actions">
-            <button type="button" class="cart-button modal-cart" data-i18n="addToCart">Add to cart</button>
-            <button type="button" class="favorite-button modal-favorite" data-i18n="saveFavorite">Save favorite</button>
-            <button type="button" class="favorite-button modal-share" data-i18n="share">Share</button>
-          </div>
-        </div>
-      </section>
-    </div>
-
-    <aside class="cart-drawer" id="cartDrawer" aria-hidden="true" aria-labelledby="cartTitle">
-      <button class="drawer-backdrop" type="button" data-close-cart aria-label="Close cart"></button>
-      <section class="drawer-panel" role="dialog" aria-modal="true">
-        <div class="drawer-head">
-          <div>
-            <p class="kicker" data-i18n="cartKicker">Shopping cart</p>
-            <h2 id="cartTitle" data-i18n="cartTitle">Your items</h2>
-          </div>
-          <button class="icon-close" type="button" data-close-cart aria-label="Close cart" data-i18n="close">Close</button>
-        </div>
-        <div class="cart-items" id="cartItems"></div>
-        <div class="cart-empty" id="cartEmpty">
-          <p data-i18n="cartEmpty">Your cart is empty.</p>
-          <button class="mini-button" type="button" data-close-cart data-i18n="continueShopping">Continue shopping</button>
-        </div>
-        <div class="cart-summary">
-          <div>
-            <span data-i18n="subtotal">Subtotal</span>
-            <strong id="cartSubtotal">RMB 0</strong>
-          </div>
-          <small id="shippingNote">Shipping is calculated at checkout. Free shipping over RMB 599.</small>
-          <form class="checkout-form" id="checkoutForm">
-            <label>
-              <span data-i18n="giftOption">Gift option</span>
-              <select name="giftOption">
-                <option value="none" data-i18n="noGiftWrap">No gift wrap</option>
-                <option value="wrap" data-i18n="giftWrap">Gift wrapping</option>
-                <option value="message" data-i18n="giftMessage">Gift wrapping + message card</option>
-              </select>
-            </label>
-            <label>
-              <span data-i18n="name">Name</span>
-              <input type="text" name="name" autocomplete="name" required />
-            </label>
-            <label>
-              <span data-i18n="email">Email</span>
-              <input type="email" name="email" autocomplete="email" required />
-            </label>
-            <label>
-              <span data-i18n="address">Address</span>
-              <textarea name="address" rows="3" required></textarea>
-            </label>
-            <button class="cart-button" type="submit" data-i18n="checkout">Checkout</button>
-          </form>
-          <p class="form-message" id="checkoutMessage" role="status"></p>
-        </div>
-      </section>
-    </aside>
-
-    <div class="account-modal" id="accountModal" aria-hidden="true">
-      <button class="modal-backdrop" type="button" data-close-account aria-label="Close account form"></button>
-      <section class="account-panel" role="dialog" aria-modal="true" aria-labelledby="accountTitle">
-        <button class="modal-close" type="button" data-close-account aria-label="Close account form" data-i18n="close">Close</button>
-        <p class="kicker">EVRIS Member</p>
-        <h2 id="accountTitle">Sign in</h2>
-        <div class="member-summary" id="memberSummary" hidden>
-          <p data-i18n="loggedInAs">Logged in as</p>
-          <strong id="memberEmail"></strong>
-          <span data-i18n="memberRank">Current rank: Silver / Points: 0 pt</span>
-          <div class="member-preferences">
-            <label>
-              <span data-i18n="favoriteMood">Favorite mood</span>
-              <select id="stylePreference">
-                <option value="Minimal" data-i18n="moodMinimal">Minimal</option>
-                <option value="Natural stone" data-i18n="moodNaturalStone">Natural stone</option>
-                <option value="Pearl classic" data-i18n="moodPearlClassic">Pearl classic</option>
-                <option value="Gift styling" data-i18n="moodGiftStyling">Gift styling</option>
-              </select>
-            </label>
-            <div>
-              <p data-i18n="savedFavorites">Saved favorites</p>
-              <strong id="favoriteCount">0 items</strong>
-            </div>
-          </div>
-          <form class="member-address-form" id="memberAddressForm">
-            <label>
-              <span data-i18n="packageAddress">Package address</span>
-              <textarea
-                id="memberAddress"
-                name="shippingAddress"
-                rows="4"
-                autocomplete="shipping street-address"
-                placeholder="Add your package delivery address"
-              ></textarea>
-            </label>
-            <button class="mini-button" type="submit" data-i18n="saveAddress">Save address</button>
-            <small data-i18n="packageAddressHint">This address will be used automatically at checkout.</small>
-            <p class="form-message" id="memberAddressMessage" role="status"></p>
-          </form>
-          <button class="mini-button" type="button" id="logoutButton" data-i18n="logout">Logout</button>
-        </div>
-        <div class="account-tabs" role="tablist" aria-label="Account mode">
-          <button class="is-active" type="button" data-account-mode="login" data-i18n="accountLogin">Login</button>
-          <button type="button" data-account-mode="create" data-i18n="accountCreate">Create</button>
-        </div>
-        <form class="account-form" id="accountForm">
+          <label>
+            <span data-i18n="name">Name</span>
+            <input type="text" name="name" autocomplete="name" required />
+          </label>
           <label>
             <span data-i18n="email">Email</span>
             <input type="email" name="email" autocomplete="email" required />
           </label>
           <label>
-            <span data-i18n="password">Password</span>
-            <input type="password" name="password" autocomplete="current-password" minlength="6" required />
+            <span data-i18n="address">Address</span>
+            <textarea name="address" rows="3" required></textarea>
           </label>
-          <label class="create-only">
-            <span data-i18n="birthdayMonth">Birthday month</span>
-            <select name="birthday">
-              <option value="">Select month</option>
-              <option>January</option>
-              <option>February</option>
-              <option>March</option>
-              <option>April</option>
-              <option>May</option>
-              <option>June</option>
-              <option>July</option>
-              <option>August</option>
-              <option>September</option>
-              <option>October</option>
-              <option>November</option>
-              <option>December</option>
+          <button class="cart-button" type="submit" data-i18n="checkout">Checkout</button>
+        </form>
+        <p class="form-message" id="checkoutMessage" role="status"></p>
+      </div>
+    </section>
+  </aside>
+
+  <div class="account-modal" id="accountModal" aria-hidden="true">
+    <button class="modal-backdrop" type="button" data-close-account aria-label="Close account form"></button>
+    <section class="account-panel" role="dialog" aria-modal="true" aria-labelledby="accountTitle">
+      <button class="modal-close" type="button" data-close-account aria-label="Close account form"
+        data-i18n="close">Close</button>
+      <p class="kicker">EVRIS Member</p>
+      <h2 id="accountTitle">Sign in</h2>
+      <div class="member-summary" id="memberSummary" hidden>
+        <p data-i18n="loggedInAs">Logged in as</p>
+        <strong id="memberEmail"></strong>
+        <span data-i18n="memberRank">Current rank: Silver / Points: 0 pt</span>
+        <div class="member-preferences">
+          <label>
+            <span data-i18n="favoriteMood">Favorite mood</span>
+            <select id="stylePreference">
+              <option value="Minimal" data-i18n="moodMinimal">Minimal</option>
+              <option value="Natural stone" data-i18n="moodNaturalStone">Natural stone</option>
+              <option value="Pearl classic" data-i18n="moodPearlClassic">Pearl classic</option>
+              <option value="Gift styling" data-i18n="moodGiftStyling">Gift styling</option>
             </select>
           </label>
-          <button class="cart-button" type="submit" id="accountSubmit">Login</button>
-          <button class="forgot-password" type="button" id="forgotPasswordButton">Forgot password?</button>
-          <p class="form-message" id="accountMessage" role="status"></p>
+          <div>
+            <p data-i18n="savedFavorites">Saved favorites</p>
+            <strong id="favoriteCount">0 items</strong>
+          </div>
+        </div>
+        <form class="member-address-form" id="memberAddressForm">
+          <label>
+            <span data-i18n="packageAddress">Package address</span>
+            <textarea id="memberAddress" name="shippingAddress" rows="4" autocomplete="shipping street-address"
+              placeholder="Add your package delivery address"></textarea>
+          </label>
+          <button class="mini-button" type="submit" data-i18n="saveAddress">Save address</button>
+          <small data-i18n="packageAddressHint">This address will be used automatically at checkout.</small>
+          <p class="form-message" id="memberAddressMessage" role="status"></p>
         </form>
-      </section>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="script.js?v=23"></script>
-  </body>
+        <button class="mini-button" type="button" id="logoutButton" data-i18n="logout">Logout</button>
+      </div>
+      <div class="account-tabs" role="tablist" aria-label="Account mode">
+        <button class="is-active" type="button" data-account-mode="login" data-i18n="accountLogin">Login</button>
+        <button type="button" data-account-mode="create" data-i18n="accountCreate">Create</button>
+      </div>
+      <form class="account-form" id="accountForm">
+        <label>
+          <span data-i18n="email">Email</span>
+          <input type="email" name="email" autocomplete="email" required />
+        </label>
+        <label>
+          <span data-i18n="password">Password</span>
+          <input type="password" name="password" autocomplete="current-password" minlength="6" required />
+        </label>
+        <label class="create-only">
+          <span data-i18n="birthdayMonth">Birthday month</span>
+          <select name="birthday">
+            <option value="">Select month</option>
+            <option>January</option>
+            <option>February</option>
+            <option>March</option>
+            <option>April</option>
+            <option>May</option>
+            <option>June</option>
+            <option>July</option>
+            <option>August</option>
+            <option>September</option>
+            <option>October</option>
+            <option>November</option>
+            <option>December</option>
+          </select>
+        </label>
+        <button class="cart-button" type="submit" id="accountSubmit">Login</button>
+        <button class="forgot-password" type="button" id="forgotPasswordButton">Forgot password?</button>
+        <p class="form-message" id="accountMessage" role="status"></p>
+      </form>
+    </section>
+  </div>
+  <script src="gem-archive-2048/energy.js" data-gem-browse defer></script>
+  <script src="gem-archive-2048/coupon.js"></script>
+  <script src="auth-feedback.js?v=6"></script>
+  <script src="firebase-config.js?v=2"></script>
+    <script src="firebase-backend.js?v=5"></script>
+  <script src="products-data.js?v=1"></script>
+  <script src="script.js?v=39"></script>
+  <script src="catalog-live.js?v=1"></script>
+    <script src="coupon-sync.js?v=1"></script>
+    <script src="member-coupons.js?v=2"></script>
+</body>
+
 </html>

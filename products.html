@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All Items | EVRIS</title>
+    <meta
+      name="description"
+      content="Browse all EVRIS accessories by category, price, and daily styling mood."
+    />
+    <link rel="icon" href="assets/icon.png" type="image/png" />
+    <link rel="stylesheet" href="styles.css?v=73" />
+  </head>
+  <body>
+    <div class="top-message">Free shipping over RMB 599 / Member points 5%</div>
+    <header class="site-header" aria-label="Primary navigation">
+      <a class="brand-mark" href="index.html" aria-label="EVRIS home">EVRIS</a>
+      <nav>
+        <a href="index.html#new" data-i18n="navFeatured">Featured</a>
+        <a href="index.html#member" data-i18n="navMembership">Membership</a>
+        <a href="index.html#styling" data-i18n="navStyling">Styling</a>
+        <a href="index.html#store" data-i18n="navStore">Store</a>
+        <a href="index.html#news" data-i18n="navNews">News</a>
+        <a href="products.html" data-i18n="navShop">Shop</a>
+      <a href="stone-archive/index.html" data-i18n="navArchive">Stone Archive</a>
+      <a href="gem-archive-2048/index.html">GEM 2048</a>
+      </nav>
+      <div class="header-actions" aria-label="Account and cart links">
+        <div class="locale-controls" aria-label="Country and currency settings">
+          <select id="marketSelect" aria-label="Country and currency">
+            <option value="CN">RMB</option>
+            <option value="JP">JPY</option>
+            <option value="HK">HKD</option>
+            <option value="US">USD</option>
+            <option value="KR">KRW</option>
+            <option value="TW">TWD</option>
+          </select>
+          <select id="languageSelect" aria-label="Language">
+            <option value="en">EN</option>
+            <option value="zh">中</option>
+            <option value="ja">日</option>
+            <option value="ko">한</option>
+          </select>
+        </div>
+        <button type="button" id="accountButton" data-open-account>Login</button>
+        <button type="button" data-open-cart><span class="cart-label" data-i18n="cart">Cart</span> <span id="cartCount">0</span></button>
+      </div>
+    </header>
+
+    <main>
+      <section class="catalog-hero">
+        <div>
+          <h1 data-i18n="allItemsTitle">All Items</h1>
+          <p data-i18n="allItemsText">Browse every EVRIS accessory by category, keyword, and price.</p>
+        </div>
+      </section>
+
+      <section class="section catalog-section">
+        <div class="catalog-toolbar">
+          <div class="filters" aria-label="Product filters">
+            <button class="is-active" type="button" data-filter="all" data-i18n="filterAll">All</button>
+            <button type="button" data-filter="bracelet" data-i18n="filterBracelets">Bracelets</button>
+            <button type="button" data-filter="earring" data-i18n="filterEarrings">Earrings</button>
+            <button type="button" data-filter="necklace" data-i18n="filterNecklaces">Necklaces</button>
+          </div>
+          <form class="shop-tools" role="search" aria-label="Search products">
+            <label>
+              <span data-i18n="searchLabel">Search</span>
+              <input id="catalogSearch" type="search" placeholder="stone, pearl, necklace..." />
+            </label>
+            <label>
+              <span data-i18n="sortLabel">Sort</span>
+              <select id="catalogSort">
+                <option value="featured" data-i18n="sortFeatured">Featured</option>
+                <option value="new" data-i18n="sortNewest">Newest</option>
+                <option value="price-asc" data-i18n="sortLow">Price low to high</option>
+                <option value="price-desc" data-i18n="sortHigh">Price high to low</option>
+              </select>
+            </label>
+            <p id="catalogCount" role="status">0 items</p>
+          </form>
+        </div>
+        <div class="product-grid catalog-grid" id="catalogGrid"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>EVRIS</p>
+      <div>
+        <a href="products.html" data-i18n="navShop">Shop</a>
+        <a href="index.html#member" data-i18n="navMembership">Member</a>
+        <a href="index.html#news" data-i18n="navNews">News</a>
+        <a href="index.html#store" data-i18n="footerStoreLocation">Store location</a>
+        <a href="stone-archive/index.html" data-i18n="navArchive">Stone Archive</a>
+        <a href="gem-archive-2048/index.html">GEM 2048</a>
+      </div>
+      <span data-i18n="footerText">Accessory online store for calm daily styling. Member points, new arrivals, and gift-ready jewelry.</span>
+    </footer>
+
+    <aside class="cart-drawer" id="cartDrawer" aria-hidden="true" aria-labelledby="cartTitle">
+      <button class="drawer-backdrop" type="button" data-close-cart aria-label="Close cart"></button>
+      <section class="drawer-panel" role="dialog" aria-modal="true">
+        <div class="drawer-head">
+          <div>
+            <p class="kicker" data-i18n="cartKicker">Shopping cart</p>
+            <h2 id="cartTitle" data-i18n="cartTitle">Your items</h2>
+          </div>
+          <button class="icon-close" type="button" data-close-cart aria-label="Close cart">Close</button>
+        </div>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-empty" id="cartEmpty">
+          <p data-i18n="cartEmpty">Your cart is empty.</p>
+          <button class="mini-button" type="button" data-close-cart data-i18n="continueShopping">Continue shopping</button>
+        </div>
+        <div class="cart-summary">
+          <div>
+            <span data-i18n="subtotal">Subtotal</span>
+            <strong id="cartSubtotal">RMB 0</strong>
+          </div>
+          <small data-i18n="shippingNote">Shipping is calculated at checkout. Free shipping over RMB 599.</small>
+          <section class="coupon-panel" data-coupon-panel aria-live="polite">
+            <p class="coupon-panel-kicker">GAME COUPON</p>
+            <label>
+              <span>Coupon</span>
+              <select data-coupon-select></select>
+            </label>
+            <p class="coupon-panel-note" data-coupon-note></p>
+            <p class="coupon-panel-total" data-coupon-total></p>
+          </section>
+          <a class="coupon-checkout-link" href="index.html#checkout">Proceed to checkout</a>
+        </div>
+      </section>
+    </aside>
+
+    <script src="gem-archive-2048/energy.js" data-gem-browse defer></script>
+    <script src="gem-archive-2048/coupon.js"></script>
+    <script src="products-data.js?v=1"></script>
+    <script src="products-page.js?v=8"></script>
+    <script src="auth-feedback.js?v=6"></script>
+  <script src="firebase-config.js?v=2"></script>
+    <script src="firebase-backend.js?v=5"></script>
+    <script src="account-auth.js?v=7"></script>
+    <script src="catalog-live.js?v=1"></script>
+    <script src="coupon-sync.js?v=1"></script>
+    <script src="member-coupons.js?v=2"></script>
+  </body>
+</html>

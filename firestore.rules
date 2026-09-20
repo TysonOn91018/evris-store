@@ -1,0 +1,100 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function owner(uid) { return request.auth != null && request.auth.uid == uid; }
+    function verified() { return request.auth != null && request.auth.token.email_verified == true; }
+    function admin() { return verified() && (request.auth.token.email == 'fatchan2019@gmail.com' || request.auth.token.get('admin', false) == true); }
+    match /profiles/{uid} {
+      allow read: if owner(uid);
+      allow create: if owner(uid)
+        && request.resource.data.keys().hasAll(['email','birthday_month','shipping_address','rank','points'])
+        && request.resource.data.keys().hasOnly(['email','birthday_month','shipping_address','rank','points'])
+        && request.resource.data.email == request.auth.token.email
+        && request.resource.data.rank == 'Silver' && request.resource.data.points == 0
+        && validProfile();
+      allow update: if owner(uid) && validProfile()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['birthday_month','shipping_address']);
+      function validProfile() {
+        return request.resource.data.birthday_month is string && request.resource.data.birthday_month.size() <= 20
+          && request.resource.data.shipping_address is string && request.resource.data.shipping_address.size() <= 2000;
+      }
+      match /favorites/{slug} {
+        allow read, delete: if owner(uid);
+        allow create, update: if owner(uid)
+          && request.resource.data.keys().hasOnly(['product_slug','product_name','image_url'])
+          && request.resource.data.product_slug == slug
+          && request.resource.data.product_name is string && request.resource.data.product_name.size() <= 200
+          && request.resource.data.image_url is string && request.resource.data.image_url.size() <= 1000;
+      }
+    }
+    match /products/{slug} {
+      allow read: if resource.data.is_active == true || admin();
+      allow create, update: if admin() && validProduct();
+      function validProduct() {
+        let p = request.resource.data;
+        return p.keys().hasAll(['slug','name','price','stock','category','image_path','description','material','style','is_active','revision','updated_at'])
+          && p.keys().hasOnly(['slug','name','price','stock','category','image_path','description','material','style','is_active','revision','updated_at','created_at'])
+          && p.slug == slug && slug.matches('^[a-z0-9-]{1,100}$')
+          && p.name is string && p.name.size() > 0 && p.name.size() <= 160 && !p.name.matches('.*[<>].*')
+          && p.description is string && p.description.size() <= 2000 && !p.description.matches('.*[<>].*')
+          && p.material is string && p.material.size() <= 2000 && !p.material.matches('.*[<>].*')
+          && p.style is string && p.style.size() <= 2000 && !p.style.matches('.*[<>].*')
+          && p.price is int && p.price >= 0 && p.price <= 10000000
+          && p.stock is int && p.stock >= 0 && p.stock <= 1000000
+          && p.category in ['bracelet','earring','necklace']
+          && p.image_path is string && p.image_path.matches('^assets/[a-zA-Z0-9_./-]+[.](jpg|jpeg|png|webp)$') && !p.image_path.matches('.*[.][.].*')
+          && p.is_active is bool && p.revision is int && p.revision > 0 && p.updated_at == request.time;
+      }
+    }
+    match /reviews/{id} {
+      allow read: if true;
+      allow create: if verified()
+        && request.resource.data.keys().hasOnly(['product_slug','rating','comment','user_id','user_email','created_at'])
+        && request.resource.data.user_id == request.auth.uid && request.resource.data.user_email == 'EVRIS member'
+        && request.resource.data.product_slug is string && request.resource.data.product_slug.size() <= 100
+        && request.resource.data.rating is int && request.resource.data.rating >= 1 && request.resource.data.rating <= 5
+        && request.resource.data.comment is string && request.resource.data.comment.size() > 0 && request.resource.data.comment.size() <= 2000
+        && request.resource.data.created_at == request.time;
+    }
+    match /newsletter_subscribers/{id} {
+      allow create: if request.resource.data.keys().hasOnly(['email','created_at'])
+        && request.resource.data.email is string && request.resource.data.email.size() <= 254
+        && request.resource.data.email.matches('^[^@ ]+@[^@ ]+[.][^@ ]+$')
+        && request.resource.data.created_at == request.time;
+    }
+    match /orders/{id} { allow read: if owner(resource.data.user_id); }
+    // Fixed game reward tiers: a verified account can create one immutable claim per tier.
+    function validReward(id, p) {
+      return verified()
+        && p.keys().hasOnly(['user_id','code','milestone','product_slug','discount_percent','issued_at','redeemed_at'])
+        && p.user_id == request.auth.uid
+        && p.milestone is int && p.milestone in [256,512,1024,2048]
+        && id == request.auth.uid + '_' + string(p.milestone) && p.code == id
+        && p.product_slug in ['citrine-drop-earrings','moon-pearl-bracelet','minimal-pearl-chain']
+        && ((p.milestone == 256 && p.discount_percent == 3)
+          || (p.milestone == 512 && p.discount_percent == 5)
+          || (p.milestone == 1024 && p.discount_percent == 8)
+          || (p.milestone == 2048 && p.discount_percent == 10))
+        && p.issued_at == request.time && p.redeemed_at == null;
+    }
+    function ownRewardId(id) {
+      return verified() && id in [request.auth.uid + '_256', request.auth.uid + '_512', request.auth.uid + '_1024', request.auth.uid + '_2048'];
+    }
+    match /coupon_claims/{id} {
+      allow get: if ownRewardId(id) || owner(resource.data.user_id);
+      allow create: if validReward(id, request.resource.data)
+        && getAfter(/databases/$(database)/documents/game_coupons/$(id)).data == request.resource.data;
+      // Claims cannot be edited or deleted by clients, including the store UI.
+    }
+    match /game_coupons/{id} {
+      allow get: if ownRewardId(id) || owner(resource.data.user_id);
+      allow list: if owner(resource.data.user_id);
+      allow create: if validReward(id, request.resource.data)
+        && !exists(/databases/$(database)/documents/coupon_claims/$(id))
+        && getAfter(/databases/$(database)/documents/coupon_claims/$(id)).data == request.resource.data;
+      // Redemption is still performed only by the trusted checkout service.
+    }
+    // Orders, inventory, rewards, subscribers and all unspecified paths are not client-writable/readable.
+    match /{document=**} { allow read, write: if false; }
+  }
+}
