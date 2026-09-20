@@ -57,11 +57,34 @@
     try { return JSON.parse(localStorage.getItem(key)) || fallback; } catch { return fallback; }
   }
 
+  let accountUid = null;
+  let accountState = 'loading';
+  let accountCoupons = [];
+  const statusCopy = {
+    en: { loading: 'Loading account coupons…', failed: 'Could not load coupons. Open My Page and refresh your coupons.', login: 'Sign in to use your account coupons.', pending: 'Device rewards are not synced yet. Open My Page and select Sync coupons.', ready: 'Choose an available coupon for this product.' },
+    zh: { loading: '正在載入帳戶優惠券…', failed: '無法載入優惠券，請到會員中心重新整理優惠券。', login: '請登入以使用帳戶優惠券。', pending: '此裝置嘅獎勵尚未同步，請到會員中心按「同步優惠券」。', ready: '請選擇適用於購物車商品嘅優惠券。' },
+    ja: { loading: 'アカウントのクーポンを読み込み中…', failed: '読み込めませんでした。マイページでクーポンを更新してください。', login: 'クーポンを使うにはログインしてください。', pending: '端末の報酬は未同期です。マイページでクーポンを同期してください。', ready: '対象商品のクーポンを選んでください。' },
+    ko: { loading: '계정 쿠폰을 불러오는 중…', failed: '쿠폰을 불러올 수 없습니다. 마이페이지에서 새로고침하세요.', login: '계정 쿠폰을 사용하려면 로그인하세요.', pending: '기기 보상이 동기화되지 않았습니다. 마이페이지에서 동기화하세요.', ready: '상품에 사용할 쿠폰을 선택하세요.' },
+  };
+  function statusText(key) { return (statusCopy[language()] || statusCopy.en)[key]; }
   function coupons() {
+    if (!accountUid || accountState !== 'ready') return [];
+    return accountCoupons.filter(coupon => coupon.user_id === accountUid && !coupon.redeemed_at
+      && coupon.code && Number.isFinite(coupon.discount_percent) && coupon.discount_percent > 0 && coupon.discount_percent <= 100)
+      .map(coupon => ({ ...coupon, kind: 'percent', amount: coupon.discount_percent, storeProductId: coupon.product_slug }));
+  }
+  function hasPendingRewards() {
     const game = read(GAME_STORAGE_KEY, {});
-    return Array.isArray(game.coupons) ? game.coupons.filter((coupon) => (
-      coupon && !coupon.redeemed_at && coupon.kind === "percent" && Number.isFinite(coupon.amount) && coupon.code
-    )) : [];
+    return Array.isArray(game.coupons) && game.coupons.some(coupon => coupon && !coupon.redeemed_at
+      && (!coupon.user_id || coupon.user_id === accountUid)
+      && !accountCoupons.some(saved => saved.code === coupon.code));
+  }
+  function setAccountCoupons(uid, rows, state) {
+    if ((accountUid && accountUid !== uid) || state === 'signed-out') localStorage.removeItem(APPLIED_COUPON_KEY);
+    accountUid = uid;
+    accountCoupons = Array.isArray(rows) ? rows : [];
+    accountState = state;
+    render();
   }
 
   function cart() {
@@ -79,7 +102,7 @@
   function price(amount) {
     const market = localStorage.getItem("evrisMarket") || "CN";
     const settings = {
-      CN: ["zh-CN", "RMB", 1, 0], JP: ["ja-JP", "JPY", 21.8, 0], HK: ["zh-HK", "HK$", 1.08, 0],
+      CN: ["zh-CN", "RMB", 1, 2], JP: ["ja-JP", "JPY", 21.8, 0], HK: ["zh-HK", "HK$", 1.08, 0],
       US: ["en-US", "USD", 0.14, 2], KR: ["ko-KR", "KRW", 191, 0], TW: ["zh-TW", "NT$", 4.5, 0],
     }[market] || ["zh-CN", "RMB", 1, 0];
     const [locale, currency, rate, digits] = settings;
@@ -103,12 +126,13 @@
     const saved = localStorage.getItem(APPLIED_COUPON_KEY);
     const all = coupons();
     const current = all.find((coupon) => coupon.code === saved);
-    if (saved && (!current || !eligible(current, items))) localStorage.removeItem(APPLIED_COUPON_KEY);
+    if (saved && accountState === 'ready' && (!current || !eligible(current, items))) localStorage.removeItem(APPLIED_COUPON_KEY);
 
     document.querySelectorAll("[data-coupon-panel]").forEach((panel) => {
       const select = panel.querySelector("[data-coupon-select]");
       const note = panel.querySelector("[data-coupon-note]");
       const total = panel.querySelector("[data-coupon-total]");
+      select.disabled = !accountUid || accountState !== 'ready';
       select.innerHTML = "";
       const placeholder = document.createElement("option");
       placeholder.value = "";
@@ -118,14 +142,18 @@
         const option = document.createElement("option");
         option.value = coupon.code;
         option.disabled = !eligible(coupon, items);
-        option.textContent = `${coupon.code} · ${coupon.amount}% OFF`;
+        const product = (window.EVRIS_PRODUCTS || []).find(item => item.id === productId(coupon));
+        option.textContent = `${product?.title || productId(coupon)} · ${coupon.amount}% OFF · ${coupon.code}`;
         select.append(option);
       });
       const applied = getAppliedDiscount(items);
       select.value = applied.code || "";
-      if (!all.length) note.textContent = t("empty");
-      else if (applied.coupon) note.textContent = t("applied", { product: productId(applied.coupon), amount: applied.coupon.amount });
-      else note.textContent = t("unavailable");
+      if (accountState === 'loading') note.textContent = statusText('loading');
+      else if (!accountUid) note.textContent = statusText('login');
+      else if (accountState === 'failed') note.textContent = statusText('failed');
+      else if (!all.length) note.textContent = hasPendingRewards() ? statusText('pending') : t("empty");
+      else if (applied.coupon) note.textContent = t("applied", { product: (window.EVRIS_PRODUCTS || []).find(item => item.id === productId(applied.coupon))?.title || productId(applied.coupon), amount: applied.coupon.amount });
+      else note.textContent = all.some(coupon => eligible(coupon, items)) ? statusText('ready') : t('unavailable');
       const subtotal = items.reduce((sum, item) => sum + item.priceValue * item.quantity, 0);
       total.textContent = applied.coupon
         ? `${t("discount", { price: price(applied.discount) })}\n${t("total", { price: price(subtotal - applied.discount) })}`
@@ -141,6 +169,7 @@
   }
 
   function consume(code) {
+    accountCoupons = accountCoupons.filter(coupon => coupon.code !== code);
     const game = read(GAME_STORAGE_KEY, {});
     if (Array.isArray(game.coupons)) {
       game.coupons = game.coupons.filter((coupon) => coupon.code !== code);
@@ -151,8 +180,10 @@
     render();
   }
 
-  window.EVRISCoupons = { getAppliedDiscount, consume, render };
+  window.EVRISCoupons = { getAppliedDiscount, consume, render, setAccountCoupons };
   document.addEventListener("evris:cart-updated", render);
+  document.addEventListener("evris:coupons-updated", render);
+  document.querySelector("#languageSelect")?.addEventListener("change", render);
   document.addEventListener("click", (event) => {
     if (event.target.closest("[data-open-cart]")) window.setTimeout(render, 0);
   }, true);

@@ -63,6 +63,7 @@
     catch { return []; }
   }
   function render() {
+    window.EVRISCoupons?.setAccountCoupons(uid, saved, state);
     section.hidden = !uid;
     syncButton.textContent = t(syncing ? 'syncing' : 'sync');
     syncButton.disabled = syncing;
@@ -91,7 +92,7 @@
   }
   function load() {
     const current = ++revision;
-    unsubscribe?.(); clearTimeout(timer); saved = []; state = 'loading'; render();
+    unsubscribe?.(); clearTimeout(timer); saved = []; state = uid ? 'loading' : 'signed-out'; render();
     if (!uid) return;
     timer = setTimeout(() => { if (current === revision) { state = 'failed'; render(); } },8000);
     unsubscribe = window.EvrisBackend.watchMemberCoupons(uid, rows => {
