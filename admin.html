@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="zh-Hant">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>EVRIS · 店家管理</title><link rel="stylesheet" href="styles.css?v=73"><link rel="stylesheet" href="admin.css"></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>EVRIS · 店家管理</title><link rel="stylesheet" href="styles.css?v=73"><link rel="stylesheet" href="admin.css?v=2"></head>
 <body class="admin-page">
 <header class="admin-header"><a href="index.html">EVRIS <span>STORE MANAGER</span></a><a href="products.html">查看商店 ↗</a></header>
 <main class="admin-main">
@@ -20,11 +20,17 @@
 <div class="admin-field-row"><label>分類<select name="category"><option value="bracelet">手鍊</option><option value="earring">耳環</option><option value="necklace">頸鍊</option></select></label><label>售價（RMB）<input name="price" type="number" min="0" max="10000000" step="1" required></label></div>
 <label>商品介紹<textarea name="description" rows="4" maxlength="2000"></textarea></label>
 <label>材質<input name="material" maxlength="2000"></label><label>搭配介紹<textarea name="style" rows="2" maxlength="2000"></textarea></label>
-<label>商品圖片路徑<input name="image_path" required placeholder="assets/products/example.jpg"></label>
+<label>選擇商品圖片<input type="file" id="productImageFile" accept="image/jpeg,image/png,image/webp"></label>
+<p class="image-help">JPG、PNG 或 WebP，每張最多 5 MB。選圖後先上傳，再儲存商品。</p>
+<div class="admin-toolbar"><button type="button" id="uploadProductImage" disabled>上傳圖片</button><button type="button" id="cancelProductImage" hidden>取消選擇</button></div>
+<label>商品圖片網址或路徑<input name="image_path" required maxlength="1000" placeholder="https://… 或 assets/products/example.jpg" aria-describedby="imageHelp"></label>
+<p id="imageHelp" class="image-help">可使用網上圖片的完整 HTTPS 網址，或現有商品圖片路徑。</p>
+<img id="productImagePreview" class="product-image-preview" alt="商品圖片預覽" hidden>
+<p id="imageMessage" class="image-help" role="status"></p>
 <div class="admin-field-row"><label>庫存操作<select name="stockMode"><option value="set">盤點：設定總庫存</option><option value="add">補貨：增加數量</option></select></label><label id="stockLabel">數量<input name="stock" type="number" min="0" max="1000000" step="1" required></label></div>
 <label class="admin-checkbox"><input name="is_active" type="checkbox">在商店上架</label>
 <p id="editorMessage" role="status"></p><button type="submit" id="saveProduct" class="admin-primary">儲存並更新商店</button>
 </form></dialog>
 </main>
-<script src="products-data.js?v=1"></script><script src="inventory-model.js"></script><script src="firebase-config.js?v=2"></script><script src="firebase-backend.js?v=5"></script><script src="auth-feedback.js?v=6"></script><script src="admin.js"></script>
+<script src="products-data.js?v=1"></script><script src="inventory-model.js?v=2"></script><script src="firebase-config.js?v=2"></script><script src="firebase-backend.js?v=5"></script><script src="auth-feedback.js?v=6"></script><script src="admin.js?v=2"></script><script src="cloudinary-config.js?v=1"></script><script src="product-image-upload.js?v=1"></script>
 </body></html>

@@ -41,3 +41,13 @@ test('absolute stock edits and stale product edits fail rather than overwrite co
   const second=harness(undefined,{...valid,stock:7,revision:1});
   assert.equal((await second.api.saveInventory('test-product',valid,{stock:10,revision:1})).error.code,'inventory/conflict');
 });
+
+test('product images accept HTTPS storage URLs while rejecting executable and local file URLs',()=>{
+ const {window}=harness();
+ for(const image_path of ['https://res.cloudinary.com/store/image/upload/v1/item.jpg','https://firebasestorage.googleapis.com/v0/b/store/o/images%2Fitem.jpg?alt=media&token=abc']) {
+  assert.equal(window.EvrisInventory.validate({...valid,image_path}).image_path,image_path);
+ }
+ for(const image_path of ['http://example.com/item.jpg','file:///tmp/item.jpg','data:image/png;base64,abc','https://user:password@example.com/a.jpg','https://example.com/a\" onerror=alert(1)','https://example.com/'+ 'a'.repeat(1001)]) {
+  assert.throws(()=>window.EvrisInventory.validate({...valid,image_path}));
+ }
+});

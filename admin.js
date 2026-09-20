@@ -49,6 +49,17 @@
       row.append(actions); $('#inventoryRows').append(row);
     }
   }
+  function previewImage() {
+    const value = $('#productEditorForm').elements.image_path.value.trim();
+    const preview = $('#productImagePreview');
+    preview.hidden = true;
+    $('#imageMessage').textContent = '';
+    if (!window.EvrisInventory.validImagePath(value)) { preview.removeAttribute('src'); return; }
+    preview.onload = () => { preview.hidden = false; $('#imageMessage').textContent = ''; };
+    preview.onerror = () => { preview.hidden = true; $('#imageMessage').textContent = '圖片無法載入，請確認網址直接連到圖片，而且允許公開瀏覽。'; };
+    preview.src = value;
+  }
+  $('#productEditorForm').elements.image_path.addEventListener('input', previewImage);
   function edit(item, mode = 'set') {
     editing = item ? { ...item } : null;
     const editor = $('#productEditorForm'); editor.reset();
@@ -58,6 +69,7 @@
     editor.elements.slug.readOnly = Boolean(item);
     editor.elements.stockMode.value = mode;
     if (mode === 'add') editor.elements.stock.value = 1;
+    previewImage();
     $('#editorTitle').textContent = !item ? '新增商品' : mode === 'add' ? '補充庫存' : '編輯商品';
     $('#editorMessage').textContent = '';
     $('#productEditor').showModal();
@@ -94,6 +106,7 @@
     event.preventDefault(); const editor = event.currentTarget;
     const values = Object.fromEntries(new FormData(editor));
     const slug = values.slug; const mode = values.stockMode; delete values.slug; delete values.stockMode;
+    values.image_path = values.image_path.trim();
     values.price = Number(values.price); values.stock = Number(values.stock); values.is_active = editor.elements.is_active.checked;
     $('#saveProduct').disabled = true; $('#editorMessage').textContent = '正在儲存…';
     try {

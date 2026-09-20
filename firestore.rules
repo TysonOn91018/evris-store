@@ -42,7 +42,9 @@ service cloud.firestore {
           && p.price is int && p.price >= 0 && p.price <= 10000000
           && p.stock is int && p.stock >= 0 && p.stock <= 1000000
           && p.category in ['bracelet','earring','necklace']
-          && p.image_path is string && p.image_path.matches('^assets/[a-zA-Z0-9_./-]+[.](jpg|jpeg|png|webp)$') && !p.image_path.matches('.*[.][.].*')
+          && p.image_path is string && p.image_path.size() <= 1000
+          && ((p.image_path.matches('^assets/[a-zA-Z0-9_./-]+[.](jpg|jpeg|png|webp)$') && !p.image_path.matches('.*[.][.].*'))
+            || p.image_path.matches('^https://[a-zA-Z0-9][a-zA-Z0-9.-]*/[-a-zA-Z0-9_~:/?#@!$&()*+,;=%.]+$'))
           && p.is_active is bool && p.revision is int && p.revision > 0 && p.updated_at == request.time;
       }
     }
