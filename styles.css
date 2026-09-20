@@ -3727,3 +3727,36 @@ body.modal-open {
 .member-coupon--used { background:transparent; border-left-color:#aaa; opacity:.7; }
 .member-coupon--pending { border-left-color:#ad8b50; background:#faf7ee; }
 .member-coupons .member-coupon--pending span { color:#8a6c39; }
+
+.member-favorites-list {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.member-favorite-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  background: var(--paper, #fffdfa);
+  color: inherit;
+  text-decoration: none;
+}
+.member-favorite-link:hover,
+.member-favorite-link:focus-visible {
+  border-color: var(--ink);
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+.member-favorite-link img {
+  width: 64px;
+  height: 76px;
+  flex: 0 0 64px;
+  object-fit: cover;
+}
+.member-favorite-link > span { display: grid; gap: 5px; min-width: 0; }
+.member-favorite-link strong { font-size: 0.82rem; line-height: 1.5; }
+.member-favorites-empty { font-size: 0.75rem; color: var(--soft-ink); }

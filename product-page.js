@@ -444,6 +444,7 @@ favoriteButton.addEventListener("click", () => {
   const exists = favorites.some((item) => item.id === product.id);
   favorites = exists ? favorites.filter((item) => item.id !== product.id) : [...favorites, product];
   localStorage.setItem("evrisFavorites", JSON.stringify(favorites));
+  window.dispatchEvent(new Event("evris:favorites-updated"));
   renderDetail();
 });
 

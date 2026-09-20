@@ -9,7 +9,7 @@ import { placeOrder, claimCoupon, StoreError } from './orders.mjs';
 const app = initializeApp({ credential: applicationDefault(), ...(process.env.GOOGLE_CLOUD_PROJECT ? { projectId: process.env.GOOGLE_CLOUD_PROJECT } : {}) });
 const db = getFirestore(app);
 const root = fileURLToPath(new URL('../', import.meta.url));
-const rootFiles = new Set(['coupon-sync.js','member-coupons.js','admin.html','admin.css','admin.js','inventory-model.js','catalog-live.js','index.html','products.html','product.html','styles.css','script.js','account-auth.js','auth-feedback.js','firebase-config.js','firebase-backend.js','homepage-motion.js','products-data.js','products-page.js','product-page.js']);
+const rootFiles = new Set(['member-favorites.js','coupon-sync.js','member-coupons.js','admin.html','admin.css','admin.js','inventory-model.js','catalog-live.js','index.html','products.html','product.html','styles.css','script.js','account-auth.js','auth-feedback.js','firebase-config.js','firebase-backend.js','homepage-motion.js','products-data.js','products-page.js','product-page.js']);
 const mime = { '.html':'text/html; charset=utf-8', '.js':'application/javascript', '.css':'text/css', '.png':'image/png', '.jpg':'image/jpeg', '.jpeg':'image/jpeg', '.webp':'image/webp', '.svg':'image/svg+xml', '.woff2':'font/woff2', '.json':'application/json' };
 const limits = new Map();
 function rateLimit(uid) {

@@ -1051,6 +1051,7 @@ async function loadReviews(productId) {
 
 function saveFavorites() {
   localStorage.setItem("evrisFavorites", JSON.stringify(favorites));
+  window.dispatchEvent(new Event("evris:favorites-updated"));
 }
 
 function updateFavoriteCount() {
