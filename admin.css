@@ -14,3 +14,8 @@
 
 .inventory-actions { flex-wrap:wrap; }
 .admin-page .admin-unpublish { color:#9b3d31; border-color:#d9b6af; }
+
+.admin-header-actions { display:flex; align-items:center; gap:20px; }
+.admin-language { display:grid; gap:3px; font-size:11px; }
+.admin-page .admin-language select { padding:6px 8px; }
+@media(max-width:480px) { .admin-header { height:auto; min-height:82px; gap:12px; padding:12px 18px; flex-wrap:wrap; } .admin-header-actions { gap:12px; font-size:13px; } }

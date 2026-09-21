@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="zh-Hant">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>EVRIS · 店家管理</title><link rel="stylesheet" href="styles.css?v=73"><link rel="stylesheet" href="admin.css?v=3"></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>EVRIS · 店家管理</title><link rel="stylesheet" href="styles.css?v=73"><link rel="stylesheet" href="admin.css?v=4"></head>
 <body class="admin-page">
-<header class="admin-header"><a href="index.html">EVRIS <span>STORE MANAGER</span></a><a href="products.html">查看商店 ↗</a></header>
+<header class="admin-header"><a href="index.html">EVRIS <span>STORE MANAGER</span></a><div class="admin-header-actions"><label class="admin-language">Language / 語言<select id="languageSelect" aria-label="Language / 語言"><option value="zh">繁體中文</option><option value="en">English</option><option value="ja">日本語</option><option value="ko">한국어</option></select></label><a href="products.html">查看商店 ↗</a></div></header>
 <main class="admin-main">
 <div class="admin-heading"><div><p class="kicker">店家工作台</p><h1>商品與庫存</h1><p>管理每件商品，讓店面保持最新。</p></div><span class="admin-badge" id="connectionState">尚未登入</span></div>
 <section id="adminLogin" class="admin-login"><div><p class="kicker">專屬管理入口</p><h2>登入店家帳戶</h2><p>使用已驗證電郵的店家帳戶登入，即可更新商品與補貨。</p><a href="index.html#member">還未建立帳戶？前往商店註冊</a></div><form id="adminAuthForm" class="account-form"><label>電郵<input type="email" name="email" required autocomplete="email"></label><label><span>密碼</span><input type="password" name="password" required autocomplete="current-password"></label><button type="submit" class="cart-button" id="adminSignIn">登入管理後台</button><p id="adminAuthMessage" class="form-message" role="status"></p></form></section>
@@ -32,5 +32,5 @@
 <p id="editorMessage" role="status"></p><button type="submit" id="saveProduct" class="admin-primary">儲存並更新商店</button>
 </form></dialog>
 </main>
-<script src="products-data.js?v=1"></script><script src="inventory-model.js?v=2"></script><script src="firebase-config.js?v=2"></script><script src="firebase-backend.js?v=5"></script><script src="auth-feedback.js?v=6"></script><script src="admin.js?v=3"></script><script src="cloudinary-config.js?v=2"></script><script src="product-image-upload.js?v=1"></script>
+<script src="admin-language.js?v=1"></script><script src="products-data.js?v=1"></script><script src="inventory-model.js?v=2"></script><script src="firebase-config.js?v=2"></script><script src="firebase-backend.js?v=5"></script><script src="auth-feedback.js?v=6"></script><script src="admin.js?v=3"></script><script src="cloudinary-config.js?v=2"></script><script src="product-image-upload.js?v=1"></script>
 </body></html>
