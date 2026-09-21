@@ -5,11 +5,17 @@ import { fileURLToPath } from 'node:url';
 import { initializeApp, applicationDefault } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 import { getFirestore, FieldValue } from 'firebase-admin/firestore';
-import { placeOrder, claimCoupon, StoreError } from './orders.mjs';
+import { claimCoupon, StoreError } from './orders.mjs';
+import { paymentService } from './payment-service.mjs';
+import { mailWorker } from './order-mail.mjs';
 const app = initializeApp({ credential: applicationDefault(), ...(process.env.GOOGLE_CLOUD_PROJECT ? { projectId: process.env.GOOGLE_CLOUD_PROJECT } : {}) });
 const db = getFirestore(app);
+const payments = paymentService(db, () => FieldValue.serverTimestamp());
+setInterval(() => payments.reconcile().catch(() => console.error('Payment reconciliation unavailable')), 60000).unref();
+const processMail = mailWorker(db, () => FieldValue.serverTimestamp());
+setInterval(() => processMail().catch(() => console.error('Email queue unavailable')), 30000).unref();
 const root = fileURLToPath(new URL('../', import.meta.url));
-const rootFiles = new Set(['admin-language.js','cloudinary-config.js','product-image-upload.js','member-favorites.js','coupon-sync.js','member-coupons.js','admin.html','admin.css','admin.js','inventory-model.js','catalog-live.js','index.html','products.html','product.html','styles.css','script.js','account-auth.js','auth-feedback.js','firebase-config.js','firebase-backend.js','homepage-motion.js','products-data.js','products-page.js','product-page.js']);
+const rootFiles = new Set(['checkout-payment.js','admin-language.js','cloudinary-config.js','product-image-upload.js','member-favorites.js','coupon-sync.js','member-coupons.js','admin.html','admin.css','admin.js','inventory-model.js','catalog-live.js','index.html','products.html','product.html','styles.css','script.js','account-auth.js','auth-feedback.js','firebase-config.js','firebase-backend.js','homepage-motion.js','products-data.js','products-page.js','product-page.js']);
 const mime = { '.html':'text/html; charset=utf-8', '.js':'application/javascript', '.css':'text/css', '.png':'image/png', '.jpg':'image/jpeg', '.jpeg':'image/jpeg', '.webp':'image/webp', '.svg':'image/svg+xml', '.woff2':'font/woff2', '.json':'application/json' };
 const limits = new Map();
 function rateLimit(uid) {
@@ -26,6 +32,14 @@ function json(res, status, data) {
 http.createServer(async (req, res) => {
   try {
     const url = new URL(req.url, 'http://localhost');
+    if (url.pathname === '/api/payments/webhook' && req.method === 'POST') {
+      const chunks=[]; let size=0;
+      for await (const chunk of req) { size+=chunk.length; if(size>1048576) throw new StoreError('order/invalid-input','Request too large.',413); chunks.push(chunk); }
+      await payments.webhook(Buffer.concat(chunks),req.headers['stripe-signature']);
+      json(res,200,{received:true});
+      processMail().catch(() => console.error('Email queue unavailable'));
+      return;
+    }
     if (url.pathname.startsWith('/api/')) {
       const origin = req.headers.origin;
       const expected = process.env.PUBLIC_ORIGIN || `http://${req.headers.host}`;
@@ -35,7 +49,7 @@ http.createServer(async (req, res) => {
         res.writeHead(204, { 'Access-Control-Allow-Headers':'Authorization, Content-Type', 'Access-Control-Allow-Methods':'POST' }); res.end(); return;
       }
       if (req.method !== 'POST') throw new StoreError('app/backend-unavailable', 'Use POST.', 405);
-      if (!['/api/orders', '/api/coupons/claim'].includes(url.pathname)) throw new StoreError('app/backend-unavailable', 'Unknown endpoint.', 404);
+      if (!['/api/checkout/start', '/api/checkout/status', '/api/coupons/claim'].includes(url.pathname)) throw new StoreError('app/backend-unavailable', 'Unknown endpoint.', 404);
       let identity;
       try { identity = await getAuth(app).verifyIdToken((req.headers.authorization || '').replace(/^Bearer /, ''), true); }
       catch { throw new StoreError('auth/login-required', 'Please sign in again.', 401); }
@@ -49,8 +63,10 @@ http.createServer(async (req, res) => {
       let payload;
       try { payload = JSON.parse(body); } catch { throw new StoreError('order/invalid-input', 'Invalid request.'); }
       if (!payload || typeof payload !== 'object') throw new StoreError('order/invalid-input', 'Invalid request.');
-      const handler = url.pathname === '/api/orders' ? placeOrder : claimCoupon;
-      const data = await handler(db, identity.uid, payload, () => FieldValue.serverTimestamp());
+      const data = url.pathname === '/api/checkout/start' ? await payments.start(identity,payload)
+        : url.pathname === '/api/checkout/status' ? await payments.status(identity,payload)
+        : await claimCoupon(db, identity.uid, payload, () => FieldValue.serverTimestamp());
+      if (url.pathname === '/api/checkout/status') processMail().catch(() => console.error('Email queue unavailable'));
       json(res, 200, data);
       return;
     }

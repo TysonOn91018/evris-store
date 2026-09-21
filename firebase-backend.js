@@ -203,7 +203,8 @@
         return body;
       });
     },
-    placeOrder: payload => backend.request('orders', payload),
+    placeOrder: payload => backend.request('checkout/start', payload),
+    orderStatus: payload => backend.request('checkout/status', payload),
     claimCoupon: payload => result(async ({ auth, db, d }) => {
       const user = requireUser(auth);
       if (!user.emailVerified) throw failure('auth/unverified-email');

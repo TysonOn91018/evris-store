@@ -47,3 +47,7 @@ Tests cover local form behavior, coupon ownership and synchronization, inventory
 ## Deployment status
 
 Pushing to GitHub stores the source code; it does not publish a website, deploy Firestore rules, or start the checkout server. GitHub Pages can serve static assets but cannot run the Node checkout API. The legacy `supabase-schema.sql` is retained as a migration reference; the active frontend uses Firebase.
+
+## 測試付款
+
+Stripe 測試付款、付款成功扣庫存、會員 Gmail 確認信已加入後端。網站仍需要配置與部署後端，不能只使用 GitHub Pages 收款。請按 [PAYMENT_SETUP.md](PAYMENT_SETUP.md) 設定。測試版拒絕正式金鑰，不收取真錢。

@@ -3760,3 +3760,6 @@ body.modal-open {
 .member-favorite-link > span { display: grid; gap: 5px; min-width: 0; }
 .member-favorite-link strong { font-size: 0.82rem; line-height: 1.5; }
 .member-favorites-empty { font-size: 0.75rem; color: var(--soft-ink); }
+
+.payment-status { margin:24px auto; max-width:900px; padding:24px; border:1px solid var(--line); background:#f6f4ef; }
+.payment-status p { margin:0 0 12px; overflow-wrap:anywhere; line-height:1.7; }

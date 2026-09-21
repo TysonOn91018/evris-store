@@ -1,0 +1,14 @@
+.git
+node_modules
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+*service-account*.json
+.firebase
+.DS_Store
+tests
+**/tests
+*-debug.log

@@ -1590,9 +1590,14 @@ async function submitOrder(formData) {
         pendingOrder = { fingerprint, request_id: crypto.randomUUID() };
       }
       orderSubmitting = true;
-      const { error } = await backendClient.placeOrder({ ...payload, request_id: pendingOrder.request_id });
+      const { data, error } = await backendClient.placeOrder({ ...payload, request_id: pendingOrder.request_id });
       if (error) throw error;
+      const destination = new URL(data.checkout_url);
+      if (destination.protocol !== 'https:' || destination.hostname !== 'checkout.stripe.com') throw new Error('Invalid checkout URL');
+      window.location.assign(destination.href);
+      return;
     } catch (error) {
+      if (error.code === 'payment/order-closed') pendingOrder = null;
       checkoutMessage.textContent = getBackendErrorMessage(error);
       return;
     } finally {
@@ -1600,13 +1605,7 @@ async function submitOrder(formData) {
     }
   }
 
-  pendingOrder = null;
-  checkoutMessage.textContent = t("orderReceived");
-  if (coupon.code) window.EVRISCoupons.consume(coupon.code);
-  checkoutForm.reset();
-  cart = [];
-  saveCart();
-  renderCart();
+
 }
 
 function openAccountModal(mode = "login") {
@@ -2004,4 +2003,9 @@ document.addEventListener('evris:catalog-updated', () => {
     const button = card.querySelector('.cart-button');
     if (button) button.disabled = item.stock <= 0;
   });
+});
+
+window.addEventListener('evris:payment-cart-updated', () => {
+  cart = JSON.parse(localStorage.getItem('evrisCart') || '[]');
+  renderCart();
 });
