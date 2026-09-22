@@ -42,7 +42,7 @@
         const cell = document.createElement('td'); cell.textContent = value; row.append(cell);
       }
       const actions = document.createElement('td'); actions.className = 'inventory-actions';
-      for (const [label, mode] of [['編輯','set'],['補貨','add']]) {
+      for (const [label, mode] of [['編輯','set']]) {
         const button = document.createElement('button'); button.type = 'button'; button.textContent = label;
         button.addEventListener('click', () => edit(item, mode)); actions.append(button);
       }
