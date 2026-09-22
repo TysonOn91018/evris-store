@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer';
 import { randomUUID } from 'node:crypto';
+import { gmailApiSender } from './gmail-api.mjs';
 export function receipt(order,id,review=false) {
   const amount = (order.amount_total/100).toFixed(2);
   return {
@@ -32,14 +33,19 @@ export async function deliverMail(db,id,send,timestamp,now=Date.now()) {
   }
 }
 export function mailWorker(db,timestamp,env=process.env) {
-  if(!env.GMAIL_USER || !env.GMAIL_APP_PASSWORD) return async()=>{};
-  const transport=nodemailer.createTransport({host:'smtp.gmail.com',port:465,secure:true,auth:{user:env.GMAIL_USER,pass:env.GMAIL_APP_PASSWORD},connectionTimeout:15000,socketTimeout:30000});
+  let send;
+  if(env.MAIL_TRANSPORT==='gmail-api') send=gmailApiSender(env);
+  else {
+    if(!env.GMAIL_USER || !env.GMAIL_APP_PASSWORD) return async()=>{};
+    const transport=nodemailer.createTransport({host:'smtp.gmail.com',port:465,secure:true,auth:{user:env.GMAIL_USER,pass:env.GMAIL_APP_PASSWORD},connectionTimeout:15000,socketTimeout:30000});
+    send=message=>transport.sendMail({...message,from:env.GMAIL_USER});
+  }
   let running=false;
   return async()=>{
     if(running)return; running=true;
     try {
       const snapshot=await db.collection('order_mail').where('status','in',['pending','sending']).limit(30).get();
-      for(const job of snapshot.docs) await deliverMail(db,job.id,message=>transport.sendMail({...message,from:env.GMAIL_USER}),timestamp);
+      for(const job of snapshot.docs) await deliverMail(db,job.id,send,timestamp);
     } finally {running=false;}
   };
 }
