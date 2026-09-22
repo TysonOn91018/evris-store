@@ -11,13 +11,13 @@
 <div class="admin-stats"><div><span>商品總數</span><strong id="totalProducts">—</strong></div><div><span>上架中</span><strong id="activeProducts">—</strong></div><div><span>剩餘庫存</span><strong id="totalStock">—</strong></div><div><span>已售罄</span><strong id="emptyProducts">—</strong></div></div>
 <div class="admin-toolbar"><label class="admin-search">搜尋商品<input id="inventorySearch" type="search" placeholder="輸入商品名稱或編號"></label><button id="reloadInventory" type="button">重新載入</button><button id="newProduct" type="button" class="admin-primary">＋ 新增商品</button></div>
 <p id="inventoryMessage" role="status"></p>
-<div class="inventory-table-wrap"><table><thead><tr><th>商品</th><th>售價（RMB）</th><th>庫存</th><th>狀態</th><th>管理</th></tr></thead><tbody id="inventoryRows"></tbody></table></div>
+<div class="inventory-table-wrap"><table><thead><tr><th>商品</th><th>售價（JPY）</th><th>庫存</th><th>狀態</th><th>管理</th></tr></thead><tbody id="inventoryRows"></tbody></table></div>
 <div id="inventoryEmpty" class="admin-empty" hidden><h2>建立第一批商品</h2><p>可以從商店現有商品匯入，庫存會從 0 開始；補上實際數量後才開放購買。</p><button type="button" id="importCatalog">匯入現有商品</button></div>
 </section>
 <dialog id="productEditor" class="admin-editor"><form id="productEditorForm"><div class="admin-toolbar"><h2 id="editorTitle">編輯商品</h2><button type="button" id="closeEditor">關閉</button></div>
 <label>商品編號<input name="slug" required pattern="[a-z0-9-]{1,100}" placeholder="例如 citrine-pearl-bracelet"></label>
 <label>商品名稱<input name="name" required maxlength="160"></label>
-<div class="admin-field-row"><label>分類<select name="category"><option value="bracelet">手鍊</option><option value="earring">耳環</option><option value="necklace">頸鍊</option></select></label><label>售價（RMB）<input name="price" type="number" min="0" max="10000000" step="1" required></label></div>
+<div class="admin-field-row"><label>分類<select name="category"><option value="bracelet">手鍊</option><option value="earring">耳環</option><option value="necklace">頸鍊</option></select></label><label>售價（JPY）<input name="price" type="number" min="0" max="10000000" step="1" required></label></div>
 <label>商品介紹<textarea name="description" rows="4" maxlength="2000"></textarea></label>
 <label>材質<input name="material" maxlength="2000"></label><label>搭配介紹<textarea name="style" rows="2" maxlength="2000"></textarea></label>
 <label>選擇商品圖片<input type="file" id="productImageFile" accept="image/jpeg,image/png,image/webp"></label>
@@ -32,5 +32,5 @@
 <p id="editorMessage" role="status"></p><button type="submit" id="saveProduct" class="admin-primary">儲存並更新商店</button>
 </form></dialog>
 </main>
-<script src="admin-language.js?v=1"></script><script src="products-data.js?v=1"></script><script src="inventory-model.js?v=2"></script><script src="firebase-config.js?v=3"></script><script src="firebase-backend.js?v=6"></script><script src="auth-feedback.js?v=6"></script><script src="admin.js?v=3"></script><script src="cloudinary-config.js?v=2"></script><script src="product-image-upload.js?v=1"></script>
+<script src="admin-language.js?v=2"></script><script src="products-data.js?v=2"></script><script src="inventory-model.js?v=3"></script><script src="firebase-config.js?v=3"></script><script src="firebase-backend.js?v=7"></script><script src="auth-feedback.js?v=6"></script><script src="admin.js?v=4"></script><script src="cloudinary-config.js?v=2"></script><script src="product-image-upload.js?v=1"></script>
 </body></html>

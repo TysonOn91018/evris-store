@@ -15,7 +15,7 @@
     ['登入管理後台','Sign in','ログイン','로그인'],['登出','Sign out','ログアウト','로그아웃'],
     ['商品總數','Total products','商品数','전체 상품'],['上架中','Published','公開中','판매 중'],['剩餘庫存','Stock remaining','在庫数','남은 재고'],['已售罄','Sold out','売り切れ','품절'],['已下架','Unpublished','非公開','판매 중지'],
     ['搜尋商品','Search products','商品を検索','상품 검색'],['輸入商品名稱或編號','Product name or ID','商品名またはID','상품명 또는 ID'],['重新載入','Reload','再読み込み','새로고침'],['＋ 新增商品','＋ Add product','＋ 商品を追加','＋ 상품 추가'],
-    ['商品','Product','商品','상품'],['售價（RMB）','Price (RMB)','価格（RMB）','가격 (RMB)'],['庫存','Stock','在庫','재고'],['狀態','Status','状態','상태'],['管理','Actions','操作','관리'],
+    ['商品','Product','商品','상품'],['售價（JPY）','Price (JPY)','価格（JPY）','가격 (JPY)'],['庫存','Stock','在庫','재고'],['狀態','Status','状態','상태'],['管理','Actions','操作','관리'],
     ['建立第一批商品','Add your first products','最初の商品を登録','첫 상품 등록'],
     ['可以從商店現有商品匯入，庫存會從 0 開始；補上實際數量後才開放購買。','Import existing store products with zero stock, then enter stock to enable purchases.','既存商品を在庫0で取り込み、実際の在庫を入力すると購入可能になります。','기존 상품을 재고 0으로 가져온 후 재고를 입력하면 구매할 수 있습니다.'],
     ['匯入現有商品','Import existing products','既存商品を取り込む','기존 상품 가져오기'],
@@ -39,7 +39,7 @@
     ['圖片已預覽，但尚未連接 Cloudinary，暫時未能上傳。','Preview ready. Configure Cloudinary to enable uploads.','プレビューできました。アップロードにはCloudinary設定が必要です。','미리보기 준비됨. 업로드하려면 Cloudinary를 설정하세요.'],['正在上傳圖片…','Uploading image…','画像をアップロード中…','이미지 업로드 중…'],
     ['圖片已上傳。請按「儲存並更新商店」套用到商品。','Image uploaded. Select Save and update store to apply it.','アップロードしました。「保存してストアを更新」で適用してください。','업로드 완료. 저장 및 스토어 업데이트를 눌러 적용하세요.'],
     ['上傳逾時，請重試。原有商品圖片未有更改。','Upload timed out. Retry; the original product image is unchanged.','タイムアウトしました。元の画像は変更されていません。再試行してください。','업로드 시간 초과. 기존 이미지는 변경되지 않았습니다. 다시 시도하세요.'],['請先完成圖片上傳，或者取消選擇。','Finish uploading or cancel the image selection first.','アップロードを完了するか画像選択を取り消してください。','업로드를 완료하거나 이미지 선택을 취소하세요.'],
-    ['文字過長或包含 HTML 標籤。','Text is too long or contains HTML tags.','文字数が多すぎるかHTMLタグが含まれています。','텍스트가 너무 길거나 HTML 태그가 포함되어 있습니다.'],['請輸入商品名稱。','Enter a product name.','商品名を入力してください。','상품명을 입력하세요.'],['請選擇商品分類。','Choose a category.','カテゴリーを選択してください。','카테고리를 선택하세요.'],['價格必須是 0 或以上的整數（RMB）。','Price must be a non-negative integer (RMB).','価格は0以上の整数（RMB）で入力してください。','가격은 0 이상의 정수(RMB)여야 합니다.'],['庫存必須是 0 至 1,000,000 的整數。','Stock must be an integer from 0 to 1,000,000.','在庫は0～1,000,000の整数で入力してください。','재고는 0에서 1,000,000 사이의 정수여야 합니다.'],['請使用 assets/ 圖片路徑或完整 HTTPS 圖片網址。','Use an assets/ image path or a full HTTPS image URL.','assets/画像パスまたは完全なHTTPS画像URLを使用してください。','assets/ 경로 또는 전체 HTTPS 이미지 URL을 사용하세요.'],['商品狀態不正確。','Invalid product status.','商品状態が無効です。','상품 상태가 올바르지 않습니다.'],
+    ['文字過長或包含 HTML 標籤。','Text is too long or contains HTML tags.','文字数が多すぎるかHTMLタグが含まれています。','텍스트가 너무 길거나 HTML 태그가 포함되어 있습니다.'],['請輸入商品名稱。','Enter a product name.','商品名を入力してください。','상품명을 입력하세요.'],['請選擇商品分類。','Choose a category.','カテゴリーを選択してください。','카테고리를 선택하세요.'],['價格必須是 0 或以上的整數（JPY）。','Price must be a non-negative integer (JPY).','価格は0以上の整数（JPY）で入力してください。','가격은 0 이상의 정수(JPY)여야 합니다.'],['庫存必須是 0 至 1,000,000 的整數。','Stock must be an integer from 0 to 1,000,000.','在庫は0～1,000,000の整数で入力してください。','재고는 0에서 1,000,000 사이의 정수여야 합니다.'],['請使用 assets/ 圖片路徑或完整 HTTPS 圖片網址。','Use an assets/ image path or a full HTTPS image URL.','assets/画像パスまたは完全なHTTPS画像URLを使用してください。','assets/ 경로 또는 전체 HTTPS 이미지 URL을 사용하세요.'],['商品狀態不正確。','Invalid product status.','商品状態が無効です。','상품 상태가 올바르지 않습니다.'],
   ];
   const map = new Map(rows.map(row => [row[0], row]));
   const languages = ['zh','en','ja','ko'];

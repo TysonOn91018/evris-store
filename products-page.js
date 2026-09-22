@@ -9,7 +9,8 @@ const marketSettings = {
   TW: { locale: "zh-TW", prefix: "NT$", rate: 4.5, decimals: 0 },
 };
 
-let currentMarket = localStorage.getItem("evrisMarket") || "CN";
+if(localStorage.getItem('evrisYenDefault') !== '1') { localStorage.setItem('evrisMarket','JP'); localStorage.setItem('evrisYenDefault','1'); }
+let currentMarket = localStorage.getItem("evrisMarket") || "JP";
 let currentLanguage = localStorage.getItem("evrisLanguage") || "en";
 const initialCategory = new URLSearchParams(window.location.search).get("category");
 let currentFilter = ["bracelet", "earring", "necklace"].includes(initialCategory) ? initialCategory : "all";
@@ -561,3 +562,14 @@ function initCustomDropdowns() {
 initCustomDropdowns();
 
 document.addEventListener('evris:catalog-updated', renderProducts);
+
+// Refresh saved cart prices from the current authoritative catalog.
+document.addEventListener('evris:catalog-updated', () => {
+  if(window.EvrisCatalog?.state !== 'ready') return;
+  cart = cart.map(item => {
+    const current = window.EVRIS_PRODUCTS.find(product => product.id === item.id);
+    return current ? {...item, priceValue:current.priceValue} : item;
+  });
+  localStorage.setItem('evrisCart',JSON.stringify(cart));
+  renderCart();
+});

@@ -33,12 +33,13 @@ service cloud.firestore {
       function validProduct() {
         let p = request.resource.data;
         return p.keys().hasAll(['slug','name','price','stock','category','image_path','description','material','style','is_active','revision','updated_at'])
-          && p.keys().hasOnly(['slug','name','price','stock','category','image_path','description','material','style','is_active','revision','updated_at','created_at'])
+          && p.keys().hasOnly(['slug','name','price','stock','category','image_path','description','material','style','is_active','revision','updated_at','created_at','currency'])
           && p.slug == slug && slug.matches('^[a-z0-9-]{1,100}$')
           && p.name is string && p.name.size() > 0 && p.name.size() <= 160 && !p.name.matches('.*[<>].*')
           && p.description is string && p.description.size() <= 2000 && !p.description.matches('.*[<>].*')
           && p.material is string && p.material.size() <= 2000 && !p.material.matches('.*[<>].*')
           && p.style is string && p.style.size() <= 2000 && !p.style.matches('.*[<>].*')
+          && p.get('currency', 'cny') in ['cny', 'jpy']
           && p.price is int && p.price >= 0 && p.price <= 10000000
           && p.stock is int && p.stock >= 0 && p.stock <= 1000000
           && p.category in ['bracelet','earring','necklace']

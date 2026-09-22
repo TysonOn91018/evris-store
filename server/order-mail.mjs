@@ -2,14 +2,16 @@ import nodemailer from 'nodemailer';
 import { randomUUID } from 'node:crypto';
 import { gmailApiSender } from './gmail-api.mjs';
 export function receipt(order,id,review=false) {
-  const amount = (order.amount_total/100).toFixed(2);
+  const currency = (order.currency || 'cny').toUpperCase();
+  const format = value => `${currency} ${(value/(currency==='JPY'?1:100)).toFixed(currency==='JPY'?0:2)}`;
+  const amount = format(order.amount_total);
   return {
     to:order.customer_email,
     subject:`[TEST / テスト決済] EVRIS ${review ? 'Order requires review' : 'Order confirmation'} ${id}`,
     text:[`EVRIS — TEST PAYMENT / テスト決済 / 測試付款`, 'No real money was charged. 実際の請求はありません。沒有扣取真實款項。', '',
       `Order / 注文番号: ${id}`, `Customer / お名前: ${order.customer_name}`, '',
-      ...order.items.map(item=>`${item.product_name} × ${item.quantity} — CNY ${(item.unit_amount*item.quantity/100).toFixed(2)}`),
-      `Discount / 割引: CNY ${(order.discount_amount/100).toFixed(2)}`, `Total / 合計: CNY ${amount}`,
+      ...order.items.map(item=>`${item.product_name} × ${item.quantity} — ${format(item.unit_amount*item.quantity)}`),
+      `Discount / 割引: ${format(order.discount_amount)}`, `Total / 合計: ${amount}`,
       '', review ? 'Payment confirmed, but stock changed. The store must review this order. 商品在庫が変更されたため、店舗による確認が必要です。' : 'Test payment confirmed. Your order and stock have been updated. テスト決済が完了し、注文と在庫を更新しました。',
       '', `Delivery address / 配送先: ${order.shipping_address}`].join('\n'),
   };

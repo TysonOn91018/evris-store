@@ -36,7 +36,7 @@
   const millis=value=>value?.toMillis?.() || (Number(value?.seconds)||0)*1000;
   function money(amount,currency){
     if(!Number.isFinite(amount))return '—';
-    try{return new Intl.NumberFormat(locale(),{style:'currency',currency:(currency||'cny').toUpperCase()}).format(amount/100);}catch{return '—';}
+    try{return new Intl.NumberFormat(locale(),{style:'currency',currency:(currency||'cny').toUpperCase()}).format(amount/(currency?.toLowerCase()==='jpy'?1:100));}catch{return '—';}
   }
   function render(){
     section.hidden=!uid;heading.textContent=t('title');refresh.textContent=t(state==='loading'?'loading':'refresh');

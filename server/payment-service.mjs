@@ -14,7 +14,7 @@ export function paymentService(db,timestamp,env=process.env) {
     if(order.status!=='draft' || order.expires_at_ms <= Date.now()+31*60*1000) throw new StoreError('payment/order-closed','This checkout is closed. Start a new checkout.');
     const root=env.STORE_URL.replace(/\/$/,'');
     const session=await api.checkout.sessions.create({mode:'payment',payment_method_types:['card'],customer_email:order.customer_email,
-      line_items:[{price_data:{currency:'cny',unit_amount:order.amount_total,product_data:{name:'EVRIS test order',description:order.items.map(x=>`${x.product_name} × ${x.quantity}`).join(', ').slice(0,500)}},quantity:1}],
+      line_items:[{price_data:{currency:order.currency,unit_amount:order.amount_total,product_data:{name:'EVRIS test order',description:order.items.map(x=>`${x.product_name} × ${x.quantity}`).join(', ').slice(0,500)}},quantity:1}],
       metadata:{order_id:order.id},client_reference_id:order.id,expires_at:Math.floor(order.expires_at_ms/1000),
       success_url:`${root}/index.html?payment=return&order=${encodeURIComponent(order.id)}`,
       cancel_url:`${root}/index.html?payment=cancel&order=${encodeURIComponent(order.id)}`,

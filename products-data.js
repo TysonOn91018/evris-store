@@ -220,3 +220,6 @@ window.EVRIS_PRODUCTS = [
     style: "Clean with denim, navy, gray tailoring, and white shirts.",
   },
 ];
+
+// Keep the display adapter compatible while rounding each product to whole yen.
+window.EVRIS_PRODUCTS.forEach(item => { item.priceValue = Math.round(item.priceValue * 21.8) / 21.8; });

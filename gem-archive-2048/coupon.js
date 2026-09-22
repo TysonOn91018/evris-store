@@ -118,7 +118,7 @@
     if (!coupon || !eligible(coupon, items)) return { discount: 0, code: null, coupon: null };
     const subtotal = items.filter((item) => item.id === productId(coupon))
       .reduce((total, item) => total + item.priceValue * item.quantity, 0);
-    return { coupon, code, discount: Math.round(subtotal * coupon.amount) / 100 };
+    return { coupon, code, discount: Math.round(Math.round(subtotal * 21.8) * coupon.amount / 100) / 21.8 };
   }
 
   function render() {

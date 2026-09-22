@@ -9,7 +9,7 @@
     const updated = rows.map(row => {
       const previous = original.find(item => item.id === row.slug);
       const item = previous || { id: row.slug };
-      Object.assign(item, { title: row.name, priceValue: row.price, stock: row.stock, is_active: true,
+      Object.assign(item, { title: row.name, priceValue: (row.currency === 'jpy' ? row.price : Math.round(row.price * 21.8)) / 21.8, stock: row.stock, is_active: true,
         category: row.category, image: row.image_path, imageAlt: row.name,
         meta: `${row.category} / ${row.material || ''}`, description: row.description || item.description || '',
         material: row.material || item.material || '', style: row.style || item.style || '', live: true });

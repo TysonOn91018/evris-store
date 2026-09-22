@@ -150,7 +150,7 @@
     try {
       for (const item of window.EVRIS_PRODUCTS) {
         if (inventory.some(row => row.slug === item.id)) continue;
-        const { error } = await api.saveInventory(item.id,{name:item.title,price:item.priceValue,category:item.category,stock:0,image_path:item.image,description:item.description || '',material:item.material || '',style:item.style || '',is_active:true},null);
+        const { error } = await api.saveInventory(item.id,{name:item.title,price:Math.round(item.priceValue * 21.8),category:item.category,stock:0,image_path:item.image,description:item.description || '',material:item.material || '',style:item.style || '',is_active:true},null);
         if (error) throw error;
       }
       await load();

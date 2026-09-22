@@ -108,7 +108,7 @@
       const token = await requireUser(auth).getIdTokenResult();
       if (!token.claims.admin && auth.currentUser.email !== 'fatchan2019@gmail.com') throw failure('permission-denied');
       const snapshot = await inventoryDeadline(d.getDocs(d.collection(db, 'products')));
-      return snapshot.docs.map(item => ({ ...item.data(), slug: item.id }));
+      return snapshot.docs.map(item => ({ ...item.data(), slug: item.id, price: item.data().currency === 'jpy' ? item.data().price : Math.round(item.data().price * 21.8), currency:'jpy' }));
     }),
     saveInventory: (slug, values, expected, adjustment = null) => result(async ({ auth, db, d }) => {
       const token = await requireUser(auth).getIdTokenResult();
@@ -122,7 +122,7 @@
         if (adjustment === null && previous && previous.stock !== expected.stock) throw failure('inventory/conflict');
         if (adjustment !== null && (!Number.isSafeInteger(adjustment) || adjustment <= 0)) throw failure('inventory/invalid-stock');
         const updated = window.EvrisInventory.validate({ ...values, stock: adjustment === null ? values.stock : (previous?.stock || 0) + adjustment });
-        tx.set(ref, { ...updated, slug, revision: (previous?.revision || 0) + 1, updated_at: d.serverTimestamp() }, { merge: true });
+        tx.set(ref, { ...updated, currency:'jpy', slug, revision: (previous?.revision || 0) + 1, updated_at: d.serverTimestamp() }, { merge: true });
         return {};
       });
     }),

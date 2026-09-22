@@ -18,7 +18,7 @@ test('cloud-only matching coupon applies without any device game history',()=>{
  const {api,values}=setup();
  api.setAccountCoupons('alice',[reward],'ready');
  values.set('evrisAppliedGameCoupon',reward.code);
- assert.equal(api.getAppliedDiscount().discount,13.74);
+ assert.equal(Math.round(api.getAppliedDiscount().discount * 21.8),300);
  assert.equal(api.getAppliedDiscount().code,reward.code);
 });
 test('cloud redemption and account ownership override local coupon copies',()=>{
@@ -35,7 +35,7 @@ test('selection survives loading but is cleared on logout and account switch',()
  assert.equal(values.get('evrisAppliedGameCoupon'),reward.code);
  assert.equal(api.getAppliedDiscount().discount,0);
  api.setAccountCoupons('alice',[reward],'ready');
- assert.equal(api.getAppliedDiscount().discount,13.74);
+ assert.equal(Math.round(api.getAppliedDiscount().discount * 21.8),300);
  api.setAccountCoupons('bob',[],'loading');
  assert.equal(values.has('evrisAppliedGameCoupon'),false);
  values.set('evrisAppliedGameCoupon',reward.code);

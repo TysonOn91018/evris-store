@@ -941,7 +941,8 @@ Object.entries(extraUiText).forEach(([language, entries]) => {
   Object.assign(uiText[language], entries);
 });
 
-let currentMarket = localStorage.getItem("evrisMarket") || "CN";
+if(localStorage.getItem('evrisYenDefault') !== '1') { localStorage.setItem('evrisMarket','JP'); localStorage.setItem('evrisYenDefault','1'); }
+let currentMarket = localStorage.getItem("evrisMarket") || "JP";
 let currentLanguage = localStorage.getItem("evrisLanguage") || "en";
 
 function getBackendErrorMessage(error) {
@@ -2007,5 +2008,16 @@ document.addEventListener('evris:catalog-updated', () => {
 
 window.addEventListener('evris:payment-cart-updated', () => {
   cart = JSON.parse(localStorage.getItem('evrisCart') || '[]');
+  renderCart();
+});
+
+// Refresh saved cart prices from the current authoritative catalog.
+document.addEventListener('evris:catalog-updated', () => {
+  if(window.EvrisCatalog?.state !== 'ready') return;
+  cart = cart.map(item => {
+    const current = window.EVRIS_PRODUCTS.find(product => product.id === item.id);
+    return current ? {...item, priceValue:current.priceValue} : item;
+  });
+  localStorage.setItem('evrisCart',JSON.stringify(cart));
   renderCart();
 });

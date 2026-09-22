@@ -13,7 +13,7 @@ for (const product of context.window.EVRIS_PRODUCTS) {
   await db.runTransaction(async tx => {
     const ref = db.doc(`products/${product.id}`);
     if ((await tx.get(ref)).exists) return;
-    tx.create(ref, { slug: product.id, name: product.title, price: product.priceValue, category: product.category, image_path: product.image, stock: 0, is_active: true });
+    tx.create(ref, { slug: product.id, name: product.title, price: Math.round(product.priceValue * 21.8), currency: 'jpy', category: product.category, image_path: product.image, stock: 0, is_active: true });
   });
 }
 console.log('Catalog created. Set actual stock in Firestore before accepting orders.');

@@ -19,7 +19,7 @@ export async function draftOrder(db, identity, input, timestamp, now = Date.now(
     for (const item of items) {
       const snap = await tx.get(db.doc(`products/${item.slug}`)); const p = snap.data();
       check(snap.exists && p.is_active && p.stock >= item.quantity && Number.isSafeInteger(p.price) && p.price >= 0, 'order/out-of-stock', 'Product unavailable.');
-      rows.push({product_slug:item.slug,quantity:item.quantity,unit_amount:p.price*100,product_name:p.name});
+      rows.push({product_slug:item.slug,quantity:item.quantity,unit_amount:p.currency === 'jpy' ? p.price : Math.round(p.price*21.8),product_name:p.name});
     }
     let discount = 0;
     if (normalized.coupon) {
@@ -30,9 +30,9 @@ export async function draftOrder(db, identity, input, timestamp, now = Date.now(
     }
     const subtotal = rows.reduce((sum,row)=>sum+row.unit_amount*row.quantity,0);
     const amount = subtotal-discount;
-    check(Number.isSafeInteger(amount) && amount >= 400 && amount <= 99999999, 'order/invalid-input', 'Test order total must be between CNY 4 and CNY 999,999.99.');
+    check(Number.isSafeInteger(amount) && amount >= 50 && amount <= 99999999, 'order/invalid-input', 'Test order total must be between JPY 50 and JPY 99,999,999.');
     const data = {user_id:identity.uid, customer_email:identity.email, customer_name:normalized.name, shipping_address:normalized.address, gift_option:normalized.gift,
-      items:rows,coupon_code:normalized.coupon,fingerprint,status:'draft',payment_mode:'test',currency:'cny',subtotal_amount:subtotal,discount_amount:discount,amount_total:amount,
+      items:rows,coupon_code:normalized.coupon,fingerprint,status:'draft',payment_mode:'test',currency:'jpy',subtotal_amount:subtotal,discount_amount:discount,amount_total:amount,
       shipping_amount:0,created_at:timestamp(),expires_at_ms:now+35*60*1000};
     tx.create(ref,data);return {id,...data};
   });

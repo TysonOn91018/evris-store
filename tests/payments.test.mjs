@@ -18,9 +18,9 @@ const identity={uid:'alice',email:'member@example.com',email_verified:true};
 const input={request_id:'12345678-1234-1234-1234-123456789abc',p_customer_name:'Test buyer',p_customer_email:'attacker@example.com',p_shipping_address:'Test address',p_items:[{product_slug:'moon-pearl-bracelet',quantity:2,price:1}],p_coupon_code:'alice_256'};
 const entries=()=>({'products/moon-pearl-bracelet':{name:'Moon Pearl Bracelet',stock:5,price:458,is_active:true},'game_coupons/alice_256':{user_id:'alice',product_slug:'moon-pearl-bracelet',discount_percent:3,redeemed_at:null}});
 const ts=()=> 'now';
-async function prepared(){const db=database(entries());const order=await draftOrder(db,identity,input,ts);const session={id:'cs_test_1',url:'https://checkout.stripe.com/test',livemode:false,metadata:{order_id:order.id},amount_total:order.amount_total,currency:'cny',payment_status:'unpaid',status:'open'};await reserveOrder(db,order.id,session,ts);return {db,order,session};}
-test('authoritative quote uses member email, integer cents and does not deduct unpaid stock',async()=>{
- const {db,order}=await prepared();assert.equal(order.customer_email,identity.email);assert.equal(order.amount_total,88852);assert.equal(order.discount_amount,2748);assert.equal(db.rows.get('products/moon-pearl-bracelet').stock,5);assert.equal(db.rows.get('payment_stock/moon-pearl-bracelet').quantity,2);
+async function prepared(){const db=database(entries());const order=await draftOrder(db,identity,input,ts);const session={id:'cs_test_1',url:'https://checkout.stripe.com/test',livemode:false,metadata:{order_id:order.id},amount_total:order.amount_total,currency:'jpy',payment_status:'unpaid',status:'open'};await reserveOrder(db,order.id,session,ts);return {db,order,session};}
+test('authoritative quote uses member email, integer yen and does not deduct unpaid stock',async()=>{
+ const {db,order}=await prepared();assert.equal(order.customer_email,identity.email);assert.equal(order.amount_total,19369);assert.equal(order.discount_amount,599);assert.equal(db.rows.get('products/moon-pearl-bracelet').stock,5);assert.equal(db.rows.get('payment_stock/moon-pearl-bracelet').quantity,2);
 });
 test('paid callbacks are idempotent and atomically deduct correct quantities and redeem coupon',async()=>{
  const {db,order,session}=await prepared();session.payment_status='paid';session.status='complete';
@@ -53,8 +53,18 @@ test('email failures stay queued and duplicate workers cannot send the same comp
  await deliverMail(db,order.id,async()=>{throw new Error('offline')},ts);assert.equal(db.rows.get(`order_mail/${order.id}`).status,'pending');
  let sent=0;const send=async message=>{sent++;assert.equal(message.to,identity.email);assert.match(message.subject,/TEST/);return {messageId:'mail1'}};
  await Promise.all([deliverMail(db,order.id,send,ts),deliverMail(db,order.id,send,ts)]);assert.equal(sent,1);assert.equal(db.rows.get(`order_mail/${order.id}`).status,'sent');
- assert.match(receipt(order,order.id).text,/888.52/);
+ assert.match(receipt(order,order.id).text,/JPY 19369/);
 });
 test('changed request contents cannot reuse an existing request ID',async()=>{
  const {db}=await prepared();await assert.rejects(draftOrder(db,identity,{...input,p_shipping_address:'Another address'},ts),{code:'order/invalid-input'});
+});
+test('yen-native products are charged directly, not multiplied by 100 or converted again',async()=>{
+ const data=entries();data['products/moon-pearl-bracelet'].price=10001;data['products/moon-pearl-bracelet'].currency='jpy';
+ const order=await draftOrder(database(data),identity,input,ts);
+ assert.equal(order.currency,'jpy');assert.equal(order.items[0].unit_amount,10001);assert.equal(order.subtotal_amount,20002);assert.equal(order.discount_amount,600);assert.equal(order.amount_total,19402);
+ assert.match(receipt(order,order.id).text,/JPY 19402/);
+});
+test('historical CNY receipts retain cents and original currency',()=>{
+ const old={currency:'cny',amount_total:58800,discount_amount:0,items:[{product_name:'Pearl',quantity:1,unit_amount:58800}]};
+ assert.match(receipt(old,'old').text,/CNY 588.00/);
 });
