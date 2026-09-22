@@ -9,5 +9,7 @@ window.EVRIS_FIREBASE_CONFIG = {
   appId: "1:24684058013:web:c16bbe3a9c18c46a174b74",
   measurementId: "G-719J3Q4K8F",
 };
-// Trusted checkout service. Empty = same origin (/api). See FIREBASE_SETUP.md.
-window.EVRIS_API_BASE = "";
+// GitHub Pages uses the cloud service; local previews keep their local /api.
+window.EVRIS_API_BASE = window.location.hostname === 'tysonon91018.github.io'
+  ? 'https://evris-store.onrender.com'
+  : '';
