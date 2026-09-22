@@ -3761,5 +3761,17 @@ body.modal-open {
 .member-favorite-link strong { font-size: 0.82rem; line-height: 1.5; }
 .member-favorites-empty { font-size: 0.75rem; color: var(--soft-ink); }
 
-.payment-status { margin:24px auto; max-width:900px; padding:24px; border:1px solid var(--line); background:#f6f4ef; }
+.payment-status { position:fixed; z-index:110; top:var(--payment-top, 80px); right:16px; width:min(560px, calc(100% - 32px)); max-height:calc(100dvh - var(--payment-top, 80px) - 16px); overflow:auto; padding:20px; border:1px solid var(--line); background:#f6f4ef; box-shadow:0 8px 24px #0002; }
+.payment-status[hidden] { display:none; }
+.payment-status-actions { display:flex; flex-wrap:wrap; gap:10px; }
+.member-orders { margin-top:28px; padding-top:24px; border-top:1px solid var(--line); }
+.member-orders h3 { margin:0; font-size:18px; }
+.member-order-list { display:grid; gap:14px; margin-top:14px; }
+.member-order { padding:16px; border:1px solid var(--line); background:var(--paper); overflow-wrap:anywhere; }
+.member-order-top { display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px; font-size:13px; }
+.member-order-test { color:#786544; font-size:12px; }
+.member-order ul { padding-left:18px; line-height:1.8; }
+.member-order a { text-decoration:underline; text-underline-offset:3px; }
+.member-order summary { cursor:pointer; text-decoration:underline; }
+.member-order details { font-size:13px; line-height:1.7; }
 .payment-status p { margin:0 0 12px; overflow-wrap:anywhere; line-height:1.7; }

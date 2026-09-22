@@ -144,6 +144,17 @@
       }).catch(error => { if (!cancelled) onError(error); });
       return () => { cancelled = true; unsubscribe?.(); };
     },
+    watchMemberOrders(uid, onData, onError) {
+      let unsubscribe, cancelled = false;
+      initialize().then(({ auth, db, d }) => {
+        if (cancelled) return;
+        if (!auth.currentUser?.emailVerified || auth.currentUser.uid !== uid) throw failure('permission-denied');
+        unsubscribe = d.onSnapshot(d.query(d.collection(db, 'orders'), d.where('user_id', '==', uid)), snapshot => {
+          if (!cancelled) onData(snapshot.docs.map(item => ({ ...item.data(), id: item.id })));
+        }, error => { if (!cancelled) onError(error); });
+      }).catch(error => { if (!cancelled) onError(error); });
+      return () => { cancelled = true; unsubscribe?.(); };
+    },
     getProfile: id => result(async ({ db, d }) => {
       const snapshot = await d.getDoc(d.doc(db, 'profiles', id));
       return snapshot.exists() ? snapshot.data() : null;

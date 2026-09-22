@@ -3,6 +3,26 @@
 此版本只接受 Stripe 測試金鑰 `sk_test_`，拒絕正式付款事件，不收取真錢。
 程式已完成，但必須設定帳戶和部署後端才能實際測試付款及寄信。
 
+## 本機測試（不需要部署網上後端）
+
+使用 Node 22.9+。本機 `.env.local` 已被 Git 忽略；不要把任何秘密放入前端 JS。
+
+1. 在 `.env.local` 填寫 `STRIPE_SECRET_KEY`（沙盒的 `sk_test_` 私鑰）。
+2. Firebase 專案設定 → 服務帳戶 → 產生新的私密金鑰。將下載的 JSON 留在本機，並把完整路徑填入 `GOOGLE_APPLICATION_CREDENTIALS`，使用雙引號包住路徑。
+3. Google 帳戶開啟兩步驟驗證，建立應用程式密碼，填入 `GMAIL_APP_PASSWORD`；寄件地址已設為 `fatchan2019@gmail.com`。
+4. 在終端執行 `stripe login`，瀏覽器登入時選擇同一個 Stripe 沙盒。接著執行：
+
+   ```sh
+   stripe listen --events checkout.session.completed,checkout.session.expired,checkout.session.async_payment_succeeded --forward-to http://localhost:8081/api/payments/webhook
+   ```
+
+   保持該終端開啟，將輸出的 `whsec_` 密鑰填入 `STRIPE_WEBHOOK_SECRET`。不要使用其他 endpoint 的 signing secret。
+5. 在專案目錄執行 `npm run local:check`（只顯示缺少哪些設定，不印出值）。格式通過後，執行 `npm run local:start`。
+6. 使用 `http://localhost:8081/`（不是原本的 8080 靜態預覽），重新登入會員，按下方「驗證流程」測試。完成後 Ctrl+C 關閉伺服器與 Stripe listener。
+
+這裡只是付款不扣真錢；Firebase 仍是現有專案，庫存和優惠券會實際更新，Gmail 亦會寄出真實的測試確認信。請用測試商品和自己帳戶驗證。
+本機啟動器固定只監聽 loopback，網站及 API 同在 8081，毋須修改已發布的 `firebase-config.js`。
+
 ## 1 Stripe 測試環境
 
 建立 Stripe 帳戶：https://dashboard.stripe.com/register
