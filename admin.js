@@ -38,7 +38,7 @@
       const copy = document.createElement('div'); copy.textContent = item.name;
       const slug = document.createElement('small'); slug.textContent = item.slug; copy.append(slug);
       product.append(image,copy); productCell.append(product); row.append(productCell);
-      for (const value of [item.price, item.stock, item.is_active ? '上架中' : '已下架']) {
+      for (const value of [`¥${Number(item.price).toLocaleString('ja-JP')}`, item.stock, item.is_active ? '上架中' : '已下架']) {
         const cell = document.createElement('td'); cell.textContent = value; row.append(cell);
       }
       const actions = document.createElement('td'); actions.className = 'inventory-actions';
