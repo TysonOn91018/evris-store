@@ -15,7 +15,7 @@ setInterval(() => payments.reconcile().catch(() => console.error('Payment reconc
 const processMail = mailWorker(db, () => FieldValue.serverTimestamp());
 setInterval(() => processMail().catch(() => console.error('Email queue unavailable')), 30000).unref();
 const root = fileURLToPath(new URL('../', import.meta.url));
-const rootFiles = new Set(['stock-feedback.js','member-orders.js','checkout-payment.js','admin-language.js','cloudinary-config.js','product-image-upload.js','member-favorites.js','coupon-sync.js','member-coupons.js','admin.html','admin.css','admin.js','inventory-model.js','catalog-live.js','index.html','products.html','product.html','styles.css','script.js','account-auth.js','auth-feedback.js','firebase-config.js','firebase-backend.js','homepage-motion.js','products-data.js','products-page.js','product-page.js']);
+const rootFiles = new Set(['checkout-form.js','stock-feedback.js','member-orders.js','checkout-payment.js','admin-language.js','cloudinary-config.js','product-image-upload.js','member-favorites.js','coupon-sync.js','member-coupons.js','admin.html','admin.css','admin.js','inventory-model.js','catalog-live.js','index.html','products.html','product.html','styles.css','script.js','account-auth.js','auth-feedback.js','firebase-config.js','firebase-backend.js','homepage-motion.js','products-data.js','products-page.js','product-page.js']);
 const mime = { '.html':'text/html; charset=utf-8', '.js':'application/javascript', '.css':'text/css', '.png':'image/png', '.jpg':'image/jpeg', '.jpeg':'image/jpeg', '.webp':'image/webp', '.svg':'image/svg+xml', '.woff2':'font/woff2', '.json':'application/json' };
 const limits = new Map();
 function rateLimit(uid) {
