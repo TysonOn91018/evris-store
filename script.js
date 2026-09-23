@@ -1361,6 +1361,8 @@ function renderCart() {
 }
 
 function addToCart(product) {
+  product = window.EvrisStock.check(product?.id, cart);
+  if (!product) return false;
   checkoutMessage.textContent = "";
   const existingItem = cart.find((item) => item.id === product.id);
 
@@ -1372,6 +1374,7 @@ function addToCart(product) {
 
   saveCart();
   renderCart();
+  return true;
 }
 
 function changeCartQuantity(productId, change) {
@@ -1453,7 +1456,7 @@ document.querySelectorAll(".product-card a").forEach((link) => {
 
 document.querySelectorAll(".product-card .cart-button").forEach((button) => {
   button.addEventListener("click", () => {
-    addToCart(getProductFromCard(button.closest(".product-card")));
+    if (!addToCart(getProductFromCard(button.closest(".product-card")))) return;
     button.textContent = t("added");
     window.setTimeout(() => {
       button.textContent = t("addToCart");
@@ -1463,13 +1466,13 @@ document.querySelectorAll(".product-card .cart-button").forEach((button) => {
 
 document.querySelector(".feature-card .mini-button").addEventListener("click", (event) => {
   event.preventDefault();
-  addToCart(getFeatureProduct());
+  if (!addToCart(getFeatureProduct())) return;
   openCartDrawer();
 });
 
 modalCart.addEventListener("click", () => {
   if (!activeProduct) return;
-  addToCart(activeProduct);
+  if (!addToCart(activeProduct)) return;
   modalCart.textContent = t("added");
   window.setTimeout(() => {
     modalCart.textContent = t("addToCart");
@@ -2002,7 +2005,7 @@ document.addEventListener('evris:catalog-updated', () => {
     const photo = card.querySelector('img');
     if (photo) { photo.src = item.image; photo.alt = item.title; }
     const button = card.querySelector('.cart-button');
-    if (button) button.disabled = item.stock <= 0;
+    if (button) button.disabled = false;
   });
 });
 

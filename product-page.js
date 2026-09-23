@@ -339,8 +339,8 @@ function updateCartCount() {
 }
 
 function addToCart(productItem) {
-  if (window.EvrisCatalog?.state !== "ready" || !productItem.is_active || !Number.isInteger(productItem.stock)) return false;
-  if ((cart.find(item => item.id === productItem.id)?.quantity || 0) >= productItem.stock) return false;
+  productItem = window.EvrisStock.check(productItem?.id, cart);
+  if (!productItem) return false;
   const existing = cart.find((item) => item.id === productItem.id);
   if (existing) existing.quantity += 1;
   else cart.push({ ...productItem, quantity: 1 });
@@ -397,7 +397,7 @@ function renderDetail() {
     : unavailable ? ['This item is no longer available','此商品已下架','販売を終了しました','판매 종료'][index]
     : quantity === 0 ? ['Out of stock','已售罄','在庫切れ','품절'][index]
     : [`In stock · ${quantity} remaining`, `在庫：剩餘 ${quantity} 件`, `在庫：残り ${quantity} 点`, `재고: ${quantity}개`][index];
-  button.disabled = state !== 'ready' || unavailable || !quantity;
+  button.disabled = false;
   stock.classList.toggle('is-empty', state === 'ready' && (unavailable || quantity === 0));
   document.title = `${product.title} | EVRIS`;
   image.src = product.image;

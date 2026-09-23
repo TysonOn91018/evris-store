@@ -294,7 +294,8 @@ function updateCartCount() {
 }
 
 function addToCart(product) {
-  if (!product || window.EvrisCatalog?.state !== "ready" || !product.stock || (cart.find(item => item.id === product.id)?.quantity || 0) >= product.stock) return false;
+  product = window.EvrisStock.check(product?.id, cart);
+  if (!product) return false;
   const existing = cart.find((item) => item.id === product.id);
   if (existing) existing.quantity += 1;
   else cart.push({ ...product, quantity: 1 });
@@ -369,7 +370,7 @@ function renderProducts() {
             </div>
             <span>${formatPrice(product.priceValue)}</span>
           </div>
-          <button type="button" class="cart-button" ${window.EvrisCatalog?.state !== "ready" || !product.stock ? "disabled" : ""} data-add="${escapeCatalogHtml(product.id)}">${t("addToCart")}</button>
+          <button type="button" class="cart-button" data-add="${escapeCatalogHtml(product.id)}">${t("addToCart")}</button>
         </article>
       `,
     )

@@ -3763,6 +3763,8 @@ body.modal-open {
 
 .payment-status { position:fixed; z-index:110; top:var(--payment-top, 80px); right:16px; width:min(560px, calc(100% - 32px)); max-height:calc(100dvh - var(--payment-top, 80px) - 16px); overflow:auto; padding:20px; border:1px solid var(--line); background:#f6f4ef; box-shadow:0 8px 24px #0002; }
 .payment-status[hidden] { display:none; }
+.stock-toast { position:fixed; z-index:10000; bottom:24px; left:50%; transform:translateX(-50%); width:max-content; max-width:calc(100vw - 32px); padding:16px 24px; background:#272923; color:#fff; border-radius:4px; box-shadow:0 4px 20px #0003; line-height:1.6; pointer-events:none; }
+.stock-toast[hidden] { display:none; }
 .payment-status-actions { display:flex; flex-wrap:wrap; gap:10px; }
 .member-orders { margin-top:28px; padding-top:24px; border-top:1px solid var(--line); }
 .member-orders h3 { margin:0; font-size:18px; }
